@@ -3,6 +3,12 @@ import withRouter from 'umi/withRouter'
 import router from 'umi/router'
 import { Menu } from 'antd'
 import Avatar from './components/Avatar'
+import { InjectClass } from '@/utils/HOC'
+import styled from 'styled-components'
+
+const StyledMenu = styled(InjectClass(Menu))`
+  border-bottom: 0;
+`
 
 function Layout(props) {
   // 拦截器，处理认证重定向等情况
@@ -12,12 +18,12 @@ function Layout(props) {
   }
   return (
     <React.Fragment>
-      <Menu mode="horizontal" theme="dark">
-        <Menu.Item>Ant Design</Menu.Item>
+      <StyledMenu mode="horizontal" theme="dark">
+        <Menu.Item>Lein Meeting</Menu.Item>
         <Menu.Item>Home</Menu.Item>
         <Menu.Item>About</Menu.Item>
         <Avatar />
-      </Menu>
+      </StyledMenu>
       {props.children}
     </React.Fragment>
   )
