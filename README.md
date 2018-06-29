@@ -36,7 +36,7 @@ $ yarn start
 ### 样式
 
 - 推荐使用 [styled-components](https://www.styled-components.com/docs/basics#getting-started)
-- 如果要结合第三方组件库使用，则一定要将第三方组件用`utils/HOC.js`中的工具函数`InjectClass`包装起来再传入 styled 函数，否则样式不会生效，如
+- 如果要结合 antd 使用，则一定要将组件用`utils/HOC.js`中的工具函数`InjectClass`包装起来再传入 styled 函数，否则样式不会生效，如
 
 ```javascript
 import { InjectClass } from 'utils/HOC'
@@ -57,3 +57,4 @@ export const StyledButton = styled(InjectClass(Button))`
 
 - [React](https://reactjs.org/docs/hello-world.html)
 - [styled-components](https://www.styled-components.com/docs/basics#getting-started)
+- [antd](https://ant.design/components/button-cn/)
