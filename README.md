@@ -14,9 +14,8 @@ npm: >= 3.10
 将项目克隆至本地后，切换到项目根目录下，打开终端运行下列指令
 
 ```shell
-$ npm install yarn -g
-$ yarn
-$ yarn start
+$ npm install cnpm -g
+$ cnpm install
 ```
 
 耐心等待编译过程, 完成后打开浏览器, 输入http://localhost:8000, 就能看到页面了
