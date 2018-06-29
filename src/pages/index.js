@@ -13,7 +13,7 @@ function IndexPage() {
           To get started, edit <code>src/index.js</code> and save to reload.
         </li>
         <li>
-          <Button>
+          <Button type="primary">
             <a href="https://github.com/dvajs/dva">Getting Started</a>
           </Button>
         </li>

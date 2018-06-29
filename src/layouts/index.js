@@ -8,12 +8,7 @@ function Layout(props) {
   if (location.pathname === '/never') {
     router.push('/')
   }
-  return (
-    <React.Fragment>
-      <div>header</div>
-      {props.children}
-    </React.Fragment>
-  )
+  return <React.Fragment>{props.children}</React.Fragment>
 }
 
 export default withRouter(Layout)
