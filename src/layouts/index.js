@@ -13,6 +13,12 @@ class Layout extends React.Component {
   state = {
     current: this.props.location.pathname
   }
+  handleClick = e => {
+    this.setState({
+      current: e.key
+    })
+    router.push(e.key)
+  }
   render() {
     // 拦截器，处理认证重定向等情况
     const { location, children } = this.props
@@ -24,11 +30,12 @@ class Layout extends React.Component {
         <StyledMenu
           mode="horizontal"
           theme="dark"
+          onClick={this.handleClick}
           selectedKeys={[this.state.current]}
         >
-          <Menu.Item>Lein Meeting</Menu.Item>
-          <Menu.Item>Home</Menu.Item>
-          <Menu.Item>About</Menu.Item>
+          <Menu.Item key="/">Lein Meeting</Menu.Item>
+          <Menu.Item key="/home">Home</Menu.Item>
+          <Menu.Item key="/collection">Collection</Menu.Item>
           <Avatar />
         </StyledMenu>
         {children}
