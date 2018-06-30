@@ -28,7 +28,7 @@ const Item = ({ meeting, handleClick = () => {} }) => {
           <Icon type="star" style={{ marginRight: '8px' }} />收藏
         </Link>
       }
-      style={{ margin: '30px' }}
+      style={{ margin: '30px auto', maxWidth: '800px' }}
     >
       <div style={{ marginBottom: '20px' }}>{meeting.introduction}</div>
       <div>

@@ -1,9 +1,8 @@
 import React from 'react'
-import Item from './components/Item'
 import styled from 'styled-components'
-import router from 'umi/router'
 import { RestClient } from '@/utils/HOC'
 import { Spin, Icon } from 'antd'
+import MeetingList from '@/components/MeetingList'
 import { getAllMeetings } from './services/meeting'
 
 const Container = styled.div`
@@ -21,9 +20,6 @@ const Loading = styled(L)`
 `
 
 class Home extends React.Component {
-  onCardClick(id) {
-    router.push(`/detail/${id}`)
-  }
   render() {
     const {
       data: { items },
@@ -31,17 +27,7 @@ class Home extends React.Component {
     } = this.props
     return (
       <Container>
-        {loading ? (
-          <Loading />
-        ) : (
-          items.map(({ conferenceInfo: item }) => (
-            <Item
-              handleClick={this.onCardClick.bind(this, item.id)}
-              key={item.id}
-              meeting={item}
-            />
-          ))
-        )}
+        {loading ? <Loading /> : <MeetingList items={items} />}
       </Container>
     )
   }
