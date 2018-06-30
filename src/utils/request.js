@@ -1,4 +1,5 @@
 import fetch from 'dva/fetch'
+import { isEnumerable } from './index'
 
 function parseJSON(response) {
   return response.json()
@@ -22,6 +23,9 @@ function checkStatus(response) {
  * @return {object}           An object containing either "data" or "err"
  */
 export default function request(url, options) {
+  if (options && options.body && isEnumerable(options.body)) {
+    options.body = JSON.stringify(options.body)
+  }
   return fetch(url, options)
     .then(checkStatus)
     .then(parseJSON)
