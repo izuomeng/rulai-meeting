@@ -7,7 +7,7 @@ import { InjectClass } from '@/utils/HOC'
 
 const StyledButton = styled(InjectClass(Button))`
   font-size: 2em;
-  font-weight: 100;
+  font-weight: 200;
   height: 120px;
   width: 300px;
   margin-right: 120px;
@@ -36,5 +36,4 @@ function IndexPage() {
 }
 
 IndexPage.propTypes = {}
-
 export default connect()(IndexPage)
