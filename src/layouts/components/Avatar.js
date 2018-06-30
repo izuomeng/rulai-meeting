@@ -31,4 +31,16 @@ const Avatar = () => {
   )
 }
 
-export default Avatar
+const bbb=()=>{
+
+return (
+  <AvatarContainer>
+  <Dropdown overlay={menu} trigger={['click']}>
+  <Icon type="right" />
+  </Dropdown>
+</AvatarContainer>
+
+)
+}
+
+export default bbb
