@@ -1,7 +1,8 @@
 import React from 'react'
 import { connect } from 'dva'
-import styles from './index.css'
 import { Button } from 'antd'
+import Link from 'umi/link'
+import styles from './index.css'
 
 function IndexPage() {
   return (
@@ -14,7 +15,7 @@ function IndexPage() {
         </li>
         <li>
           <Button type="primary">
-            <a href="https://github.com/dvajs/dva">Getting Started</a>
+            <Link to="/home">Getting Started</Link>
           </Button>
         </li>
       </ul>
