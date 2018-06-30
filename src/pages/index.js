@@ -6,17 +6,19 @@ import styled from 'styled-components'
 import { InjectClass } from '@/utils/HOC'
 
 const StyledButton = styled(InjectClass(Button))`
-  font-size: 2em;
-  font-weight: 200;
-  height: 120px;
-  width: 300px;
+  font-size: 1.5em;
+  font-weight: 500;
+  height: 80px;
+  width: 200px;
+  border-radius: 24px;
   margin-right: 120px;
-  background-color: rgb(4, 250, 168);
-  color: #001529;
+  background: transparent;
+  border: 4px solid #ffffff;
+  color: #ffffff;
   :hover {
     background: transparent;
-    color: #ffffff;
-    border: 5px solid #ffffff;
+    border: 4px solid #47c479;
+    color: #47c479;
   }
 `
 
@@ -27,7 +29,7 @@ function IndexPage() {
       <h1 className={styles.title}>Welcome to ru-lai meeting!</h1>
       <ul className={styles.list}>
         <li>
-          <StyledButton>查看全部会议</StyledButton>
+          <StyledButton>查看会议</StyledButton>
           <StyledButton>发布会议</StyledButton>
         </li>
       </ul>
