@@ -1,9 +1,9 @@
 import React from 'react'
 import { connect } from 'dva'
-import styles from './index.css'
 import { Button } from 'antd'
 import styled from 'styled-components'
 import { InjectClass } from '@/utils/HOC'
+import styles from './index.css'
 
 const StyledButton = styled(InjectClass(Button))`
   font-size: 1.5em;

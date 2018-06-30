@@ -10,9 +10,8 @@ export default {
   },
   proxy: {
     '/api': {
-      target: 'http://jsonplaceholder.typicode.com/',
-      changeOrigin: true,
-      pathRewrite: { '^/api': '' }
+      target: 'http://rap2api.taobao.org/app/mock/18452',
+      changeOrigin: true
     }
   }
 }
