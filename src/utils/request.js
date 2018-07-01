@@ -1,4 +1,7 @@
 import fetch from 'dva/fetch'
+import router from 'umi/router'
+import { message } from 'antd'
+import { transQuery } from '@/utils'
 import { isEnumerable } from './index'
 
 function parseJSON(response) {
@@ -15,6 +18,19 @@ function checkStatus(response) {
   throw error
 }
 
+function handleRes(data) {
+  if (data && data.errorCode) {
+    if (data.errorCode === 100) {
+      router.push('/login')
+      message.error('认证失败，请重新登陆')
+      return Promise.reject(data.errorCode)
+    }
+    message.error(`${data.errorInfo || '操作失败'}(${data.errorCode})`)
+    return Promise.reject(data.errorCode)
+  }
+  return { data }
+}
+
 /**
  * Requests a URL, returning a promise.
  *
@@ -23,12 +39,24 @@ function checkStatus(response) {
  * @return {object}           An object containing either "data" or "err"
  */
 export default function request(url, options) {
+  let finalUrl = url
   if (options && options.body && isEnumerable(options.body)) {
     options.body = JSON.stringify(options.body)
   }
-  return fetch(url, options)
+  if (
+    options &&
+    (options.method === 'get' || options.method === 'undefined') &&
+    options.body
+  ) {
+    finalUrl = `${url}?${transQuery(options.body)}`
+    delete options.body
+  }
+  return fetch(finalUrl, options)
     .then(checkStatus)
     .then(parseJSON)
-    .then(data => ({ data }))
-    .catch(err => ({ err }))
+    .then(handleRes)
+    .catch(err => {
+      console.log(err)
+      return Promise.reject(err)
+    })
 }
