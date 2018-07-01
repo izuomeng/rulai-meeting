@@ -8,6 +8,11 @@ import styled from 'styled-components'
 
 const StyledMenu = styled(InjectClass(Menu))`
   border-bottom: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 99;
 `
 class Layout extends React.Component {
   state = {
@@ -38,7 +43,7 @@ class Layout extends React.Component {
           <Menu.Item key="/collection">Collection</Menu.Item>
           <Avatar />
         </StyledMenu>
-        {children}
+        <div style={{ marginTop: 46, paddingTop: 1 }}>{children}</div>
       </React.Fragment>
     )
   }

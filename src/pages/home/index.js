@@ -1,53 +1,36 @@
 import React from 'react'
-import Item from './components/Item'
 import styled from 'styled-components'
-
-const fakeData = [
-  {
-    conferenceInfo: {
-      id: 1,
-      title: '联合国气候大会',
-      introduction: '这是一个假会议',
-      organization: {
-        id: 1,
-        name: '北航'
-      },
-      ddlDate: 1530399098140,
-      confBeginDate: 1530359078140,
-      state: ''
-    }
-  },
-  {
-    conferenceInfo: {
-      id: 2,
-      title: '联合国大会',
-      introduction: '这是一个真会议',
-      organization: {
-        id: 1,
-        name: '联合国'
-      },
-      ddlDate: 1530399098140,
-      confBeginDate: 1530359078140,
-      state: ''
-    }
-  }
-]
+import { RestClient } from '@/utils/HOC'
+import { Spin, Icon } from 'antd'
+import MeetingList from '@/components/MeetingList'
+import { getAllMeetings } from './services/meeting'
 
 const Container = styled.div`
   display: block;
 `
 
+const L = ({ className }) => (
+  <div className={className}>
+    <Spin indicator={<Icon type="loading" style={{ fontSize: 40 }} spin />} />
+  </div>
+)
+const Loading = styled(L)`
+  text-align: center;
+  margin-top: calc(50vh - 40px);
+`
+
 class Home extends React.Component {
   render() {
-    const list = fakeData
+    const {
+      data: { items },
+      loading
+    } = this.props
     return (
       <Container>
-        {list.map(item => (
-          <Item key={item.conferenceInfo.id} meeting={item.conferenceInfo} />
-        ))}
+        {loading ? <Loading /> : <MeetingList items={items} />}
       </Container>
     )
   }
 }
 
-export default Home
+export default RestClient(getAllMeetings, 1)(Home)
