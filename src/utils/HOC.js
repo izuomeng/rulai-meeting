@@ -23,14 +23,21 @@ export function RestClient(request, ...args) {
         result: {}
       }
       async componentDidMount() {
-        const { data } = await request(...args)
-        this.setState({
-          loading: false,
-          result: data
-        })
+        try {
+          const { data } = await request(...args)
+          this.setState({
+            loading: false,
+            result: data
+          })
+        } catch (error) {
+          return
+        }
       }
       render() {
         const { loading, result } = this.state
+        if (!loading && !result) {
+          return null
+        }
         return <MyComponent loading={loading} data={result} {...this.props} />
       }
     }
