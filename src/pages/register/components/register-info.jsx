@@ -2,6 +2,7 @@ import React from 'react'
 import { Upload, Form, Icon, Input, Button } from 'antd'
 import styled from 'styled-components'
 import p from '@/assets/images/logo.png'
+import { getRegister } from '../services/registermessage'
 
 const FormItem = Form.Item
 
@@ -11,10 +12,15 @@ const Container = styled.div`
   margin: 0 auto;
   margin-top: 20px;
 `
+
 class RegisterInfo extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { user: 'people' }
+    this.state = {
+      user: 'people',
+      mail: '',
+      pwd: ''
+    }
   }
 
   handleSubmit = e => {
@@ -37,6 +43,13 @@ class RegisterInfo extends React.Component {
     })
   }
 
+  registerClick = async () => {
+    const data = await getRegister({
+      email: this.state.mail,
+      pwd: this.state.pwd
+    })
+    console.log(data)
+  }
   render() {
     return (
       <React.Fragment>
@@ -60,6 +73,8 @@ class RegisterInfo extends React.Component {
           <Form onSubmit={this.handleSubmit} className="login-form">
             <FormItem>
               <Input
+                value={this.state.mail}
+                onChange={e => this.setState({ mail: e.target.value })}
                 prefix={
                   <Icon type="mail" style={{ color: 'rgba(0,0,0,.25)' }} />
                 }
@@ -68,6 +83,8 @@ class RegisterInfo extends React.Component {
             </FormItem>
             <FormItem>
               <Input
+                value={this.state.pwd}
+                onChange={e => this.setState({ pwd: e.target.value })}
                 prefix={
                   <Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />
                 }
@@ -100,6 +117,7 @@ class RegisterInfo extends React.Component {
                 htmlType="submit"
                 className="login-form-button"
                 style={{ display: 'block', width: 350 }}
+                onClick={this.registerClick}
               >
                 注册
               </Button>
