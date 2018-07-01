@@ -2,7 +2,8 @@ const path = require('path')
 
 export default {
   alias: {
-    '@': path.resolve(__dirname, 'src')
+    '@': path.resolve(__dirname, 'src'),
+    CP: path.resolve(__dirname, 'src/components')
   },
   plugins: ['umi-plugin-dva'],
   theme: {
