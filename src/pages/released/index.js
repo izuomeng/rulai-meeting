@@ -1,8 +1,9 @@
 import React from 'react'
 import { RestClient } from '@/utils/HOC'
-import MeetingList from '@/components/MeetingList'
 import Loading from '@/components/Loading'
+import TitleCard from './components/TitleCard'
 import { getReleasedMeetings } from './services/release'
+import Tabel from './components/Tabel'
 
 class Released extends React.Component {
   render() {
@@ -10,9 +11,16 @@ class Released extends React.Component {
       data: { items },
       loading
     } = this.props
+    console.log(items)
     return (
       <React.Fragment>
-        {loading ? <Loading /> : <MeetingList items={items} />}
+        {loading ? (
+          <Loading />
+        ) : (
+          <TitleCard>
+            <Tabel />
+          </TitleCard>
+        )}
       </React.Fragment>
     )
   }

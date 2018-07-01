@@ -16,3 +16,11 @@ export function isEnumerable(obj) {
 export function transTime(time) {
   return miment(time).format('YYYY-MM-DD')
 }
+
+export function transQuery(obj) {
+  return Object.entries(obj).reduce((result, item, index) => {
+    const pre = index === 0 ? '' : '&'
+    result += `${pre}${item[0]}=${item[1]}`
+    return result
+  }, '')
+}

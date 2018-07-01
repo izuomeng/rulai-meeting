@@ -1,22 +1,8 @@
 import React from 'react'
 import { Card, Icon } from 'antd'
-import Link from 'umi/link'
 import styled from 'styled-components'
 import { InjectClass } from '@/utils/HOC'
 import { transTime } from '@/utils'
-//import { Button } from 'antd'
-
-const CoButton = styled.button`
-  background: transparent;
-  width: 70px;
-  height: 30px;
-  border: 0px;
-  color: red;
-  :hover {
-    background-color: red;
-    color: #fff;
-  }
-`
 
 const Tip = styled(
   InjectClass(props => (
@@ -37,11 +23,9 @@ const ItemCollection = ({ meeting, handleClick = () => {} }) => {
       title={meeting.title}
       onClick={handleClick}
       extra={
-        <Link to="/collection">
-          <CoButton type="danger" onClick>
-            <Icon type="close-square-o" style={{ marginRight: '8px' }} />删除
-          </CoButton>
-        </Link>
+        <a style={{ color: 'red' }}>
+          <Icon type="close-square-o" style={{ marginRight: '8px' }} />删除
+        </a>
       }
       style={{ margin: '30px auto', maxWidth: '800px' }}
     >

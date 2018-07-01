@@ -1,7 +1,8 @@
 html,
 body,
 :global(#root) {
-  min-height: 100vh;
+  height: auto;
+  min-height: calc(100vh - 46px);
 }
 
 body {
