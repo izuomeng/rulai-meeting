@@ -1,16 +1,12 @@
 import React from 'react'
 import { connect } from 'dva'
 import styles from './Release.css'
-import { Button } from 'antd'
 import { Divider } from 'antd'
-import { Tag } from 'antd'
 import { Input } from 'antd'
 import { DatePicker } from 'antd'
 import 'antd/dist/antd.css'
-import { ENABLE_DISABLE_REGEX } from 'tslint'
 import { Timeline } from 'antd'
 
-const { MonthPicker, RangePicker, WeekPicker } = DatePicker
 const { TextArea } = Input
 
 function onChange(date, dateString) {
