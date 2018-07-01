@@ -2,10 +2,12 @@
   font-family: Georgia, sans-serif;
   text-align: center;
   background: url(../assets/meeting.jpg) no-repeat center 0;
-  background-size: 100% 100%;
-  opacity: 0.9;
-  height: 1000px;
-  margin-top: -5px;
+  background-size: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
 }
 
 .title {
@@ -14,10 +16,7 @@
   color: #ffffff;
   letter-spacing: -1px;
   margin-bottom: 200px;
-}
-
-.tmp {
-  height: 200px;
+  margin-top: 200px;
 }
 
 .welcome {
