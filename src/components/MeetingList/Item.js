@@ -17,20 +17,24 @@ const Tip = styled(
   color: #aeb0b3;
 `
 
+const Introduce = styled.div`
+  cursor: pointer;
+  margin-bottom: 20px;
+`
+
 const Item = ({ meeting, handleClick = () => {} }) => {
   return (
     <Card
       hoverable
       title={meeting.title}
-      onClick={handleClick}
       extra={
         <Link to="/collection">
           <Icon type="star" style={{ marginRight: '8px' }} />收藏
         </Link>
       }
-      style={{ margin: '30px auto', maxWidth: '800px' }}
+      style={{ margin: '30px auto', maxWidth: '800px', cursor: 'default' }}
     >
-      <div style={{ marginBottom: '20px' }}>{meeting.introduction}</div>
+      <Introduce onClick={handleClick}>{meeting.introduction}</Introduce>
       <div>
         <Tip icon="solution" label="机构" value={meeting.organization.name} />
         <Tip
