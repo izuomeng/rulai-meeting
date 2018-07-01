@@ -5,6 +5,7 @@ import Theme from './components/Theme'
 import Content from './components/Content'
 import { Timeline, Button } from 'antd'
 import { SSL_OP_TLS_BLOCK_PADDING_BUG } from 'constants'
+import { getMeetingsByID } from './services/meeting'
 
 const fakeData = {
   id: 1,
@@ -33,7 +34,14 @@ const fakeData = {
 const Detail = ({ location, match }) => {
   console.log(match)
   return (
-    <div style={{ marginLeft: '10%', marginRight: '20%' }}>
+    <div
+      style={{
+        backgroundColor: 'white',
+        margin: '0px auto',
+        width: '70%',
+        minWidth: 800
+      }}
+    >
       {/* <div>会议详情：{match.params.id}</div> */}
       <Info meeting={fakeData} />
 
