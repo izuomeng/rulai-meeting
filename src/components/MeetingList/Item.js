@@ -1,6 +1,5 @@
 import React from 'react'
 import { Card, Icon } from 'antd'
-import Link from 'umi/link'
 import styled from 'styled-components'
 import { InjectClass } from '@/utils/HOC'
 import { transTime } from '@/utils'
@@ -22,16 +21,12 @@ const Introduce = styled.div`
   margin-bottom: 20px;
 `
 
-const Item = ({ meeting, handleClick = () => {} }) => {
+const Item = ({ meeting, handleClick = () => {}, extra }) => {
   return (
     <Card
       hoverable
       title={meeting.title}
-      extra={
-        <Link to="/collection">
-          <Icon type="star" style={{ marginRight: '8px' }} />收藏
-        </Link>
-      }
+      extra={extra}
       style={{ margin: '30px auto', maxWidth: '800px', cursor: 'default' }}
     >
       <Introduce onClick={handleClick}>{meeting.introduction}</Introduce>
