@@ -2,6 +2,8 @@ import React from 'react'
 import styled from 'styled-components'
 import { Menu, Dropdown, Icon } from 'antd'
 import Link from 'umi/link'
+import { Input } from 'antd'
+
 
 const AvatarContainer = styled.div`
   display: inline-block;
@@ -42,5 +44,14 @@ return (
 
 )
 }
+
+
+const TextArea=()=>{
+
+  return (
+    <TextArea rows={4} />
+  
+  )
+  }
 
 export default bbb
