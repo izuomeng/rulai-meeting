@@ -8,10 +8,21 @@ import styled from 'styled-components'
 
 const StyledMenu = styled(InjectClass(Menu))`
   border-bottom: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 99;
 `
 class Layout extends React.Component {
   state = {
     current: this.props.location.pathname
+  }
+  handleClick = e => {
+    this.setState({
+      current: e.key
+    })
+    router.push(e.key)
   }
   render() {
     // 拦截器，处理认证重定向等情况
@@ -24,14 +35,15 @@ class Layout extends React.Component {
         <StyledMenu
           mode="horizontal"
           theme="dark"
+          onClick={this.handleClick}
           selectedKeys={[this.state.current]}
         >
-          <Menu.Item>Lein Meeting</Menu.Item>
-          <Menu.Item>Home</Menu.Item>
-          <Menu.Item>About</Menu.Item>
+          <Menu.Item key="/">Lein Meeting</Menu.Item>
+          <Menu.Item key="/home">Home</Menu.Item>
+          <Menu.Item key="/collection">Collection</Menu.Item>
           <Avatar />
         </StyledMenu>
-        {children}
+        <div style={{ marginTop: 46, paddingTop: 1 }}>{children}</div>
       </React.Fragment>
     )
   }

@@ -4,7 +4,6 @@ import { Menu, Dropdown, Icon } from 'antd'
 import Link from 'umi/link'
 
 const AvatarContainer = styled.div`
-  display: inline-block;
   float: right;
   margin-right: 24px;
   cursor: pointer;
