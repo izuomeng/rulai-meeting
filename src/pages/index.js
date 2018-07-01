@@ -10,7 +10,7 @@ const StyledButton = styled(InjectClass(Button))`
   font-weight: 500;
   height: 80px;
   width: 200px;
-  border-radius: 24px;
+  border-radius: 14px;
   margin-right: 120px;
   background: transparent;
   border: 4px solid #ffffff;
@@ -18,7 +18,7 @@ const StyledButton = styled(InjectClass(Button))`
   :hover {
     background: transparent;
     border: 4px solid #47c479;
-    color: #47c479;
+    color: #ffffff;
   }
 `
 
