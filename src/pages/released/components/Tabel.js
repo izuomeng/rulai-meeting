@@ -2,6 +2,7 @@ import { Table, Divider } from 'antd'
 import React from 'react'
 import styled from 'styled-components'
 import { InjectClass } from '@/utils/HOC'
+import Link from 'umi/link'
 
 const columns = [
   {
@@ -24,6 +25,8 @@ const columns = [
     key: 'action',
     render: (text, record) => (
       <span>
+        <Link to={`/papers/${record.id}`}>投稿情况</Link>
+        <Divider type="vertical" />
         <a>编辑</a>
         <Divider type="vertical" />
         <a style={{ color: 'red' }}>删除</a>
@@ -34,19 +37,19 @@ const columns = [
 
 const data = [
   {
-    key: '1',
+    id: '1',
     name: 'John Brown',
     confBeginDate: '2018-4-5',
     ddlDate: '2019-5-6'
   },
   {
-    key: '2',
+    id: '2',
     name: 'Jim Green',
     confBeginDate: '2018-4-5',
     ddlDate: '2019-5-6'
   },
   {
-    key: '3',
+    id: '3',
     name: 'Joe Black',
     confBeginDate: '2018-4-5',
     ddlDate: '2019-5-6'
@@ -54,18 +57,19 @@ const data = [
 ]
 
 const T = styled(InjectClass(Table))`
-  margin: 12px;
+  margin: 12px 0;
   & .ant-table-thead > tr > th {
     background: transparent;
   }
 `
-const MyTabel = () => {
+const MyTabel = props => {
   return (
     <T
       pagination={false}
-      style={{ margin: 12 }}
       columns={columns}
       dataSource={data}
+      rowKey="id"
+      {...props}
     />
   )
 }

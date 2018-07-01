@@ -32,7 +32,7 @@ const Title = styled.div`
 `
 const AddButton = styled(InjectClass(Button))`
   position: absolute;
-  right: 8px;
+  right: 12px;
   top: 0;
   bottom: 0;
   margin: auto 0;
@@ -44,15 +44,15 @@ const SubTitle = styled.div`
   font-size: 0.8em;
   margin-top: 4px;
 `
-const TitleCard = ({ children }) => {
+const TitleCard = ({ children, title, subtitle, hasAdd = true }) => {
   return (
     <Card>
       <Title>
-        <AddButton shape="circle" icon="plus" />
-        已发布会议
-        <SubTitle>查看和编辑已发布会议，新建会议</SubTitle>
+        {hasAdd && <AddButton shape="circle" icon="plus" />}
+        {title}
+        <SubTitle>{subtitle}</SubTitle>
       </Title>
-      {children}
+      <div style={{ padding: '0 12px' }}>{children}</div>
     </Card>
   )
 }

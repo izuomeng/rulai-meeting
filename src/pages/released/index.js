@@ -1,7 +1,7 @@
 import React from 'react'
 import { RestClient } from '@/utils/HOC'
 import Loading from '@/components/Loading'
-import TitleCard from './components/TitleCard'
+import TitleCard from 'CP/TitleCard'
 import { getReleasedMeetings } from './services/release'
 import Tabel from './components/Tabel'
 
@@ -11,13 +11,16 @@ class Released extends React.Component {
       data: { items },
       loading
     } = this.props
-    console.log(items)
+    console.log('会议列表', items)
     return (
       <React.Fragment>
         {loading ? (
           <Loading />
         ) : (
-          <TitleCard>
+          <TitleCard
+            title="已发布会议"
+            subtitle="查看和编辑已发布会议，新建会议"
+          >
             <Tabel />
           </TitleCard>
         )}
