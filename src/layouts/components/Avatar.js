@@ -2,15 +2,11 @@ import React from 'react'
 import styled from 'styled-components'
 import { Menu, Dropdown, Icon } from 'antd'
 import Link from 'umi/link'
-import { Input } from 'antd'
-
 
 const AvatarContainer = styled.div`
-  display: inline-block;
-  float: right;
-  margin-right: 24px;
   cursor: pointer;
   font-size: 1.5em;
+  display: inline-block;
 `
 const menu = (
   <Menu>
@@ -33,25 +29,4 @@ const Avatar = () => {
   )
 }
 
-const bbb=()=>{
-
-return (
-  <AvatarContainer>
-  <Dropdown overlay={menu} trigger={['click']}>
-  <Icon type="right" />
-  </Dropdown>
-</AvatarContainer>
-
-)
-}
-
-
-const TextArea=()=>{
-
-  return (
-    <TextArea rows={4} />
-  
-  )
-  }
-
-export default bbb
+export default Avatar
