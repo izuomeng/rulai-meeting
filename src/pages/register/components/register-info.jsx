@@ -1,8 +1,9 @@
 import React from 'react'
-import { Upload, Form, Icon, Input, Button } from 'antd'
+import { Upload, Form, Icon, Input, Button, message } from 'antd'
 import styled from 'styled-components'
 import p from '@/assets/images/logo.png'
 import { getRegister } from '../services/registermessage'
+import router from 'umi/router'
 
 const FormItem = Form.Item
 
@@ -23,15 +24,6 @@ class RegisterInfo extends React.Component {
     }
   }
 
-  handleSubmit = e => {
-    e.preventDefault()
-    this.props.form.validateFields((err, values) => {
-      if (!err) {
-        console.log('Received values of form: ', values)
-      }
-    })
-  }
-
   handleClick = () => {
     this.setState({
       user: 'company'
@@ -49,6 +41,11 @@ class RegisterInfo extends React.Component {
       pwd: this.state.pwd
     })
     console.log(data)
+    if (data.data.errorCode === 0) {
+      message.success('注册成功')
+
+      router.push('/')
+    }
   }
   render() {
     return (
