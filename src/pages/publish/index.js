@@ -4,7 +4,6 @@ import styles from './Release.css'
 import { Divider } from 'antd'
 import { Input } from 'antd'
 import { DatePicker } from 'antd'
-import 'antd/dist/antd.css'
 import { Timeline } from 'antd'
 
 const { TextArea } = Input
