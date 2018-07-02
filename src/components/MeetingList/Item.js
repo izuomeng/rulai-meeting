@@ -40,7 +40,7 @@ const Item = ({ meeting, handleClick = () => {}, extra }) => {
         />
         <Tip
           icon="clock-circle"
-          label="结束日前"
+          label="结束日期"
           value={transTime(meeting.ddlDate)}
         />
       </div>
