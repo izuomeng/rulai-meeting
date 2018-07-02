@@ -30,7 +30,9 @@ class SubForm extends React.Component {
       if (!err) {
         console.log('Received values of form: ', values)
         return
-      } else this.props.handleClick('ok')
+      } else {
+        this.props.handleClick('ok')
+      }
     })
   }
 
