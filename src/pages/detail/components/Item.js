@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import Theme from './Theme'
 
-const Container_c = styled.div`
+const Container = styled.div`
   margin: 0px 160px 0px 50px;
   padding-left: 20px;
   padding-top: 12px;
@@ -14,9 +14,9 @@ const Text = styled.p`
 
 const Content = ({ content }) => {
   return (
-    <Container_c>
+    <Container>
       <Text>{content}</Text>
-    </Container_c>
+    </Container>
   )
 }
 
