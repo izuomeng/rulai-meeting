@@ -1,6 +1,7 @@
 import fetch from 'dva/fetch'
 import router from 'umi/router'
 import { message } from 'antd'
+import { transQuery } from '@/utils'
 import { isEnumerable } from './index'
 
 function parseJSON(response) {
@@ -38,10 +39,19 @@ function handleRes(data) {
  * @return {object}           An object containing either "data" or "err"
  */
 export default function request(url, options) {
+  let finalUrl = url
   if (options && options.body && isEnumerable(options.body)) {
     options.body = JSON.stringify(options.body)
   }
-  return fetch(url, options)
+  if (
+    options &&
+    (options.method === 'get' || options.method === 'undefined') &&
+    options.body
+  ) {
+    finalUrl = `${url}?${transQuery(options.body)}`
+    delete options.body
+  }
+  return fetch(finalUrl, options)
     .then(checkStatus)
     .then(parseJSON)
     .then(handleRes)
