@@ -7,13 +7,20 @@ const Procedure = props => {
     <React.Fragment>
       <Theme content={props.label} />
       <Timeline style={{ marginLeft: 100, marginTop: 20 }}>
-        <Timeline.Item color="green">创建会议</Timeline.Item>
-        <Timeline.Item color="#33CCFF" style={{ fontWeight: 'bold' }}>
-          机构审核
-        </Timeline.Item>
-        <Timeline.Item color="grey">论文投稿</Timeline.Item>
-        <Timeline.Item color="grey">修改稿审核</Timeline.Item>
-        <Timeline.Item color="grey">会议结束</Timeline.Item>
+        {['投稿中', '已截止', '注册中', '截止注册', '会议中', '会议完成'].map(
+          (item, index) => {
+            if (index === props.checkPoint) {
+              return (
+                <Timeline.Item color="green" style={{ fontWeight: 'bold' }}>
+                  {item}
+                </Timeline.Item>
+              )
+            } else if (index < props.checkPoint) {
+              return <Timeline.Item color="green">{item}</Timeline.Item>
+            }
+            return <Timeline.Item color="grey">{item}</Timeline.Item>
+          }
+        )}
       </Timeline>
     </React.Fragment>
   )
