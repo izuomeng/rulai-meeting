@@ -1,6 +1,5 @@
 import React from 'react'
 import { Card, Icon } from 'antd'
-import Link from 'umi/link'
 import styled from 'styled-components'
 import { InjectClass } from '@/utils/HOC'
 import { transTime } from '@/utils'
@@ -17,20 +16,20 @@ const Tip = styled(
   color: #aeb0b3;
 `
 
-const Item = ({ meeting, handleClick = () => {} }) => {
+const Introduce = styled.div`
+  cursor: pointer;
+  margin-bottom: 20px;
+`
+
+const Item = ({ meeting, handleClick = () => {}, extra }) => {
   return (
     <Card
       hoverable
       title={meeting.title}
-      onClick={handleClick}
-      extra={
-        <Link to="/collection">
-          <Icon type="star" style={{ marginRight: '8px' }} />收藏
-        </Link>
-      }
-      style={{ margin: '30px auto', maxWidth: '800px' }}
+      extra={extra}
+      style={{ margin: '30px auto', maxWidth: '800px', cursor: 'default' }}
     >
-      <div style={{ marginBottom: '20px' }}>{meeting.introduction}</div>
+      <Introduce onClick={handleClick}>{meeting.introduction}</Introduce>
       <div>
         <Tip icon="solution" label="机构" value={meeting.organization.name} />
         <Tip

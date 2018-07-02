@@ -1,7 +1,11 @@
 import React from 'react'
-
+import LoginInfo from './components/login-info'
 const Login = () => {
-  return <div>登陆</div>
+  return (
+    <React.Fragment>
+      <LoginInfo />
+    </React.Fragment>
+  )
 }
 
 export default Login
