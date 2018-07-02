@@ -1,24 +1,37 @@
 import React from 'react'
-import { Form, Icon, Input, Button } from 'antd'
+import { Form, Icon, Input, Button, Upload, message } from 'antd'
 
 const FormItem = Form.Item
+const { TextArea } = Input
 
-function hasErrors(fieldsError) {
-  return Object.keys(fieldsError).some(field => fieldsError[field])
+const props = {
+  name: 'file',
+  action: '//jsonplaceholder.typicode.com/posts/',
+  headers: {
+    authorization: 'authorization-text'
+  },
+  onChange(info) {
+    console.log(info)
+    if (info.file.status !== 'uploading') {
+      console.log(info.file, info.fileList)
+    }
+    if (info.file.status === 'done') {
+      message.success(`${info.file.name} file uploaded successfully`)
+    } else if (info.file.status === 'error') {
+      message.error(`${info.file.name} file upload failed.`)
+    }
+  }
 }
 
 class SubForm extends React.Component {
-  componentDidMount() {
-    // To disabled submit button at the beginning.
-    this.props.form.validateFields()
-  }
-
   handleSubmit = e => {
     e.preventDefault()
     this.props.form.validateFields((err, values) => {
       if (!err) {
         console.log('Received values of form: ', values)
+        return
       }
+      // gfdgfd
     })
   }
 
@@ -36,43 +49,83 @@ class SubForm extends React.Component {
     const passwordError =
       isFieldTouched('password') && getFieldError('password')
     return (
-      <Form layout="inline" onSubmit={this.handleSubmit}>
-        <FormItem
-          validateStatus={userNameError ? 'error' : ''}
-          help={userNameError || ''}
-        >
+      <Form onSubmit={this.handleSubmit}>
+        <FormItem>
           {getFieldDecorator('userName', {
             rules: [{ required: true, message: 'Please input your username!' }]
           })(
             <Input
               prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
-              placeholder="Username"
-            />
-          )}
-        </FormItem>
-        <FormItem
-          validateStatus={passwordError ? 'error' : ''}
-          help={passwordError || ''}
-        >
-          {getFieldDecorator('password', {
-            rules: [{ required: true, message: 'Please input your Password!' }]
-          })(
-            <Input
-              prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
-              type="password"
-              placeholder="Password"
+              placeholder="作者"
             />
           )}
         </FormItem>
         <FormItem>
-          <Button
-            type="primary"
-            htmlType="submit"
-            disabled={hasErrors(getFieldsError())}
-          >
-            Log in
-          </Button>
+          {getFieldDecorator('company', {
+            rules: [{ required: true, message: 'Please input your Password!' }]
+          })(
+            <Input
+              prefix={<Icon type="home" style={{ color: 'rgba(0,0,0,.25)' }} />}
+              placeholder="单位"
+            />
+          )}
         </FormItem>
+        <FormItem>
+          {getFieldDecorator('mailbox', {
+            rules: [{ required: true, message: 'Please input your Password!' }]
+          })(
+            <Input
+              prefix={<Icon type="mail" style={{ color: 'rgba(0,0,0,.25)' }} />}
+              placeholder="邮箱"
+            />
+          )}
+        </FormItem>
+        <FormItem>
+          {getFieldDecorator('title', {
+            rules: [{ required: true, message: 'Please input your Password!' }]
+          })(
+            <Input
+              prefix={<Icon type="form" style={{ color: 'rgba(0,0,0,.25)' }} />}
+              placeholder="题目"
+            />
+          )}
+        </FormItem>
+        <FormItem>
+          {getFieldDecorator('abstract', {
+            rules: [{ required: true, message: 'Please input your Password!' }]
+          })(
+            <TextArea
+              placeholder="摘要"
+              autosize={{ minRows: 5, maxRows: 5 }}
+            />
+          )}
+        </FormItem>
+        <FormItem>
+          {getFieldDecorator('upload', {
+            rules: [{ required: true, message: 'Please input your Password!' }]
+          })(
+            <Upload {...props}>
+              <Button>
+                <Icon type="upload" /> Click to Upload
+              </Button>
+            </Upload>
+          )}
+        </FormItem>
+        <Button
+          key="back"
+          onClick={this.props.handleClick('cancel')}
+          style={{ marginLeft: 320 }}
+        >
+          取消
+        </Button>
+        <Button
+          key="submit"
+          type="primary"
+          onClick={this.props.handleClick('ok')}
+          style={{ marginLeft: 10 }}
+        >
+          提交
+        </Button>
       </Form>
     )
   }
