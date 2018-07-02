@@ -1,7 +1,9 @@
 import request from '@/utils/request'
 
-export function getMeetingsByID(id = 1) {
-  return request(`/api/user/conference/${id}`, {
-    method: 'get'
-  })
+export function getMeetingsByID(id) {
+  return request(`/api/user/conference/1`)
 }
+
+// export function getPaperSample(){
+
+// }
