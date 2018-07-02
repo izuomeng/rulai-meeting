@@ -40,9 +40,6 @@ function handleRes(data) {
  */
 export default function request(url, options) {
   let finalUrl = url
-  if (options && options.body && isEnumerable(options.body)) {
-    options.body = JSON.stringify(options.body)
-  }
   // 如果是get请求，把body转换到url中
   if (
     options &&
@@ -51,6 +48,9 @@ export default function request(url, options) {
   ) {
     finalUrl = `${url}?${transQuery(options.body)}`
     delete options.body
+  }
+  if (options && options.body && isEnumerable(options.body)) {
+    options.body = JSON.stringify(options.body)
   }
   // 设置请求头
   if (options && options.body) {
