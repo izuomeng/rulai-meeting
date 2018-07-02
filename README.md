@@ -19,7 +19,7 @@ $ cnpm install
 $ npm start
 ```
 
-耐心等待编译过程, 完成后打开浏览器, 输入http://localhost:8000, 就能看到页面了
+耐心等待编译过程, 完成后打开浏览器, 输入http://localhost:8000, 就能看到页面啦
 
 ## 开发规则
 
