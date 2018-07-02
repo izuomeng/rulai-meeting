@@ -1,11 +1,11 @@
 import React from 'react'
 import withRouter from 'umi/withRouter'
 import Info from './components/Info'
-import Theme from './components/Theme'
-import Content from './components/Content'
-import { Timeline, Button } from 'antd'
-import { SSL_OP_TLS_BLOCK_PADDING_BUG } from 'constants'
+import Item from './components/Item'
+import { Button, Modal, Upload, Icon, message, Input } from 'antd'
 import { getMeetingsByID } from './services/meeting'
+import Procedure from './components/Procedure'
+import SubmitForm from './components/SubmitForm'
 
 const fakeData = {
   id: 1,
@@ -31,57 +31,127 @@ const fakeData = {
   schedule: '日程安排'
 }
 
-const Detail = ({ location, match }) => {
-  console.log(match)
-  return (
-    <div
-      style={{
-        backgroundColor: 'white',
-        margin: '0px auto',
-        width: '70%',
-        minWidth: 800
-      }}
-    >
-      {/* <div>会议详情：{match.params.id}</div> */}
-      <Info meeting={fakeData} />
+class Detail extends React.Component {
+  state = {
+    loading: false,
+    visible: false
+  }
 
-      <Theme content="会议流程" />
-      <Timeline style={{ marginLeft: 100, marginTop: 20 }}>
-        <Timeline.Item color="green">创建会议</Timeline.Item>
-        <Timeline.Item color="#33CCFF" style={{ fontWeight: 'bold' }}>
-          机构审核
-        </Timeline.Item>
-        <Timeline.Item color="grey">论文投稿</Timeline.Item>
-        <Timeline.Item color="grey">修改稿审核</Timeline.Item>
-        <Timeline.Item color="grey">会议结束</Timeline.Item>
-      </Timeline>
+  showModal = () => {
+    this.setState({
+      visible: true
+    })
+  }
 
-      <Theme content="会议简介" />
-      <Content content={fakeData.introduction} />
+  handleOk = () => {
+    this.setState({ loading: true })
+    setTimeout(() => {
+      this.setState({ loading: false, visible: false })
+    }, 3000)
+  }
 
-      <Theme content="正文信息" />
-      <Content content={fakeData.requirement} />
+  handleCancel = () => {
+    this.setState({ visible: false })
+  }
 
-      <Theme content="住宿交通" />
-      <Content content={fakeData.accommodationInfo} />
+  render() {
+    const { visible, loading } = this.state
+    const { TextArea } = Input
+    const Dragger = Upload.Dragger
+    const props = {
+      name: 'file',
+      multiple: true,
+      action: '//jsonplaceholder.typicode.com/posts/',
+      onChange(info) {
+        const status = info.file.status
+        if (status !== 'uploading') {
+          console.log(info.file, info.fileList)
+        }
+        if (status === 'done') {
+          message.success(`${info.file.name} file uploaded successfully.`)
+        } else if (status === 'error') {
+          message.error(`${info.file.name} file upload failed.`)
+        }
+      }
+    }
 
-      <Button
-        type="primary"
-        icon="download"
-        size={'large'}
-        style={{ margin: '40px 0px 60px 200px' }}
+    return (
+      <div
+        style={{
+          backgroundColor: 'white',
+          margin: '0px auto',
+          width: '70%',
+          minWidth: 800
+        }}
       >
-        下载论文模板
-      </Button>
-      <Button
-        type="primary"
-        size={'large'}
-        style={{ marginLeft: 200, width: 150 }}
-      >
-        在线会议投稿
-      </Button>
-    </div>
-  )
+        <Info meeting={fakeData} />
+        <Procedure label="会议流程" />
+        <Item label="会议简介" value={fakeData.introduction} />
+        <Item label="正文信息" value={fakeData.requirement} />
+        <Item label="住宿交通" value={fakeData.accommodationInfo} />
+
+        <Button
+          type="primary"
+          icon="download"
+          size={'large'}
+          style={{ margin: '40px 0px 60px 200px' }}
+        >
+          下载论文模板
+        </Button>
+        <Button
+          type="primary"
+          size={'large'}
+          style={{ marginLeft: 200, width: 150 }}
+          onClick={this.showModal}
+        >
+          在线会议投稿
+        </Button>
+        <SubmitForm />
+
+        <Modal
+          visible={visible}
+          title="论文投稿"
+          onOk={this.handleOk}
+          onCancel={this.handleCancel}
+          footer={[
+            <Button key="back" onClick={this.handleCancel}>
+              取消
+            </Button>,
+            <Button
+              key="submit"
+              type="primary"
+              loading={loading}
+              onClick={this.handleOk}
+            >
+              提交
+            </Button>
+          ]}
+        >
+          <Input placeholder="作者" />
+          <Input placeholder="单位" />
+          <Input placeholder="题目" />
+          <TextArea placeholder="摘要" autosize={{ minRows: 5, maxRows: 5 }} />
+          <Dragger {...props}>
+            <p className="ant-upload-drag-icon">
+              <Icon type="inbox" />
+            </p>
+            <p className="ant-upload-text">
+              Click or drag file to this area to upload
+            </p>
+            <p className="ant-upload-hint">
+              Support for a single or bulk upload. Strictly prohibit from
+              uploading company data or other band files
+            </p>
+          </Dragger>
+        </Modal>
+      </div>
+    )
+  }
 }
+
+// const Detail = props => {
+//   const MyComponent = RestClient(getMeetingsByID, props.match.params.id)(Meeting)
+//   return <MyComponent {...props} />
+// }
 
 export default withRouter(Detail)
