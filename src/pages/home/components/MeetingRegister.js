@@ -21,13 +21,14 @@ class MeetingRegister extends React.Component {
     super(props)
     this.state = {
       joinConferenceGroup: {
-        paperID: 0,
+        paperID: null,
         joinConferencePeopleList: [
           { name: '' },
           { realID: '' },
           { sex: '' },
           { ordered: false }
-        ]
+        ],
+        listenMeeting: false
       }
     }
   }
@@ -100,10 +101,6 @@ class MeetingRegister extends React.Component {
               placeholder="请输入身份证号"
             />
             <RadioGroup
-              value={
-                this.state.joinConferenceGroup.joinConferencePeopleList[3]
-                  .ordered
-              }
               onChange={e => {
                 const newGroup = produce(
                   this.state.joinConferenceGroup,
@@ -131,7 +128,23 @@ class MeetingRegister extends React.Component {
             </Upload>
           </FormItem>
           <FormItem>
-            <Checkbox>聆听参会</Checkbox>
+            <Checkbox
+              onChange={e => {
+                const newGroup = produce(
+                  this.state.joinConferenceGroup,
+                  obj => {
+                    if (e.target.checked) {
+                      obj.listenMeeting = true
+                    } else {
+                      obj.listenMeeting = false
+                    }
+                  }
+                )
+                this.setState({ joinConferenceGroup: newGroup })
+              }}
+            >
+              聆听参会
+            </Checkbox>
             <div>
               <StyledButton onClick={() => this.props.handleSubmit(false)}>
                 取消
@@ -139,7 +152,7 @@ class MeetingRegister extends React.Component {
               <StyledButton
                 type="primary"
                 style={{ marginLeft: 40 }}
-                onClick={this.props.handleSubmit(this.state)}
+                onClick={() => this.props.handleSubmit(this.state)}
               >
                 确认
               </StyledButton>

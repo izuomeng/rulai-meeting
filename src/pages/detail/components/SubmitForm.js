@@ -39,8 +39,6 @@ class SubForm extends React.Component {
   render() {
     const { getFieldDecorator } = this.props.form
 
-    // Only show error after a field is touched.
-
     return (
       <Form onSubmit={this.handleSubmit}>
         <FormItem>

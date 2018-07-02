@@ -31,7 +31,7 @@ class LoginInfo extends React.Component {
     })
     if (data.errorCode === 0) {
       message.success('登陆成功')
-      this.props.dispatch({ type: 'user/fetch' })
+      this.props.dispatch({ type: 'user/fetch', payload: {} })
       router.push('/')
     } else {
       message.error(data.errorInfo || '登陆失败')

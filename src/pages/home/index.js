@@ -31,9 +31,11 @@ class Home extends React.Component {
     this.setState({ visible: true })
   }
   handleSubmit = form => {
+    this.setState({ visible: false })
     if (!form) {
-      this.setState({ visible: false })
+      return
     } else {
+      console.info(form)
       registerMeetings(form)
     }
     // submit
@@ -61,7 +63,12 @@ class Home extends React.Component {
             items={items}
           />
         )}
-        <Modal title="注册会议" visible={this.state.visible} footer={null}>
+        <Modal
+          onCancel={() => this.setState({ visible: false })}
+          title="注册会议"
+          visible={this.state.visible}
+          footer={null}
+        >
           <MeetingRegister handleSubmit={this.handleSubmit} />
         </Modal>
       </Container>
