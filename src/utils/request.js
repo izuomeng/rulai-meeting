@@ -22,11 +22,11 @@ function handleRes(data) {
   if (data && data.errorCode) {
     if (data.errorCode === 100) {
       router.push('/login')
-      message.error('认证失败，请重新登陆')
-      return Promise.reject(data.errorCode)
+      message.error('请先登陆')
+      return Promise.reject({ code: data.errorCode })
     }
     message.error(`${data.errorInfo || '操作失败'}(${data.errorCode})`)
-    return Promise.reject(data.errorCode)
+    return Promise.reject({ code: data.errorCode })
   }
   return { data }
 }
@@ -40,9 +40,7 @@ function handleRes(data) {
  */
 export default function request(url, options) {
   let finalUrl = url
-  if (options && options.body && isEnumerable(options.body)) {
-    options.body = JSON.stringify(options.body)
-  }
+  // 如果是get请求，把body转换到url中
   if (
     options &&
     (options.method === 'get' || options.method === 'undefined') &&
@@ -50,6 +48,16 @@ export default function request(url, options) {
   ) {
     finalUrl = `${url}?${transQuery(options.body)}`
     delete options.body
+  }
+  if (options && options.body && isEnumerable(options.body)) {
+    options.body = JSON.stringify(options.body)
+  }
+  // 设置请求头
+  if (options && options.body) {
+    options.headers = {
+      ...options.headers,
+      'Content-Type': 'application/json'
+    }
   }
   return fetch(finalUrl, options)
     .then(checkStatus)

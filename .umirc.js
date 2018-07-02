@@ -10,8 +10,13 @@ export default {
     '@primary-color': '#47C479'
   },
   proxy: {
+    '/tapi': {
+      target: 'http://rap2api.taobao.org/app/mock/18452/api',
+      changeOrigin: true,
+      pathRewrite: { '^/tapi': '' }
+    },
     '/api': {
-      target: 'http://rap2api.taobao.org/app/mock/18452',
+      target: 'http://140.143.208.38:8080/demo-0.0.1-SNAPSHOT',
       changeOrigin: true
     }
   }

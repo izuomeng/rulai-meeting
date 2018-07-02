@@ -47,7 +47,7 @@ class Layout extends React.Component {
     router.push(e.key)
   }
   withoutHeader(path) {
-    return ['/login'].includes(path)
+    return ['/login', '/register'].includes(path)
   }
   render() {
     // 拦截器，处理认证重定向等情况
