@@ -4,13 +4,12 @@ import { InjectClass } from '@/utils/HOC'
 import produce from 'immer'
 import { Input, Form, Radio, Upload, Button, Icon, Checkbox } from 'antd'
 
+const FormItem = Form.Item
 const Label = styled.div`
   width: 110px;
   font-size: 15px;
 `
 const RadioGroup = Radio.Group
-
-const FormItem = Form.Item
 
 const StyledButton = styled(InjectClass(Button))`
   display: inline-block;

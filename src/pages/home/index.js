@@ -30,13 +30,15 @@ class Home extends React.Component {
   showModal = () => {
     this.setState({ visible: true })
   }
-  handleSubmit = form => {
+  handleSubmit = async form => {
     this.setState({ visible: false })
     if (!form) {
       return
     } else {
-      console.info(form)
-      registerMeetings(form)
+      const { data } = await registerMeetings(form)
+      if (data.errorCode === 0) {
+        message.success('注册会议成功')
+      }
     }
     // submit
   }
