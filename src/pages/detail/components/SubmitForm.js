@@ -37,18 +37,8 @@ class SubForm extends React.Component {
   }
 
   render() {
-    const {
-      getFieldDecorator,
-      getFieldsError,
-      getFieldError,
-      isFieldTouched
-    } = this.props.form
+    const { getFieldDecorator } = this.props.form
 
-    // Only show error after a field is touched.
-    const userNameError =
-      isFieldTouched('userName') && getFieldError('userName')
-    const passwordError =
-      isFieldTouched('password') && getFieldError('password')
     return (
       <Form onSubmit={this.handleSubmit}>
         <FormItem>

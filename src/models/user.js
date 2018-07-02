@@ -15,10 +15,14 @@ export default {
 
   effects: {
     *fetch({ payload }, { call, put }) {
-      const {
-        data: { data }
-      } = yield call(userService.getUserInfo)
-      yield put({ type: 'save', payload: { ...data } })
+      try {
+        const {
+          data: { data }
+        } = yield call(userService.getUserInfo)
+        yield put({ type: 'save', payload: { ...data } })
+      } catch (error) {
+        console.log('*fetch', error)
+      }
     }
   },
 
