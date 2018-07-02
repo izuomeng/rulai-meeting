@@ -1,5 +1,5 @@
 import fetch from 'dva/fetch'
-import router from 'umi/router'
+import router from 'umi/router' // eslint-disable-line
 import { message } from 'antd'
 import { transQuery } from '@/utils'
 import { isEnumerable } from './index'
@@ -20,11 +20,11 @@ function checkStatus(response) {
 
 function handleRes(data) {
   if (data && data.errorCode) {
-    if (data.errorCode === 100) {
-      router.push('/login')
-      message.error('请先登陆')
-      return Promise.reject({ code: data.errorCode })
-    }
+    // if (data.errorCode === 100) {
+    //   router.push('/login')
+    //   message.error('请先登陆')
+    //   return Promise.reject({ code: data.errorCode })
+    // }
     message.error(`${data.errorInfo || '操作失败'}(${data.errorCode})`)
     return Promise.reject({ code: data.errorCode })
   }
