@@ -6,6 +6,7 @@ import Loading from '@/components/Loading'
 import { Icon, Modal, message } from 'antd'
 import { getAllMeetings } from './services/meeting'
 import MeetingRegister from './components/MeetingRegister'
+import registerMeetings from './services/meetingRegister'
 
 const Container = styled.div`
   display: block;
@@ -32,6 +33,8 @@ class Home extends React.Component {
   handleSubmit = form => {
     if (!form) {
       this.setState({ visible: false })
+    } else {
+      registerMeetings(form)
     }
     // submit
   }

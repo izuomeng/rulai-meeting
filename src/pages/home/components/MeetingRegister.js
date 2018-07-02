@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { InjectClass } from '@/utils/HOC'
+import produce from 'immer'
 import { Input, Form, Radio, Upload, Button, Icon, Checkbox } from 'antd'
 
 const Label = styled.div`
@@ -16,20 +17,107 @@ const StyledButton = styled(InjectClass(Button))`
 `
 
 class MeetingRegister extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      joinConferenceGroup: {
+        paperID: 0,
+        joinConferencePeopleList: [
+          { name: '' },
+          { realID: '' },
+          { sex: '' },
+          { ordered: false }
+        ]
+      }
+    }
+  }
   render() {
     return (
       <React.Fragment>
         <Form className="login-form">
           <FormItem>
             <Label>论文编号</Label>
-            <Input placeholder="只聆听参会者无需填写此项" />
+            <Input
+              value={this.state.joinConferenceGroup.paperID}
+              onChange={e => {
+                const newGroup = produce(
+                  this.state.joinConferenceGroup,
+                  obj => {
+                    obj.paperID = e.target.value
+                  }
+                )
+                this.setState({ joinConferenceGroup: newGroup })
+              }}
+              placeholder="只聆听参会者无需填写此项"
+            />
           </FormItem>
           <FormItem>
             <Label>参会人员信息</Label>
-            <Input placeholder="请输入姓名" />
-            <Input placeholder="请输入性别" />
-            <Input placeholder="请输入联系方式" />
-            <RadioGroup>
+            <Input
+              value={
+                this.state.joinConferenceGroup.joinConferencePeopleList[0].name
+              }
+              onChange={e => {
+                const newGroup = produce(
+                  this.state.joinConferenceGroup,
+                  obj => {
+                    obj.joinConferencePeopleList[0].name = e.target.value
+                  }
+                )
+                this.setState({ joinConferenceGroup: newGroup })
+              }}
+              placeholder="请输入姓名"
+            />
+            <Input
+              value={
+                this.state.joinConferenceGroup.joinConferencePeopleList[2].sex
+              }
+              onChange={e => {
+                const newGroup = produce(
+                  this.state.joinConferenceGroup,
+                  obj => {
+                    obj.joinConferencePeopleList[2].sex = e.target.value
+                  }
+                )
+                this.setState({ joinConferenceGroup: newGroup })
+              }}
+              placeholder="请输入性别"
+            />
+            <Input
+              value={
+                this.state.joinConferenceGroup.joinConferencePeopleList[1]
+                  .realID
+              }
+              onChange={e => {
+                const newGroup = produce(
+                  this.state.joinConferenceGroup,
+                  obj => {
+                    obj.joinConferencePeopleList[1].realID = e.target.value
+                  }
+                )
+                this.setState({ joinConferenceGroup: newGroup })
+              }}
+              placeholder="请输入身份证号"
+            />
+            <RadioGroup
+              value={
+                this.state.joinConferenceGroup.joinConferencePeopleList[3]
+                  .ordered
+              }
+              onChange={e => {
+                const newGroup = produce(
+                  this.state.joinConferenceGroup,
+                  obj => {
+                    if (e.target.value === '预定住宿') {
+                      obj.joinConferencePeopleList[3].ordered = true
+                    } else {
+                      obj.joinConferencePeopleList[3].ordered = false
+                    }
+                  }
+                )
+                this.setState({ joinConferenceGroup: newGroup })
+              }}
+            >
               <Radio value={1}>预定住宿</Radio>
               <Radio value={2}>不预定住宿</Radio>
             </RadioGroup>
@@ -51,7 +139,7 @@ class MeetingRegister extends React.Component {
               <StyledButton
                 type="primary"
                 style={{ marginLeft: 40 }}
-                onClick={this.props.handleSubmit}
+                onClick={this.props.handleSubmit(this.state)}
               >
                 确认
               </StyledButton>

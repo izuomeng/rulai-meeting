@@ -3,18 +3,18 @@ import { Card, Icon } from 'antd'
 import { InjectClass } from '@/utils/HOC'
 import styled from 'styled-components'
 
-const Container_t = styled.div`
+const MyContainer = styled.div`
   margin-bottom: 15px;
 `
 
 const Theme = styled(
   InjectClass(props => (
-    <Container_t>
+    <MyContainer>
       <Icon type="smile-o" spin="true" style={{ fontSize: 25 }} />
       <span className={props.className}>
         {props.label}：{props.value}
       </span>
-    </Container_t>
+    </MyContainer>
   ))
 )`
   font-size: 1.5em;
