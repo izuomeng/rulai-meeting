@@ -30,8 +30,7 @@ class SubForm extends React.Component {
       if (!err) {
         console.log('Received values of form: ', values)
         return
-      }
-      // gfdgfd
+      } else this.props.handleClick('ok')
     })
   }
 
@@ -106,14 +105,14 @@ class SubForm extends React.Component {
           })(
             <Upload {...props}>
               <Button>
-                <Icon type="upload" /> Click to Upload
+                <Icon type="upload" /> 提交PDF格式论文
               </Button>
             </Upload>
           )}
         </FormItem>
         <Button
           key="back"
-          onClick={this.props.handleClick('cancel')}
+          onClick={() => this.props.handleClick('cancel')}
           style={{ marginLeft: 320 }}
         >
           取消
@@ -121,7 +120,7 @@ class SubForm extends React.Component {
         <Button
           key="submit"
           type="primary"
-          onClick={this.props.handleClick('ok')}
+          onClick={this.handleSubmit}
           style={{ marginLeft: 10 }}
         >
           提交

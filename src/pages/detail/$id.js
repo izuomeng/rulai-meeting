@@ -2,7 +2,7 @@ import React from 'react'
 import withRouter from 'umi/withRouter'
 import Info from './components/Info'
 import Item from './components/Item'
-import { Button, Modal, Upload, Icon, message, Input } from 'antd'
+import { Button, Modal } from 'antd'
 import { getMeetingsByID } from './services/meeting'
 import Procedure from './components/Procedure'
 import SubmitForm from './components/SubmitForm'
@@ -43,23 +43,13 @@ class Detail extends React.Component {
     })
   }
 
-  // handleOk = () => {
-  //   this.setState({ loading: true })
-  //   setTimeout(() => {
-  //     this.setState({ loading: false, visible: false })
-  //   }, 3000)
-  // }
-
-  // handleCancel = () => {
-  //   this.setState({ visible: false })
-  // }
-
   handleClick = type => {
     if (type === 'ok') {
-      this.setState({ loading: true })
-      setTimeout(() => {
-        this.setState({ loading: false, visible: false })
-      }, 3000)
+      // this.setState({ loading: true })
+      // setTimeout(() => {
+      //   this.setState({ loading: false, visible: false })
+      // }, 3000)
+      this.setState({ visible: false })
     } else if (type === 'cancel') {
       this.setState({ visible: false })
     }
@@ -87,6 +77,8 @@ class Detail extends React.Component {
           icon="download"
           size={'large'}
           style={{ margin: '40px 0px 60px 200px' }}
+          href="/user/test/xxxx.txt"
+          download="论文模板.txt"
         >
           下载论文模板
         </Button>
@@ -104,6 +96,8 @@ class Detail extends React.Component {
           visible={visible}
           title="论文投稿"
           footer={null}
+          onCancel={() => this.handleClick('cancel')}
+          onOk={() => this.handleClick('ok')}
         >
           <SubmitForm handleClick={this.handleClick} />
         </Modal>
