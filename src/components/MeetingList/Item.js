@@ -16,6 +16,12 @@ const Tip = styled(
   color: #aeb0b3;
 `
 
+const StyledCard = styled(InjectClass(Card))`
+  margin: 30px auto !important;
+  width: 75%;
+  cursor: default;
+`
+
 const Introduce = styled.div`
   cursor: pointer;
   margin-bottom: 20px;
@@ -23,13 +29,7 @@ const Introduce = styled.div`
 
 const Item = ({ meeting, handleClick = () => {}, extra }) => {
   return (
-    <Card
-      bordered={false}
-      hoverable
-      title={meeting.title}
-      extra={extra}
-      style={{ margin: '30px auto', maxWidth: '800px', cursor: 'default' }}
-    >
+    <StyledCard bordered={false} hoverable title={meeting.title} extra={extra}>
       <Introduce onClick={handleClick}>{meeting.introduction}</Introduce>
       <div>
         <Tip icon="solution" label="机构" value={meeting.organization.name} />
@@ -44,7 +44,7 @@ const Item = ({ meeting, handleClick = () => {}, extra }) => {
           value={transTime(meeting.ddlDate)}
         />
       </div>
-    </Card>
+    </StyledCard>
   )
 }
 

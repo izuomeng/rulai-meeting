@@ -23,6 +23,12 @@ const RightContainer = styled.div`
     margin-right: 24px;
   }
 `
+
+const Children = styled.div`
+  margin-top: 46px;
+  overflow: auto;
+  position: relative;
+`
 class Layout extends React.Component {
   state = {
     current: this.props.location.pathname
@@ -75,7 +81,7 @@ class Layout extends React.Component {
             <Avatar />
           </RightContainer>
         </StyledMenu>
-        <div style={{ marginTop: 46, paddingTop: 1 }}>{children}</div>
+        <Children>{children}</Children>
       </React.Fragment>
     )
   }

@@ -3,6 +3,8 @@ import router from 'umi/router' // eslint-disable-line
 import { message } from 'antd'
 import { transQuery } from '@/utils'
 import { isEnumerable } from './index'
+// import Cookies from 'js-cookie'
+// import { SESSION_KEY } from '@/constants'
 
 function parseJSON(response) {
   return response.json()
@@ -20,11 +22,11 @@ function checkStatus(response) {
 
 function handleRes(data) {
   if (data && data.errorCode) {
-    // if (data.errorCode === 100) {
-    //   router.push('/login')
-    //   message.error('请先登陆')
-    //   return Promise.reject({ code: data.errorCode })
-    // }
+    if (data.errorCode === 100) {
+      router.push('/login')
+      message.error('请先登陆')
+      return Promise.reject({ code: data.errorCode })
+    }
     message.error(`${data.errorInfo || '操作失败'}(${data.errorCode})`)
     return Promise.reject({ code: data.errorCode })
   }
@@ -38,7 +40,12 @@ function handleRes(data) {
  * @param  {object} [options] The options we want to pass to "fetch"
  * @return {object}           An object containing either "data" or "err"
  */
-export default function request(url, options) {
+export default function request(url, op = {}) {
+  // 设置默认options
+  const options = {
+    ...op,
+    credentials: 'same-origin'
+  }
   let finalUrl = url
   // 如果是get请求，把body转换到url中
   if (
@@ -49,9 +56,18 @@ export default function request(url, options) {
     finalUrl = `${url}?${transQuery(options.body)}`
     delete options.body
   }
+  // 把body对象转成json
   if (options && options.body && isEnumerable(options.body)) {
     options.body = JSON.stringify(options.body)
   }
+  // 加入session请求头
+  // const sesstionCookie = Cookies.get(SESSION_KEY)
+  // if (sesstionCookie) {
+  //   options.headers = {
+  //     ...options.headers,
+  //     Cookie: `${SESSION_KEY}=${sesstionCookie}`
+  //   }
+  // }
   // 设置请求头
   if (options && options.body) {
     options.headers = {

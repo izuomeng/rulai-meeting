@@ -9,7 +9,7 @@ const Card = styled.div`
   background: #fff;
   border-radius: 3px;
   margin: 0 auto;
-  width: 80%;
+  width: 75%;
   min-width: 800px;
   min-height: 100px;
   margin-top: 50px;

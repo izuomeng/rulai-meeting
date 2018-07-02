@@ -6,6 +6,8 @@ import { getLogin } from '../services/loginMessage'
 import router from 'umi/router'
 import { connect } from 'dva'
 import Link from 'umi/link'
+// import Cookies from 'js-cookie'
+// import { SESSION_KEY } from '@/constants'
 
 const FormItem = Form.Item
 
@@ -30,10 +32,13 @@ class LoginInfo extends React.Component {
       pwd: this.state.pwd
     })
     if (data.errorCode === 0) {
+      // const sessionId = data[SESSION_KEY]
+      // Cookies.set(SESSION_KEY, sessionId)
       message.success('登陆成功')
       this.props.dispatch({ type: 'user/fetch', payload: {} })
       router.push('/')
     } else {
+      // Cookies.remove(SESSION_KEY)
       message.error(data.errorInfo || '登陆失败')
     }
   }
