@@ -2,6 +2,7 @@ import React from 'react'
 import { RestClient } from '@/utils/HOC'
 import { getAllCollections } from './services/collection'
 import CollectionList from './components/CollectionList'
+import Loading from '@/components/Loading'
 
 class Collection extends React.Component {
   render() {
@@ -9,7 +10,7 @@ class Collection extends React.Component {
       data: { items },
       loading
     } = this.props
-    return <div>{loading ? <loading /> : <CollectionList items={items} />}</div>
+    return <div>{loading ? <Loading /> : <CollectionList items={items} />}</div>
   }
 }
 

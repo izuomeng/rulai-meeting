@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { InjectClass } from '@/utils/HOC'
 import { Button } from 'antd'
+import router from 'umi/router'
 
 const Card = styled.div`
   box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.14);
@@ -48,7 +49,13 @@ const TitleCard = ({ children, title, subtitle, hasAdd = true }) => {
   return (
     <Card>
       <Title>
-        {hasAdd && <AddButton shape="circle" icon="plus" />}
+        {hasAdd && (
+          <AddButton
+            onClick={() => router.push('/publish')}
+            shape="circle"
+            icon="plus"
+          />
+        )}
         {title}
         <SubTitle>{subtitle}</SubTitle>
       </Title>

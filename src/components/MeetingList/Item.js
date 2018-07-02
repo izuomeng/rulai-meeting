@@ -24,6 +24,7 @@ const Introduce = styled.div`
 const Item = ({ meeting, handleClick = () => {}, extra }) => {
   return (
     <Card
+      bordered={false}
       hoverable
       title={meeting.title}
       extra={extra}

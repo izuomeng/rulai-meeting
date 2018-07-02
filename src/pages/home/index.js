@@ -3,8 +3,7 @@ import styled from 'styled-components'
 import { RestClient } from '@/utils/HOC'
 import MeetingList from '@/components/MeetingList'
 import Loading from '@/components/Loading'
-import { Icon, Modal } from 'antd'
-import Link from 'umi/link'
+import { Icon, Modal, message } from 'antd'
 import { getAllMeetings } from './services/meeting'
 import MeetingRegister from './components/MeetingRegister'
 
@@ -14,12 +13,12 @@ const Container = styled.div`
 
 const Extra = props => (
   <React.Fragment>
-    <a onClick={props.handleClick} to="/">
+    <a onClick={props.handleRegister}>
       <Icon type="login" style={{ marginRight: '8px' }} />注册会议
     </a>
-    <Link style={{ marginLeft: 20 }} to="/collection">
+    <a onClick={props.handleCollect} style={{ marginLeft: 20 }}>
       <Icon type="star" style={{ marginRight: '8px' }} />收藏
-    </Link>
+    </a>
   </React.Fragment>
 )
 
@@ -36,6 +35,9 @@ class Home extends React.Component {
     }
     // submit
   }
+  handleCollect = () => {
+    message.success('收藏成功')
+  }
   render() {
     const {
       data: { items },
@@ -47,7 +49,12 @@ class Home extends React.Component {
           <Loading />
         ) : (
           <MeetingList
-            extra={<Extra handleClick={this.showModal} />}
+            extra={
+              <Extra
+                handleCollect={this.handleCollect}
+                handleRegister={this.showModal}
+              />
+            }
             items={items}
           />
         )}

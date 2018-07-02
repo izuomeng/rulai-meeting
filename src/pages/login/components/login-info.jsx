@@ -4,6 +4,8 @@ import styled from 'styled-components'
 import p from '@/assets/images/logo.png'
 import { getLogin } from '../services/loginMessage'
 import router from 'umi/router'
+import { connect } from 'dva'
+import Link from 'umi/link'
 
 const FormItem = Form.Item
 
@@ -23,15 +25,16 @@ class LoginInfo extends React.Component {
   }
 
   loginClick = async () => {
-    const data = await getLogin({
+    const { data } = await getLogin({
       email: this.state.email,
       pwd: this.state.pwd
     })
-    console.log(data)
-    if (data.data.errorCode === 0) {
+    if (data.errorCode === 0) {
       message.success('登陆成功')
-
+      this.props.dispatch({ type: 'user/fetch' })
       router.push('/')
+    } else {
+      message.error(data.errorInfo || '登陆失败')
     }
   }
 
@@ -44,8 +47,8 @@ class LoginInfo extends React.Component {
           <Form className="login-form">
             <FormItem>
               <Input
-                value={this.state.mail}
-                onChange={e => this.setState({ mail: e.target.value })}
+                value={this.state.email}
+                onChange={e => this.setState({ email: e.target.value })}
                 prefix={
                   <Icon type="mail" style={{ color: 'rgba(0,0,0,.25)' }} />
                 }
@@ -79,7 +82,9 @@ class LoginInfo extends React.Component {
                 登录
               </Button>
               <div style={{ textAlign: 'left' }}>
-                <a style={{ display: 'inline-block' }}>没有账号？点此注册</a>
+                <Link to="/register" style={{ display: 'inline-block' }}>
+                  没有账号？点此注册
+                </Link>
               </div>
             </FormItem>
           </Form>
@@ -89,4 +94,4 @@ class LoginInfo extends React.Component {
   }
 }
 
-export default LoginInfo
+export default connect()(LoginInfo)

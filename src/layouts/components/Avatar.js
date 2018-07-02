@@ -1,7 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Menu, Dropdown, Icon } from 'antd'
+import { Menu, Dropdown, Icon, Button } from 'antd'
 import Link from 'umi/link'
+import { connect } from 'dva'
+import router from 'umi/router'
 
 const AvatarContainer = styled.div`
   cursor: pointer;
@@ -19,14 +21,31 @@ const menu = (
   </Menu>
 )
 
-const Avatar = () => {
+const Avatar = ({ userInfo }) => {
   return (
     <AvatarContainer>
-      <Dropdown overlay={menu} trigger={['click']}>
-        <Icon type="user" />
-      </Dropdown>
+      {userInfo /* .userName */ ? (
+        <Dropdown overlay={menu} trigger={['click']}>
+          <Icon type="user" />
+        </Dropdown>
+      ) : (
+        <Button
+          onClick={() => router.push('/login')}
+          style={{ verticalAlign: 2 }}
+          type="primary"
+        >
+          登陆
+        </Button>
+      )}
     </AvatarContainer>
   )
 }
 
-export default Avatar
+const mapState = state => ({
+  userInfo: state.user
+})
+
+export default connect(
+  mapState,
+  null
+)(Avatar)

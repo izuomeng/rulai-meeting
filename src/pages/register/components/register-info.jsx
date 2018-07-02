@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import p from '@/assets/images/logo.png'
 import { getRegister } from '../services/registermessage'
 import router from 'umi/router'
+import Link from 'umi/link'
 
 const FormItem = Form.Item
 
@@ -119,9 +120,9 @@ class RegisterInfo extends React.Component {
                 注册
               </Button>
               <div style={{ textAlign: 'left' }}>
-                <a href="" style={{ display: 'inline-block' }}>
+                <Link to="/login" style={{ display: 'inline-block' }}>
                   已有账号登陆
-                </a>
+                </Link>
                 {this.state.user === 'company' ? (
                   <a
                     onClick={this.handleClick2}

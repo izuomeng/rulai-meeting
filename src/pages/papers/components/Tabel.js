@@ -1,4 +1,4 @@
-import { Table, Modal } from 'antd'
+import { Table, Modal, Divider } from 'antd'
 import React from 'react'
 import styled from 'styled-components'
 import { InjectClass } from '@/utils/HOC'
@@ -19,7 +19,13 @@ const columns = ({ handleResult }) => [
     title: '操作',
     key: 'action',
     render: (text, record) => (
-      <a onClick={() => handleResult(record)}>评审结果</a>
+      <React.Fragment>
+        <a onClick={() => handleResult(record)}>评审结果</a>
+        <Divider type="vertical" />
+        <a download="file.jpg" href="data:image/jpeg;base64,/9j/4AAQSk">
+          下载
+        </a>
+      </React.Fragment>
     )
   }
 ]
