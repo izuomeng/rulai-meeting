@@ -6,6 +6,7 @@ import Loading from '@/components/Loading'
 import { Icon, Modal, message } from 'antd'
 import { getAllMeetings } from './services/meeting'
 import MeetingRegister from './components/MeetingRegister'
+import registerMeetings from './services/meetingRegister'
 
 const Container = styled.div`
   display: block;
@@ -29,9 +30,15 @@ class Home extends React.Component {
   showModal = () => {
     this.setState({ visible: true })
   }
-  handleSubmit = form => {
+  handleSubmit = async form => {
+    this.setState({ visible: false })
     if (!form) {
-      this.setState({ visible: false })
+      return
+    } else {
+      const { data } = await registerMeetings(form)
+      if (data.errorCode === 0) {
+        message.success('注册会议成功')
+      }
     }
     // submit
   }
@@ -58,7 +65,12 @@ class Home extends React.Component {
             items={items}
           />
         )}
-        <Modal title="注册会议" visible={this.state.visible} footer={null}>
+        <Modal
+          onCancel={() => this.setState({ visible: false })}
+          title="注册会议"
+          visible={this.state.visible}
+          footer={null}
+        >
           <MeetingRegister handleSubmit={this.handleSubmit} />
         </Modal>
       </Container>
