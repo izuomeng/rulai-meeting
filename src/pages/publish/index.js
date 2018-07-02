@@ -6,8 +6,12 @@ import FormItem from './components/FormItem'
 
 const Container = styled(InjectClass(Card))`
   width: 80%;
-  margin: 0 auto;
-  padding-top: 20px;
+  margin: 0 auto !important;
+  min-width: 800px;
+  & > div {
+    width: 650px;
+    margin: 0 auto;
+  }
 `
 
 class Publish extends Component {
@@ -23,7 +27,7 @@ class Publish extends Component {
   render() {
     const { getFieldDecorator } = this.props.form
     return (
-      <Container style={{ width: '80%', margin: '0 auto' }}>
+      <Container>
         <Form onSubmit={this.handleSubmit}>
           <FormItem
             decorator={getFieldDecorator}

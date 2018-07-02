@@ -24,7 +24,7 @@ const menu = (
 const Avatar = ({ userInfo }) => {
   return (
     <AvatarContainer>
-      {userInfo /* .userName */ ? (
+      {userInfo.userName ? (
         <Dropdown overlay={menu} trigger={['click']}>
           <Icon type="user" />
         </Dropdown>
