@@ -44,7 +44,6 @@ class RegisterInfo extends React.Component {
     console.log(data)
     if (data.data.errorCode === 0) {
       message.success('注册成功')
-
       router.push('/')
     }
   }
