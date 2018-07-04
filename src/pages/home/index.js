@@ -4,9 +4,8 @@ import { RestClient } from '@/utils/HOC'
 import MeetingList from '@/components/MeetingList'
 import Loading from '@/components/Loading'
 import { Icon, Modal, message } from 'antd'
-import { getAllMeetings } from './services/meeting'
+import { getAllMeetings, registerMeetings } from './services/meeting'
 import MeetingRegister from './components/MeetingRegister'
-import registerMeetings from './services/meetingRegister'
 
 const Container = styled.div`
   display: block;
@@ -35,9 +34,11 @@ class Home extends React.Component {
     if (!form) {
       return
     } else {
-      const { data } = await registerMeetings(form)
-      if (data.errorCode === 0) {
-        message.success('注册会议成功')
+      try {
+        await registerMeetings(form)
+        message.success('注册成功')
+      } catch (error) {
+        return
       }
     }
     // submit

@@ -32,7 +32,11 @@ const MyItem = ({
     <FormItem {...formItemLayout} label={label}>
       {getFieldDecorator(prop, config)(
         isDatePicker ? (
-          <DatePicker placeholder="选择时间" />
+          <DatePicker
+            showTime
+            format="YYYY-MM-DD HH:mm"
+            placeholder="选择时间"
+          />
         ) : isRangePicker ? (
           <RangePicker
             showTime={{ format: 'HH:mm' }}
