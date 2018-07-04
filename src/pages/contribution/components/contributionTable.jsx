@@ -1,13 +1,14 @@
-import { Table, Divider } from 'antd'
+import { Table, Divider, Modal } from 'antd'
 import React from 'react'
 import styled from 'styled-components'
 import { InjectClass } from '@/utils/HOC'
 import getContribution from '../services/contributionMessage'
 import { RestClient } from '@/utils/HOC'
+import Message from './message'
 
 const columns = ({ handleResult }) => [
   { title: '论文名称', dataIndex: 'title', key: 'name' },
-  { title: '投稿时间', dataIndex: 'date', key: 'date' },
+
   {
     title: '状态',
     dataIndex: 'judgeStatus',
@@ -18,8 +19,12 @@ const columns = ({ handleResult }) => [
     key: 'action',
     render: (text, record) => (
       <React.Fragment>
-        <a onClick={this.handleClick}>修改</a>
-        <Divider type="vertical" />
+        {record.judgeStatus === 'Pending' && (
+          <React.Fragment>
+            <a onClick={() => handleResult(record)}>修改</a>
+            <Divider type="vertical" />
+          </React.Fragment>
+        )}
         <a download="file.jpg" href="data:image/jpeg;base64,/9j/4AAQSk">
           下载
         </a>
@@ -37,10 +42,11 @@ const T = styled(InjectClass(Table))`
 
 class MyTabel extends React.Component {
   state = {
-    visible: false
+    visible: false,
+    current: {}
   }
   handleResult = result => {
-    this.setState({ visible: true })
+    this.setState({ visible: true, current: result })
   }
   //   handleOk = () => {
   //     const { data, current } = this.state
@@ -50,26 +56,39 @@ class MyTabel extends React.Component {
   //     )
   //     this.setState({ visible: false, data: newData })
   //   }
-  //   handleCancel = () => {
-  //     this.setState({ visible: false })
-  //   }
+  handleCancel = () => {
+    this.setState({ visible: false })
+  }
   //   handleResultChange = e => {
   //     this.setState({ current: { ...this.state.current, state: e.target.value } })
   //   }
   render() {
     const { loading, data } = this.props
-
-    console.info(data)
+    const { visible } = this.state
     return (
       <React.Fragment>
         {!loading && (
-          <T
-            pagination={false}
-            columns={columns({ handleResult: this.handleResult })}
-            dataSource={data.judgeDetail}
-            rowKey="id"
-            {...this.props}
-          />
+          <React.Fragment>
+            <T
+              pagination={false}
+              columns={columns({ handleResult: this.handleResult })}
+              dataSource={data.judgeDetail}
+              rowKey="id"
+              {...this.props}
+            />
+
+            <Modal
+              title="提交论文修改"
+              visible={visible}
+              onCancel={this.handleCancel}
+              footer={null}
+            >
+              <Message
+                paperId={data.judgeDetail[0].id}
+                onCancel={this.handleCancel}
+              />
+            </Modal>
+          </React.Fragment>
         )}
       </React.Fragment>
     )
