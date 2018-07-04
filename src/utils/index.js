@@ -14,7 +14,7 @@ export function isEnumerable(obj) {
 }
 
 export function transTime(time) {
-  return miment(time).format('YYYY-MM-DD')
+  return miment(time).format('YYYY-MM-DD hh:mm:ss')
 }
 
 export function transQuery(obj) {
