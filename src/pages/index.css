@@ -3,7 +3,7 @@
   text-align: center;
   background: url(../assets/meeting.jpg) no-repeat center 0;
   background-size: cover;
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;

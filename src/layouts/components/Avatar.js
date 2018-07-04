@@ -10,22 +10,31 @@ const AvatarContainer = styled.div`
   font-size: 1.5em;
   display: inline-block;
 `
-const menu = (
-  <Menu>
-    <Menu.Item key="0">
-      <Link to="/">个人信息</Link>
-    </Menu.Item>
-    <Menu.Item key="1">
-      <Link to="/collection">我的收藏</Link>
-    </Menu.Item>
-  </Menu>
-)
+const logout = dispatch => {
+  dispatch({ type: 'user/clear' })
+  router.push('/login')
+}
 
-const Avatar = ({ userInfo }) => {
+const Avatar = ({ userInfo, dispatch }) => {
   return (
     <AvatarContainer>
       {userInfo.userName ? (
-        <Dropdown overlay={menu} trigger={['click']}>
+        <Dropdown
+          overlay={
+            <Menu>
+              <Menu.Item key="0">
+                <Link to="/">个人信息</Link>
+              </Menu.Item>
+              <Menu.Item key="1">
+                <Link to="/collection">我的收藏</Link>
+              </Menu.Item>
+              <Menu.Item>
+                <a onClick={() => logout(dispatch)}>登出</a>
+              </Menu.Item>
+            </Menu>
+          }
+          trigger={['click']}
+        >
           <Icon type="user" />
         </Dropdown>
       ) : (
