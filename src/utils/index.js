@@ -13,7 +13,10 @@ export function isEnumerable(obj) {
   return Object.prototype.toString.call(obj) === '[object Object]'
 }
 
-export function transTime(time) {
+export function transTime(time, stamp = true) {
+  if (stamp) {
+    return miment(time).stamp()
+  }
   return miment(time).format('YYYY-MM-DD hh:mm:ss')
 }
 
@@ -23,4 +26,18 @@ export function transQuery(obj) {
     result += `${pre}${item[0]}=${item[1]}`
     return result
   }, '')
+}
+
+export function getBase64(file) {
+  return new Promise((resolve, reject) => {
+    try {
+      const reader = new FileReader()
+      reader.onload = e => {
+        resolve(e.target.result)
+      }
+      reader.readAsDataURL(file)
+    } catch (error) {
+      reject(error)
+    }
+  })
 }

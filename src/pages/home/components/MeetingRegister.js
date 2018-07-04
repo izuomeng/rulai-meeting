@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { InjectClass } from '@/utils/HOC'
+import { getBase64 } from '@/utils'
 import produce from 'immer'
 import { Input, Form, Radio, Upload, Button, Icon, Checkbox } from 'antd'
 
@@ -33,12 +34,9 @@ class MeetingRegister extends React.Component {
     }
     this.feeImages = ''
   }
-  handleChange = ({ file }) => {
-    const reader = new FileReader()
-    reader.onload = e => {
-      this.feeImages = e.target.result
-    }
-    reader.readAsDataURL(file)
+  handleChange = async ({ file }) => {
+    const base64 = await getBase64(file)
+    this.feeImages = base64
   }
   handleRemove = () => {
     this.setState({ fileList: [] })
