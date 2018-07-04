@@ -5,12 +5,12 @@ const RangePicker = DatePicker.RangePicker
 const FormItem = Form.Item
 const formItemLayout = {
   labelCol: {
-    xs: { span: 4 },
-    sm: { span: 4 }
+    xs: { span: 5 },
+    sm: { span: 5 }
   },
   wrapperCol: {
-    xs: { span: 20 },
-    sm: { span: 20 }
+    xs: { span: 19 },
+    sm: { span: 19 }
   }
 }
 
@@ -32,9 +32,13 @@ const MyItem = ({
     <FormItem {...formItemLayout} label={label}>
       {getFieldDecorator(prop, config)(
         isDatePicker ? (
-          <DatePicker />
+          <DatePicker placeholder="选择时间" />
         ) : isRangePicker ? (
-          <RangePicker />
+          <RangePicker
+            showTime={{ format: 'HH:mm' }}
+            format="YYYY-MM-DD HH:mm"
+            placeholder={['开始时间', '结束时间']}
+          />
         ) : (
           <Input {...rest} />
         )

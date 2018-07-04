@@ -75,7 +75,7 @@ class Layout extends React.Component {
           selectedKeys={[this.state.current]}
         >
           <Menu.Item key="/">Lein Meeting</Menu.Item>
-          {role === 'user' && <Menu.Item key="/home">主页</Menu.Item>}
+          {role !== 'organizer' && <Menu.Item key="/home">主页</Menu.Item>}
           {role === 'user' && (
             <Menu.Item key="/contribution">我的投稿</Menu.Item>
           )}
