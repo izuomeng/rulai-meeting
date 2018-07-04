@@ -36,12 +36,12 @@ const Item = ({ meeting, handleClick = () => {}, extra }) => {
         <Tip
           icon="clock-circle-o"
           label="开始日期"
-          value={transTime(meeting.confBeginDate)}
+          value={transTime(meeting.confBeginDate, false)}
         />
         <Tip
           icon="clock-circle"
           label="结束日期"
-          value={transTime(meeting.ddlDate)}
+          value={transTime(meeting.ddlDate, false)}
         />
       </div>
     </StyledCard>
