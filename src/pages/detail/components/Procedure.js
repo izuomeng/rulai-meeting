@@ -6,7 +6,7 @@ const Procedure = props => {
   return (
     <React.Fragment>
       <Theme content={props.label} />
-      <Timeline style={{ marginLeft: 100, marginTop: 20 }}>
+      <Timeline style={{ marginLeft: 75, marginTop: 20 }}>
         {['投稿中', '已截止', '注册中', '截止注册', '会议中', '会议完成'].map(
           (item, index) => {
             if (index === props.checkPoint) {
