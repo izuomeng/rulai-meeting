@@ -5,3 +5,13 @@ export function getAllMeetings(page = 1) {
     method: 'post'
   })
 }
+
+export function registerMeetings(data) {
+  return request(`/api/user/conference/join/registration`, {
+    method: 'post',
+    body: {
+      conferenceID: 1,
+      ...data
+    }
+  })
+}

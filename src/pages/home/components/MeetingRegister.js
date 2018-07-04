@@ -29,10 +29,28 @@ class MeetingRegister extends React.Component {
         ],
         listenMeeting: false
       },
-      feeImages: ''
+      fileList: []
     }
+    this.feeImages = ''
+  }
+  handleChange = ({ file }) => {
+    const reader = new FileReader()
+    reader.onload = e => {
+      this.feeImages = e.target.result
+    }
+    reader.readAsDataURL(file)
+  }
+  handleRemove = () => {
+    this.setState({ fileList: [] })
+  }
+  beforeUpload = file => {
+    this.setState({
+      fileList: [file]
+    })
+    return false
   }
   render() {
+    const { fileList, ...form } = this.state
     return (
       <React.Fragment>
         <Form className="login-form">
@@ -121,10 +139,16 @@ class MeetingRegister extends React.Component {
           </FormItem>
           <FormItem>
             <Label>注册费缴费凭证</Label>
-            <Upload>
-              <Button>
-                <Icon type="upload" /> 请上传PDF文件或照片
-              </Button>
+            <Upload
+              beforeUpload={this.beforeUpload}
+              onChange={this.handleChange}
+              onRemove={this.handleRemove}
+            >
+              {fileList.length === 0 && (
+                <Button>
+                  <Icon type="upload" /> 请上传PDF文件或照片
+                </Button>
+              )}
             </Upload>
           </FormItem>
           <FormItem>
@@ -152,7 +176,12 @@ class MeetingRegister extends React.Component {
               <StyledButton
                 type="primary"
                 style={{ marginLeft: 40 }}
-                onClick={() => this.props.handleSubmit(this.state)}
+                onClick={() =>
+                  this.props.handleSubmit({
+                    ...form,
+                    feeImages: this.feeImages
+                  })
+                }
               >
                 确认
               </StyledButton>
