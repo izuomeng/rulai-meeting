@@ -1,7 +1,11 @@
 import React from 'react'
-
+import RegisterInfo from './components/register-info'
 const Register = () => {
-  return <div>注册</div>
+  return (
+    <React.Fragment>
+      <RegisterInfo />
+    </React.Fragment>
+  )
 }
 
 export default Register

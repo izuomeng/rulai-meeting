@@ -1,14 +1,22 @@
-
 .normal {
   font-family: Georgia, sans-serif;
-  margin-top: 3em;
   text-align: center;
+  background: url(../assets/meeting.jpg) no-repeat center 0;
+  background-size: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
 }
 
 .title {
-  font-size: 2.5rem;
-  font-weight: normal;
+  font-size: 5rem;
+  font-weight: 10em;
+  color: #ffffff;
   letter-spacing: -1px;
+  margin-bottom: 200px;
+  margin-top: 200px;
 }
 
 .welcome {
@@ -22,6 +30,7 @@
   margin-top: 1.8em;
   list-style: none;
   line-height: 1.5em;
+  text-align: center;
 }
 
 .list code {
