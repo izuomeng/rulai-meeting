@@ -3,32 +3,25 @@ import styled from 'styled-components'
 import { RestClient } from '@/utils/HOC'
 import MeetingList from '@/components/MeetingList'
 import Loading from '@/components/Loading'
-import { Icon, message } from 'antd'
+import { Icon, Button } from 'antd'
 import { getAllCollections } from './services/collection'
 import { deleteCollection } from './services/deleteCollection'
 
 const Container = styled.div`
   display: block;
 `
+
 const Extra = props => (
   <React.Fragment>
-    <a onClick={props.handleDelete}>
+    <Button type="danger" onClick={props.handleDelete}>
       <Icon type="close-circle-o" style={{ marginRight: '8px' }} />删除
-    </a>
+    </Button>
   </React.Fragment>
 )
 
 class Collection extends React.Component {
-  handleDelete = async form => {
-    this.setState({ visible: false })
-    if (!form) {
-      return
-    } else {
-      const { data } = await deleteCollection(form)
-      if (data.errorCode === 0) {
-        message.success('删除成功')
-      }
-    }
+  handleDelete = () => {
+    deleteCollection()
   }
   render() {
     const {

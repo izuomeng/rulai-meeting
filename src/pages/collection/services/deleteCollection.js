@@ -1,7 +1,7 @@
 import request from '@/utils/request'
 
-export function deleteCollection(page = 1) {
-  return request(`/undo_collection/${page}`, {
+export function deleteCollection() {
+  return request(`/api/user/undo_collection/1`, {
     method: 'delete'
   })
 }
