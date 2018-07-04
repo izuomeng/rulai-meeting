@@ -4,8 +4,20 @@ import Loading from '@/components/Loading'
 import TitleCard from 'CP/TitleCard'
 import { getReleasedMeetings } from './services/release'
 import Tabel from './components/Tabel'
+import ModifyForm from './components/ModifyForm'
+
+import { Modal } from 'antd'
 
 class Released extends React.Component {
+  state = {
+    visible: false
+  }
+
+  showModal = () => {
+    this.setState({
+      visible: true
+    })
+  }
   render() {
     const {
       data: { items },
@@ -21,7 +33,18 @@ class Released extends React.Component {
             title="已发布会议"
             subtitle="查看和编辑已发布会议，新建会议"
           >
-            <Tabel />
+            <Tabel handleClick={() => this.setState({ visible: true })} />
+            <Modal
+              style={{ top: 200 }}
+              title="编辑会议信息"
+              visible={this.state.visible}
+              cancelText="取消"
+              okText="确认"
+              onCancel={() => this.setState({ visible: false })}
+              onOk={() => this.setState({ visible: false })}
+            >
+              <ModifyForm handleClick={this.handleClick} />
+            </Modal>
           </TitleCard>
         )}
       </React.Fragment>

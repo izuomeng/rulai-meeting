@@ -3,8 +3,9 @@ import React from 'react'
 import styled from 'styled-components'
 import { InjectClass } from '@/utils/HOC'
 import Link from 'umi/link'
+import ModifyForm from './ModifyForm'
 
-const columns = [
+const columns = handleClick => [
   {
     title: '会议名称',
     dataIndex: 'name',
@@ -27,7 +28,8 @@ const columns = [
       <span>
         <Link to={`/papers/${record.id}`}>投稿情况</Link>
         <Divider type="vertical" />
-        <a>编辑</a>
+        <a onClick={handleClick}>编辑</a>
+
         <Divider type="vertical" />
         <a style={{ color: 'red' }}>删除</a>
       </span>
@@ -66,7 +68,7 @@ const MyTabel = props => {
   return (
     <T
       pagination={false}
-      columns={columns}
+      columns={columns(props.handleClick)}
       dataSource={data}
       rowKey="id"
       {...props}
