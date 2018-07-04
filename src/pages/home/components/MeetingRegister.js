@@ -28,7 +28,8 @@ class MeetingRegister extends React.Component {
           { ordered: false }
         ],
         listenMeeting: false
-      }
+      },
+      feeImages: ''
     }
   }
   render() {
@@ -60,8 +61,8 @@ class MeetingRegister extends React.Component {
               onChange={e => {
                 const newGroup = produce(
                   this.state.joinConferenceGroup,
-                  obj => {
-                    obj.joinConferencePeopleList[0].name = e.target.value
+                  group => {
+                    group.joinConferencePeopleList[0].name = e.target.value
                   }
                 )
                 this.setState({ joinConferenceGroup: newGroup })

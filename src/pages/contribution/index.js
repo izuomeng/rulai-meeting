@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
-import Contribution from './components/contributionList'
-class index extends Component {
+import ContributionList from './components/contributionList'
+class Contribution extends Component {
   render() {
     return (
       <React.Fragment>
-        <Contribution />
+        <ContributionList />
       </React.Fragment>
     )
   }
 }
 
-export default index
+export default Contribution

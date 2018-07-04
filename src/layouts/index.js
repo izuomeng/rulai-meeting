@@ -6,6 +6,7 @@ import Avatar from './components/Avatar'
 import { InjectClass } from '@/utils/HOC'
 import styled from 'styled-components'
 import Search from 'CP/Search'
+import { connect } from 'dva'
 
 const StyledMenu = styled(InjectClass(Menu))`
   border-bottom: 0;
@@ -59,7 +60,8 @@ class Layout extends React.Component {
     // 拦截器，处理认证重定向等情况
     const {
       location: { pathname },
-      children
+      children,
+      userInfo: { role }
     } = this.props
     if (this.withoutHeader(pathname)) {
       return <React.Fragment>{children}</React.Fragment>
@@ -73,9 +75,15 @@ class Layout extends React.Component {
           selectedKeys={[this.state.current]}
         >
           <Menu.Item key="/">Lein Meeting</Menu.Item>
-          <Menu.Item key="/home">主页</Menu.Item>
-          <Menu.Item key="/released">我的发布</Menu.Item>
-          <Menu.Item key="/collection">收藏夹</Menu.Item>
+          {role !== 'organizer' && <Menu.Item key="/home">主页</Menu.Item>}
+          {role === 'user' && (
+            <Menu.Item key="/contribution">我的投稿</Menu.Item>
+          )}
+          {role === 'user' && <Menu.Item key="/collection">收藏夹</Menu.Item>}
+          {role === 'organizer' && (
+            <Menu.Item key="/released">我的发布</Menu.Item>
+          )}
+
           <RightContainer>
             <Search />
             <Avatar />
@@ -87,4 +95,8 @@ class Layout extends React.Component {
   }
 }
 
-export default withRouter(Layout)
+const mapState = state => ({
+  userInfo: state.user
+})
+
+export default connect(mapState)(withRouter(Layout))
