@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { Card, Form, Button } from 'antd'
 import styled from 'styled-components'
 import { InjectClass } from '@/utils/HOC'
+import { connect } from 'dva'
+import { publish } from './services/publish'
 import FormItem from './components/FormItem'
 
 const Container = styled(InjectClass(Card))`
@@ -36,6 +38,9 @@ class Publish extends Component {
       }
       console.log('pulish form data: ', fieldsValue)
     })
+  }
+  async publishMeeting() {
+    await publish()
   }
   render() {
     const { getFieldDecorator } = this.props.form
@@ -104,4 +109,8 @@ class Publish extends Component {
   }
 }
 
-export default Form.create()(Publish)
+const mapState = state => ({
+  userInfo: state.user
+})
+
+export default connect(mapState)(Form.create()(Publish))
