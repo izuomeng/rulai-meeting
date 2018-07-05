@@ -7,6 +7,7 @@ import { InjectClass } from '@/utils/HOC'
 import styled from 'styled-components'
 import Search from 'CP/Search'
 import { connect } from 'dva'
+import Loading from 'CP/Loading'
 
 const StyledMenu = styled(InjectClass(Menu))`
   border-bottom: 0;
@@ -61,7 +62,7 @@ class Layout extends React.Component {
     const {
       location: { pathname },
       children,
-      userInfo: { role }
+      userInfo: { role, id }
     } = this.props
     if (this.withoutHeader(pathname)) {
       return <React.Fragment>{children}</React.Fragment>
@@ -89,7 +90,7 @@ class Layout extends React.Component {
             <Avatar />
           </RightContainer>
         </StyledMenu>
-        <Children>{children}</Children>
+        <Children>{id ? children : <Loading />}</Children>
       </React.Fragment>
     )
   }

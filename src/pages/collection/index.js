@@ -2,7 +2,7 @@ import React from 'react'
 import { RestClient } from '@/utils/HOC'
 import { getAllCollections } from './services/collection'
 import CollectionList from './components/CollectionList'
-import Loading from '@/components/Loading'
+import Loading from 'CP/Loading'
 
 class Collection extends React.Component {
   render() {

@@ -6,26 +6,31 @@ import Link from 'umi/link'
 
 const columns = [
   {
+    title: 'ID',
+    dataIndex: 'id',
+    key: 'id'
+  },
+  {
     title: '会议名称',
-    dataIndex: 'name',
-    key: 'name'
+    dataIndex: 'title',
+    key: 'title'
   },
   {
     title: '开始时间',
     dataIndex: 'confBeginDate',
-    key: 'age'
+    key: 'confBeginDate'
   },
   {
     title: '截稿时间',
     dataIndex: 'ddlDate',
-    key: 'address'
+    key: 'ddlDate'
   },
   {
     title: '操作',
     key: 'action',
     render: (text, record) => (
       <span>
-        <Link to={`/papers/${record.id}`}>投稿情况</Link>
+        <Link to={`/papers/${record.id}?title=${record.title}`}>投稿情况</Link>
         <Divider type="vertical" />
         <a>编辑</a>
         <Divider type="vertical" />
@@ -35,7 +40,7 @@ const columns = [
   }
 ]
 
-const data = [
+/* const data = [
   {
     id: '1',
     name: 'John Brown',
@@ -54,7 +59,7 @@ const data = [
     confBeginDate: '2018-4-5',
     ddlDate: '2019-5-6'
   }
-]
+] */
 
 const T = styled(InjectClass(Table))`
   margin: 12px 0;
@@ -67,7 +72,7 @@ const MyTabel = props => {
     <T
       pagination={false}
       columns={columns}
-      dataSource={data}
+      dataSource={props.list}
       rowKey="id"
       {...props}
     />
