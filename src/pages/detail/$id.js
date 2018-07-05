@@ -2,13 +2,14 @@ import React from 'react'
 import withRouter from 'umi/withRouter'
 import Info from './components/Info'
 import Item from './components/Item'
-import { Button, Modal } from 'antd'
+import { Button, Modal, message } from 'antd'
 import { getMeetingsByID } from './services/meeting'
 import Procedure from './components/Procedure'
 import SubmitForm from './components/SubmitForm'
 import { RestClient } from '@/utils/HOC'
 import Loading from '@/components/Loading'
 import styled from 'styled-components'
+import { connect } from 'dva'
 
 const Container = styled.div`
   background-color: white;
@@ -23,7 +24,14 @@ class Meeting extends React.Component {
     visible: false
   }
 
-  showModal = () => {
+  showModal = data => {
+    // if (data.name && data.institution) {
+    //   this.setState({
+    //     visible: true
+    //   })
+    // } else {
+    //   message.error('请先补全个人信息')
+    // }
     this.setState({
       visible: true
     })
@@ -74,6 +82,8 @@ class Meeting extends React.Component {
       default:
         checkPoint = 0
     }
+
+    const { userInfo } = this.props
     return (
       <React.Fragment>
         {loading ? (
@@ -101,12 +111,11 @@ class Meeting extends React.Component {
                 type="primary"
                 size={'large'}
                 style={{ marginLeft: 200, width: 150 }}
-                onClick={this.showModal}
+                onClick={() => this.showModal(userInfo)}
               >
                 在线会议投稿
               </Button>
             </div>
-
             <Modal
               // style={{ top: 20 }}
               visible={visible}
@@ -135,4 +144,8 @@ const Detail = props => {
   return <MyComponent {...props} />
 }
 
-export default withRouter(Detail)
+const mapState = state => ({
+  userInfo: state.user
+})
+
+export default withRouter(connect(mapState)(Detail))
