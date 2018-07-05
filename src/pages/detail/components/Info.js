@@ -59,7 +59,7 @@ const Info = ({ meeting }) => {
         <ContainerKid>
           <Tip
             label="会议创建日期"
-            value={meeting.registerDate}
+            value={meeting.setDate}
             iconType="clock-circle-o"
           />
           <Tip

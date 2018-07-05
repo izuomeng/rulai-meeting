@@ -8,6 +8,15 @@ import Procedure from './components/Procedure'
 import SubmitForm from './components/SubmitForm'
 import { RestClient } from '@/utils/HOC'
 import Loading from '@/components/Loading'
+import styled from 'styled-components'
+
+const Container = styled.div`
+  background-color: white;
+  margin: 0px auto;
+  width: 75%;
+  min-width: 800px;
+  padding-bottom: 1px;
+`
 
 class Meeting extends React.Component {
   state = {
@@ -70,51 +79,49 @@ class Meeting extends React.Component {
         {loading ? (
           <Loading />
         ) : (
-          <div
-            style={{
-              backgroundColor: 'white',
-              margin: '0px auto',
-              width: '75%',
-              minWidth: 800
-            }}
-          >
+          <Container>
             <Info meeting={data} />
-            <Procedure label="会议流程" checkPoint={checkPoint} />
+            <Procedure label="会议流程" checkPoint={checkPoint} data={data} />
             <Item label="会议简介" value={data.introduction} />
             <Item label="征文信息" value={data.requirement} />
             <Item label="日程安排" value={data.schedule} />
             <Item label="住宿交通" value={data.accommodationInfo} />
 
-            <Button
-              type="primary"
-              icon="download"
-              size={'large'}
-              style={{ margin: '40px 0px 60px 200px' }}
-              href="/user/test/xxxx.txt"
-              download="论文模板.txt"
-            >
-              下载论文模板
-            </Button>
-            <Button
-              type="primary"
-              size={'large'}
-              style={{ marginLeft: 200, width: 150 }}
-              onClick={this.showModal}
-            >
-              在线会议投稿
-            </Button>
+            <div style={{ textAlign: 'center', margin: '40px 0' }}>
+              <Button
+                type="primary"
+                icon="download"
+                size={'large'}
+                href="/user/test/xxxx.txt"
+                download="论文模板.txt"
+              >
+                下载论文模板
+              </Button>
+              <Button
+                type="primary"
+                size={'large'}
+                style={{ marginLeft: 200, width: 150 }}
+                onClick={this.showModal}
+              >
+                在线会议投稿
+              </Button>
+            </div>
 
             <Modal
-              style={{ top: 20 }}
+              // style={{ top: 20 }}
               visible={visible}
               title="论文投稿"
               footer={null}
+              destroyOnClose={true}
               onCancel={() => this.handleClick('cancel')}
               onOk={() => this.handleClick('ok')}
             >
-              <SubmitForm handleClick={this.handleClick} />
+              <SubmitForm
+                handleClick={this.handleClick}
+                id={this.props.match.params.id}
+              />
             </Modal>
-          </div>
+          </Container>
         )}
       </React.Fragment>
     )
