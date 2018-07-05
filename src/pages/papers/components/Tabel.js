@@ -1,4 +1,4 @@
-import { Table, Modal, Divider } from 'antd'
+import { Table, Modal } from 'antd'
 import React from 'react'
 import styled from 'styled-components'
 import { InjectClass } from '@/utils/HOC'
@@ -7,13 +7,13 @@ import LogResult from './LogResult'
 const filterState = state => ['未通过', '待审核', '已通过', '通过一半'][state]
 
 const columns = ({ handleResult }) => [
-  { title: '论文名称', dataIndex: 'name', key: 'name' },
-  { title: '投稿时间', dataIndex: 'date', key: 'date' },
-  { title: '作者', dataIndex: 'author', key: 'author' },
+  { title: 'ID', dataIndex: 'id', key: 'id' },
+  { title: '论文名称', dataIndex: 'title', key: 'title' },
+  { title: '作者', dataIndex: 'firstauthor', key: 'firstauthor' },
   {
     title: '状态',
     key: 'state',
-    render: (text, record) => <span>{filterState(record.state)}</span>
+    render: (text, record) => <span>{filterState(record.judgeStatusInt)}</span>
   },
   {
     title: '操作',
@@ -21,36 +21,12 @@ const columns = ({ handleResult }) => [
     render: (text, record) => (
       <React.Fragment>
         <a onClick={() => handleResult(record)}>评审结果</a>
-        <Divider type="vertical" />
+        {/* <Divider type="vertical" />
         <a download="file.jpg" href="data:image/jpeg;base64,/9j/4AAQSk">
           下载
-        </a>
+        </a> */}
       </React.Fragment>
     )
-  }
-]
-
-const data = [
-  {
-    id: '1',
-    name: 'John Brown',
-    date: '2018-4-5',
-    author: 'Wang',
-    state: 1 // 待审核
-  },
-  {
-    id: '2',
-    name: 'Jim Green',
-    date: '2018-4-5',
-    author: 'Wang',
-    state: 0 // 未通过
-  },
-  {
-    id: '3',
-    name: 'Jim Green',
-    date: '2018-4-5',
-    author: 'Wang',
-    state: 2 // 已通过
   }
 ]
 
@@ -64,25 +40,32 @@ const T = styled(InjectClass(Table))`
 class MyTabel extends React.Component {
   state = {
     visible: false,
-    current: {},
-    data
+    current: {}
   }
   handleResult = result => {
     this.setState({ visible: true, current: result })
   }
   handleOk = () => {
-    const { data, current } = this.state
-    const newData = data.map(
-      item =>
-        item.id === current.id ? { ...item, state: current.state } : item
-    )
-    this.setState({ visible: false, data: newData })
+    const { current } = this.state
+    this.props.onCheck({
+      paperId: current.id,
+      opinion: current.opinion,
+      judgeStatusInt: current.judgeStatusInt
+    })
+    this.setState({ visible: false })
   }
   handleCancel = () => {
     this.setState({ visible: false })
   }
   handleResultChange = e => {
-    this.setState({ current: { ...this.state.current, state: e.target.value } })
+    this.setState({
+      current: { ...this.state.current, judgeStatusInt: e.target.value }
+    })
+  }
+  handleOpinionChange = e => {
+    this.setState({
+      current: { ...this.state.current, opinion: e.target.value }
+    })
   }
   render() {
     const { visible, current } = this.state
@@ -91,7 +74,7 @@ class MyTabel extends React.Component {
         <T
           pagination={false}
           columns={columns({ handleResult: this.handleResult })}
-          dataSource={this.state.data}
+          dataSource={this.props.list}
           rowKey="id"
           {...this.props}
         />
@@ -102,8 +85,10 @@ class MyTabel extends React.Component {
           onCancel={this.handleCancel}
         >
           <LogResult
-            state={current.state}
+            opinion={current.opinion}
+            state={current.judgeStatusInt}
             handleChange={this.handleResultChange}
+            handleOpinionChange={this.handleOpinionChange}
           />
         </Modal>
       </React.Fragment>

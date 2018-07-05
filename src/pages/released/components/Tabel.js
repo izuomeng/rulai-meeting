@@ -30,7 +30,7 @@ const columns = [
     key: 'action',
     render: (text, record) => (
       <span>
-        <Link to={`/papers/${record.id}`}>投稿情况</Link>
+        <Link to={`/papers/${record.id}?title=${record.title}`}>投稿情况</Link>
         <Divider type="vertical" />
         <a>编辑</a>
         <Divider type="vertical" />
