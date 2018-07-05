@@ -7,7 +7,11 @@ import { isEnumerable } from './index'
 // import { SESSION_KEY } from '@/constants'
 
 function parseJSON(response) {
-  return response.json()
+  try {
+    return response.json()
+  } catch (error) {
+    return Promise.reject(error)
+  }
 }
 
 function checkStatus(response) {
@@ -17,7 +21,7 @@ function checkStatus(response) {
 
   const error = new Error(response.statusText)
   error.response = response
-  throw error
+  return Promise.reject(error)
 }
 
 function handleRes(data) {

@@ -26,7 +26,8 @@ const MyItem = ({
   ...rest
 }) => {
   const config = {
-    rules: [{ required, message }, ...rules]
+    rules: [{ required, message }, ...rules],
+    initialValue: rest.initialvalue || ''
   }
   return (
     <FormItem {...formItemLayout} label={label}>

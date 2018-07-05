@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { InjectClass } from '@/utils/HOC'
+import { getBase64 } from '@/utils'
 import produce from 'immer'
 import { Input, Form, Radio, Upload, Button, Icon, Checkbox } from 'antd'
 
@@ -28,10 +29,26 @@ class MeetingRegister extends React.Component {
           { ordered: false }
         ],
         listenMeeting: false
-      }
+      },
+      fileList: []
     }
+    this.feeImages = ''
+  }
+  handleChange = async ({ file }) => {
+    const base64 = await getBase64(file)
+    this.feeImages = base64
+  }
+  handleRemove = () => {
+    this.setState({ fileList: [] })
+  }
+  beforeUpload = file => {
+    this.setState({
+      fileList: [file]
+    })
+    return false
   }
   render() {
+    const { fileList, ...form } = this.state
     return (
       <React.Fragment>
         <Form className="login-form">
@@ -60,8 +77,8 @@ class MeetingRegister extends React.Component {
               onChange={e => {
                 const newGroup = produce(
                   this.state.joinConferenceGroup,
-                  obj => {
-                    obj.joinConferencePeopleList[0].name = e.target.value
+                  group => {
+                    group.joinConferencePeopleList[0].name = e.target.value
                   }
                 )
                 this.setState({ joinConferenceGroup: newGroup })
@@ -120,10 +137,16 @@ class MeetingRegister extends React.Component {
           </FormItem>
           <FormItem>
             <Label>注册费缴费凭证</Label>
-            <Upload>
-              <Button>
-                <Icon type="upload" /> 请上传PDF文件或照片
-              </Button>
+            <Upload
+              beforeUpload={this.beforeUpload}
+              onChange={this.handleChange}
+              onRemove={this.handleRemove}
+            >
+              {fileList.length === 0 && (
+                <Button>
+                  <Icon type="upload" /> 请上传PDF文件或照片
+                </Button>
+              )}
             </Upload>
           </FormItem>
           <FormItem>
@@ -151,7 +174,12 @@ class MeetingRegister extends React.Component {
               <StyledButton
                 type="primary"
                 style={{ marginLeft: 40 }}
-                onClick={() => this.props.handleSubmit(this.state)}
+                onClick={() =>
+                  this.props.handleSubmit({
+                    ...form,
+                    feeImages: this.feeImages
+                  })
+                }
               >
                 确认
               </StyledButton>

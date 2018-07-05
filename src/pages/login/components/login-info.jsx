@@ -24,25 +24,31 @@ class LoginInfo extends React.Component {
       email: '',
       pwd: ''
     }
+    this.isUser = true
   }
 
   loginClick = async () => {
-    const { data } = await getLogin({
-      email: this.state.email,
-      pwd: this.state.pwd
-    })
+    const { data } = await getLogin(
+      {
+        email: this.state.email,
+        pwd: this.state.pwd
+      },
+      this.isUser
+    )
     if (data.errorCode === 0) {
       // const sessionId = data[SESSION_KEY]
       // Cookies.set(SESSION_KEY, sessionId)
+      await this.props.dispatch({ type: 'user/fetch', payload: {} })
       message.success('登陆成功')
-      this.props.dispatch({ type: 'user/fetch', payload: {} })
       router.push('/')
     } else {
       // Cookies.remove(SESSION_KEY)
       message.error(data.errorInfo || '登陆失败')
     }
   }
-
+  onChange = e => {
+    this.isUser = !e.target.checked
+  }
   render() {
     return (
       <React.Fragment>
@@ -72,8 +78,11 @@ class LoginInfo extends React.Component {
               />
             </FormItem>
 
-            <Checkbox style={{ float: 'left', marginBottom: 18 }}>
-              Remember me
+            <Checkbox
+              onChange={this.onChange}
+              style={{ float: 'left', marginBottom: 18 }}
+            >
+              机构登陆
             </Checkbox>
 
             <FormItem>

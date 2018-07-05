@@ -7,19 +7,24 @@ import ModifyForm from './ModifyForm'
 
 const columns = handleClick => [
   {
+    title: 'ID',
+    dataIndex: 'id',
+    key: 'id'
+  },
+  {
     title: '会议名称',
-    dataIndex: 'name',
-    key: 'name'
+    dataIndex: 'title',
+    key: 'title'
   },
   {
     title: '开始时间',
     dataIndex: 'confBeginDate',
-    key: 'age'
+    key: 'confBeginDate'
   },
   {
     title: '截稿时间',
     dataIndex: 'ddlDate',
-    key: 'address'
+    key: 'ddlDate'
   },
   {
     title: '操作',
