@@ -5,3 +5,9 @@ export function getReleasedMeetings(page = 1) {
     method: 'post'
   })
 }
+export function modifyMeeting(data) {
+  return request('api/organization/change_conference/1', {
+    method: 'post',
+    body: data
+  })
+}

@@ -2,7 +2,7 @@ import React from 'react'
 import { RestClient } from '@/utils/HOC'
 import Loading from '@/components/Loading'
 import TitleCard from 'CP/TitleCard'
-import { getReleasedMeetings } from './services/release'
+import { getReleasedMeetings,modifyMeeting} from './services/release'
 import Tabel from './components/Tabel'
 import ModifyForm from './components/ModifyForm'
 
@@ -16,7 +16,19 @@ class Released extends React.Component {
   showModal = () => {
     this.setState({
       visible: true
-    })
+    }) 
+  }
+  onOk=async ()=>{
+    this.setState({ visible: false })
+    const form = {
+      ddlDate:'1996-9-26 10:15:16',
+      conferenceId:'dfadsf',
+     introduction:'dsadada'
+
+    }
+ 
+    const {data}=await modifyMeeting(form)
+    console.log(data)
   }
   render() {
     const {
@@ -41,7 +53,7 @@ class Released extends React.Component {
               cancelText="取消"
               okText="确认"
               onCancel={() => this.setState({ visible: false })}
-              onOk={() => this.setState({ visible: false })}
+              onOk={this.onOk}
             >
               <ModifyForm handleClick={this.handleClick} />
             </Modal>
