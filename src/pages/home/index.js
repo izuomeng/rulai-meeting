@@ -1,10 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
-import { RestClient } from '@/utils/HOC'
 import MeetingList from 'CP/MeetingList'
 import Loading from 'CP/Loading'
-import { Icon, Modal, message } from 'antd'
-import { getAllMeetings, registerMeetings } from './services/meeting'
+import { Icon, Modal, message, Pagination } from 'antd'
+import { getAllMeetings, registerMeetings, star } from './services/meeting'
 import MeetingRegister from './components/MeetingRegister'
 
 const Container = styled.div`
@@ -13,10 +12,13 @@ const Container = styled.div`
 
 const Extra = props => (
   <React.Fragment>
-    <a onClick={props.handleRegister}>
+    <a onClick={() => props.handleRegister(props.meeting)}>
       <Icon type="login" style={{ marginRight: '8px' }} />注册会议
     </a>
-    <a onClick={props.handleCollect} style={{ marginLeft: 20 }}>
+    <a
+      onClick={() => props.handleCollect(props.meeting)}
+      style={{ marginLeft: 20 }}
+    >
       <Icon type="star" style={{ marginRight: '8px' }} />收藏
     </a>
   </React.Fragment>
@@ -24,10 +26,14 @@ const Extra = props => (
 
 class Home extends React.Component {
   state = {
-    visible: false
+    visible: false,
+    currentMeeting: {},
+    currentPage: 1,
+    data: {},
+    loading: true
   }
-  showModal = () => {
-    this.setState({ visible: true })
+  showModal = currentMeeting => {
+    this.setState({ visible: true, currentMeeting })
   }
   handleSubmit = async form => {
     this.setState({ visible: false })
@@ -43,28 +49,58 @@ class Home extends React.Component {
     }
     // submit
   }
-  handleCollect = () => {
+  handleCollect = async meeting => {
+    await star(meeting.id)
     message.success('收藏成功')
   }
+  onPageChange = async currentPage => {
+    this.setState({ currentPage })
+    await this.fetch(currentPage)
+    window.scrollTo(0, 0)
+  }
+  fetch(page = 1) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const {
+          data: { data }
+        } = await getAllMeetings(page)
+        this.setState({ data, loading: false }, resolve)
+      } catch (error) {
+        reject(error)
+      }
+    })
+  }
+  async componentDidMount() {
+    this.fetch()
+  }
+
   render() {
-    const {
-      data: { items },
-      loading
-    } = this.props
+    const { currentPage, loading, data } = this.state
     return (
       <Container>
         {loading ? (
           <Loading />
         ) : (
-          <MeetingList
-            extra={
-              <Extra
-                handleCollect={this.handleCollect}
-                handleRegister={this.showModal}
+          <React.Fragment>
+            <MeetingList
+              extra={props => (
+                <Extra
+                  {...props}
+                  handleCollect={this.handleCollect}
+                  handleRegister={this.showModal}
+                />
+              )}
+              items={data.items}
+            />
+            <div style={{ textAlign: 'center', marginBottom: 30 }}>
+              <Pagination
+                current={currentPage}
+                onChange={this.onPageChange}
+                pageSize={data.pageSize}
+                total={data.totalElement || data.totalPage * data.pageSize}
               />
-            }
-            items={items}
-          />
+            </div>
+          </React.Fragment>
         )}
         <Modal
           onCancel={() => this.setState({ visible: false })}
@@ -79,4 +115,4 @@ class Home extends React.Component {
   }
 }
 
-export default RestClient(getAllMeetings, 1)(Home)
+export default Home

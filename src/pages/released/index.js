@@ -48,7 +48,7 @@ class Released extends React.Component {
                 current={current}
                 onChange={this.onPageChange}
                 pageSize={data.pageSize}
-                total={data.totalPage * data.pageSize}
+                total={data.totalElement || data.totalPage * data.pageSize}
               />
             </div>
           </TitleCard>

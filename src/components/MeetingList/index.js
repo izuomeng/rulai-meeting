@@ -5,7 +5,7 @@ import Item from './Item'
 const MeetingList = ({ items, extra }) => {
   return (
     <React.Fragment>
-      {items.map(({ conferenceInfo: item }) => (
+      {items.map(item => (
         <Item
           handleClick={() => router.push(`/detail/${item.id}`)}
           key={item.id}

@@ -6,7 +6,7 @@ export function getPaperList({ confId, page = 1 }) {
 
 export function updatePaperStatus({ paperId, ...rest }) {
   return request(`/api/organization/setjudge/${paperId}`, {
-    method: 'post',
+    method: 'get',
     body: rest
   })
 }

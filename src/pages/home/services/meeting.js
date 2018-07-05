@@ -1,9 +1,7 @@
 import request from '@/utils/request'
 
 export function getAllMeetings(page = 1) {
-  return request(`/tapi/user/search/${page}`, {
-    method: 'post'
-  })
+  return request(`/api/user/search/${page}`)
 }
 
 export function registerMeetings(data) {
@@ -14,4 +12,8 @@ export function registerMeetings(data) {
       ...data
     }
   })
+}
+
+export function star(id) {
+  return request(`/api/user/collection/${id}`)
 }
