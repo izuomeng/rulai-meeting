@@ -65,6 +65,7 @@ class MyTabel extends React.Component {
   render() {
     const { loading, data } = this.props
     const { visible } = this.state
+    console.info(data)
     return (
       <React.Fragment>
         {!loading && (
@@ -83,10 +84,7 @@ class MyTabel extends React.Component {
               onCancel={this.handleCancel}
               footer={null}
             >
-              <Message
-                paperId={data.judgeDetail[0].id}
-                onCancel={this.handleCancel}
-              />
+              <Message paperId={0} onCancel={this.handleCancel} />
             </Modal>
           </React.Fragment>
         )}

@@ -1,7 +1,7 @@
 import request from '@/utils/request'
 
 export default function getContribution() {
-  return request(`/tapi/user/getjudge`, {
+  return request(`/api/user/getjudge`, {
     method: 'get'
   })
 }
