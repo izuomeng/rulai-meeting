@@ -15,7 +15,7 @@ export const InjectClass = MyComponent => ({ className, ...others }) => (
  * @param {Array} args 请求函数的参数
  * @returns {Function} 高阶组件
  */
-export function RestClient(request, ...args) {
+export function RestClient(request, options) {
   return function(MyComponent) {
     return class WrappedRestClient extends React.PureComponent {
       state = {
@@ -24,7 +24,11 @@ export function RestClient(request, ...args) {
       }
       async componentDidMount() {
         try {
-          const { data } = await request(...args)
+          let reqArgs = options
+          if (typeof options === 'function') {
+            reqArgs = options(this.props)
+          }
+          const { data } = await request(reqArgs)
           this.setState({
             loading: false,
             result: data

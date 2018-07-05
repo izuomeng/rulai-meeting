@@ -21,7 +21,7 @@ export default {
         } = yield call(userService.getUserInfo)
         yield put({ type: 'save', payload: { ...data } })
       } catch (error) {
-        console.log('*fetch', error)
+        return
       }
     }
   },
