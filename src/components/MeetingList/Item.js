@@ -28,8 +28,18 @@ const Introduce = styled.div`
 `
 
 const Item = ({ meeting, handleClick = () => {}, extra }) => {
+  let selfExtra = extra
+  if (typeof extra === 'function') {
+    const Extra = extra
+    selfExtra = <Extra meeting={meeting} />
+  }
   return (
-    <StyledCard bordered={false} hoverable title={meeting.title} extra={extra}>
+    <StyledCard
+      bordered={false}
+      hoverable
+      title={meeting.title}
+      extra={selfExtra}
+    >
       <Introduce onClick={handleClick}>{meeting.introduction}</Introduce>
       <div>
         <Tip icon="solution" label="机构" value={meeting.organization.name} />

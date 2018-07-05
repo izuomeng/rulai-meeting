@@ -12,7 +12,12 @@ const LogResult = ({ state, handleChange, handleOpinionChange, opinion }) => (
       修改后通过
     </Radio>
     {state === 3 && (
-      <TextArea onChange={handleOpinionChange} value={opinion} rows={4} />
+      <TextArea
+        placeholder="输入评审意见"
+        onChange={handleOpinionChange}
+        value={opinion}
+        rows={4}
+      />
     )}
   </RadioGroup>
 )

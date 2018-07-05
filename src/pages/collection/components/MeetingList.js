@@ -1,19 +1,20 @@
 import React from 'react'
 import router from 'umi/router'
-import ItemCollection from './ItemCollection'
+import Item from 'CP/MeetingList/Item'
 
-const CollectionList = ({ items }) => {
+const MeetingList = ({ items, extra }) => {
   return (
     <React.Fragment>
-      {items.map(({ conferenceInfo: item }) => (
-        <ItemCollection
+      {items.map(item => (
+        <Item
           handleClick={() => router.push(`/detail/${item.id}`)}
           key={item.id}
           meeting={item}
+          extra={extra}
         />
       ))}
     </React.Fragment>
   )
 }
 
-export default CollectionList
+export default MeetingList

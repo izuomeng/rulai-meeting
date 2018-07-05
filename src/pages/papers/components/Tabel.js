@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import { InjectClass } from '@/utils/HOC'
 import LogResult from './LogResult'
 
-const filterState = state => ['未通过', '待审核', '已通过', '通过一半'][state]
+const filterState = state => ['未通过', '待审核', '已通过', '修改后通过'][state]
 
 const columns = ({ handleResult }) => [
   { title: 'ID', dataIndex: 'id', key: 'id' },
@@ -40,7 +40,9 @@ const T = styled(InjectClass(Table))`
 class MyTabel extends React.Component {
   state = {
     visible: false,
-    current: {}
+    current: {
+      opinion: ''
+    }
   }
   handleResult = result => {
     this.setState({ visible: true, current: result })
@@ -49,7 +51,7 @@ class MyTabel extends React.Component {
     const { current } = this.state
     this.props.onCheck({
       paperId: current.id,
-      opinion: current.opinion,
+      opinion: current.opinion || '',
       judgeStatusInt: current.judgeStatusInt
     })
     this.setState({ visible: false })

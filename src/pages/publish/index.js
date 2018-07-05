@@ -34,7 +34,9 @@ class Publish extends Component {
         ...fieldsValue,
         confBeginDate: transTime(fieldsValue.confDate[0]),
         confEndDate: transTime(fieldsValue.confDate[1]),
-        ddlDate: transTime(fieldsValue.ddlDate)
+        ddlDate: transTime(fieldsValue.ddlDate),
+        informDate: transTime(fieldsValue.informDate),
+        registerDate: transTime(fieldsValue.registerDate)
       }
       this.publishMeeting(form)
     })
@@ -42,7 +44,7 @@ class Publish extends Component {
   async publishMeeting(form) {
     try {
       const { userInfo } = this.props
-      await publish(userInfo.id, form)
+      await publish(userInfo.organization.id, form)
       message.success('发布成功')
       router.push('/released')
     } catch (error) {
@@ -78,11 +80,27 @@ class Publish extends Component {
             label="注册费用"
             prop="cost"
             type="number"
+            message="注册费用不能为空"
           />
           <FormItem
             decorator={getFieldDecorator}
             label="截稿日期"
             prop="ddlDate"
+            message="截稿日期不能为空"
+            isDatePicker
+          />
+          <FormItem
+            decorator={getFieldDecorator}
+            label="注册截止日期"
+            prop="registerDate"
+            message="注册截止日期不能为空"
+            isDatePicker
+          />
+          <FormItem
+            decorator={getFieldDecorator}
+            label="录用通知日期"
+            prop="informDate"
+            message="录用通知日期不能为空"
             isDatePicker
           />
           <FormItem
