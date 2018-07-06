@@ -19,7 +19,9 @@ class Papers extends Component {
   }
   handleCheckResult = async data => {
     await updatePaperStatus(data)
-    this.fetch()
+    // 更新论文列表
+    const { data: result } = await this.fetch()
+    this.setState({ data: result })
   }
   render() {
     const { location } = this.props

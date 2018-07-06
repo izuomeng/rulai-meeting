@@ -16,18 +16,23 @@ const logout = dispatch => {
 }
 
 const Avatar = ({ userInfo, dispatch }) => {
+  const { role } = userInfo
   return (
     <AvatarContainer>
       {userInfo.userName ? (
         <Dropdown
           overlay={
             <Menu>
-              <Menu.Item key="0">
-                <Link to="/">个人信息</Link>
-              </Menu.Item>
-              <Menu.Item key="1">
-                <Link to="/collection">我的收藏</Link>
-              </Menu.Item>
+              {role === 'user' && (
+                <Menu.Item key="0">
+                  <Link to="/">个人信息</Link>
+                </Menu.Item>
+              )}
+              {role === 'user' && (
+                <Menu.Item key="1">
+                  <Link to="/collection">我的收藏</Link>
+                </Menu.Item>
+              )}
               <Menu.Item>
                 <a onClick={() => logout(dispatch)}>登出</a>
               </Menu.Item>

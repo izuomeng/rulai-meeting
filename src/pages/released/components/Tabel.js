@@ -33,8 +33,8 @@ const columns = [
         <Link to={`/papers/${record.id}?title=${record.title}`}>投稿情况</Link>
         <Divider type="vertical" />
         <a>编辑</a>
-        <Divider type="vertical" />
-        <a style={{ color: 'red' }}>删除</a>
+        {/* <Divider type="vertical" />
+        <a style={{ color: 'red' }}>删除</a> */}
       </span>
     )
   }
