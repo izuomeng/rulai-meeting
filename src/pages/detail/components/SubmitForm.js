@@ -26,7 +26,7 @@ const formItemLayout = {
 //dragger上传文件
 const props = {
   name: 'file',
-  multiple: true,
+  multiple: false,
   action: '//jsonplaceholder.typicode.com/posts/',
   onChange(info) {
     const status = info.file.status
@@ -61,6 +61,7 @@ class SubForm extends React.Component {
     this.setState({ loading: true })
     this.props.form.validateFields(async (err, values) => {
       if (err) {
+        this.setState({ loading: false })
         return
       }
       console.log('Received values of form: ', values)
@@ -86,17 +87,13 @@ class SubForm extends React.Component {
       if (err) {
         return
       }
-      if (current === 0) {
-        this.setState({})
-      } else if (current === 1) {
+      if (current === 1) {
         this.setState({
           params: {
             title: values.title,
             abstractInfo: values.abstract
           }
         })
-      } else if (current === 2) {
-        this.setState({})
       }
       const next = current + 1
       this.setState({
@@ -115,7 +112,6 @@ class SubForm extends React.Component {
   handleChange = async ({ file }) => {
     const base64 = await getBase64(file)
     this.file = base64
-    console.log(this.file)
   }
 
   handleRemove = () => {
@@ -131,7 +127,7 @@ class SubForm extends React.Component {
 
   render() {
     const { getFieldDecorator } = this.props.form
-    const { current, loading } = this.state
+    const { current, loading, params } = this.state
     const { userInfo } = this.props
     return (
       <React.Fragment>
@@ -144,7 +140,8 @@ class SubForm extends React.Component {
           {current === 0 ? (
             <React.Fragment>
               <MyFormItem content={'真实姓名 ：' + userInfo.name} />
-              <MyFormItem content={'单位/机构：' + userInfo.institution} />
+              <MyFormItem content={'身份证号 ：' + userInfo.realId} />
+              <MyFormItem content={'单位机构 ：' + userInfo.institution} />
               <MyFormItem content={'联系邮箱 ：' + userInfo.email} />
               {/* <FormItem>
                 {getFieldDecorator('userName', {
@@ -189,7 +186,8 @@ class SubForm extends React.Component {
             <React.Fragment>
               <FormItem {...formItemLayout} label="题目">
                 {getFieldDecorator('title', {
-                  rules: [{ required: true, message: '题目不能为空！' }]
+                  rules: [{ required: true, message: '题目不能为空！' }],
+                  initialValue: params.title
                 })(
                   <Input
                     prefix={
@@ -201,7 +199,8 @@ class SubForm extends React.Component {
               </FormItem>
               <FormItem {...formItemLayout} label="摘要">
                 {getFieldDecorator('abstract', {
-                  rules: [{ required: true, message: '摘要不能为空！' }]
+                  rules: [{ required: true, message: '摘要不能为空！' }],
+                  initialValue: params.abstractInfo
                 })(
                   <TextArea
                     placeholder="论文摘要"
@@ -221,13 +220,16 @@ class SubForm extends React.Component {
             <React.Fragment>
               <FormItem style={{ textAlign: 'center' }}>
                 {getFieldDecorator('upload', {
-                  rules: [{ required: true, message: '请上传论文' }]
+                  rules: [{ required: true, message: '请上传论文' }],
+                  initialValue: this.state.fileList
                 })(
                   <Dragger
                     {...props}
                     beforeUpload={this.beforeUpload}
                     onChange={this.handleChange}
                     onRemove={this.handleRemove}
+                    fileList={this.state.fileList}
+                    // disabled=
                   >
                     <p className="ant-upload-drag-icon">
                       <Icon type="inbox" />
@@ -239,7 +241,7 @@ class SubForm extends React.Component {
                       className="ant-upload-hint"
                       style={{ margin: '0px 20px' }}
                     >
-                      将论文进行上传，论文格式支持.pdf、.doc、.docx等格式，不支持.txt格式。
+                      将论文进行上传，论文格式支持.pdf/.doc格式，不支持.txt/.docx格式。
                       一次只能上传一个文件。
                     </p>
                   </Dragger>
