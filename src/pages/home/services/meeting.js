@@ -8,7 +8,6 @@ export function registerMeetings(data) {
   return request(`/api/user/conference/join/registration`, {
     method: 'post',
     body: {
-      conferenceID: 1,
       ...data
     }
   })
