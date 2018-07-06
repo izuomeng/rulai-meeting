@@ -1,7 +1,13 @@
-import React from 'react'
-
-const Contribution = () => {
-  return <div>投稿列表</div>
+import React, { Component } from 'react'
+import ContributionList from './components/contributionList'
+class Contribution extends Component {
+  render() {
+    return (
+      <React.Fragment>
+        <ContributionList />
+      </React.Fragment>
+    )
+  }
 }
 
 export default Contribution

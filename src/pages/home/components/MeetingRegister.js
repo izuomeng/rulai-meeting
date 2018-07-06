@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { InjectClass } from '@/utils/HOC'
 import { getBase64 } from '@/utils'
 import produce from 'immer'
-import { Input, Form, Radio, Upload, Button, Icon, Checkbox } from 'antd'
+import { Input, Form, Radio, Upload, Button, Icon } from 'antd'
 
 const FormItem = Form.Item
 const Label = styled.div`
@@ -23,20 +23,28 @@ class MeetingRegister extends React.Component {
       joinConferenceGroup: {
         paperID: null,
         joinConferencePeopleList: [
-          { name: '' },
-          { realID: '' },
-          { sex: '' },
-          { ordered: false }
+          {
+            name: '',
+            realID: '',
+            sex: '',
+            ordered: false
+          }
         ],
-        listenMeeting: false
+        evidence: []
       },
       fileList: []
     }
-    this.feeImages = ''
+    this.evidence = ''
   }
   handleChange = async ({ file }) => {
     const base64 = await getBase64(file)
-    this.feeImages = base64
+    this.evidence = [base64]
+    this.setState({
+      joinConferenceGroup: {
+        ...this.state.joinConferenceGroup,
+        evidence: this.evidence
+      }
+    })
   }
   handleRemove = () => {
     this.setState({ fileList: [] })
@@ -85,7 +93,25 @@ class MeetingRegister extends React.Component {
               }}
               placeholder="请输入姓名"
             />
-            <Input
+            <RadioGroup
+              onChange={e => {
+                const newGroup = produce(
+                  this.state.joinConferenceGroup,
+                  obj => {
+                    if (e.target.value === 1) {
+                      obj.joinConferencePeopleList[0].sex = '男'
+                    } else {
+                      obj.joinConferencePeopleList[0].sex = '女'
+                    }
+                  }
+                )
+                this.setState({ joinConferenceGroup: newGroup })
+              }}
+            >
+              <Radio value={1}>男</Radio>
+              <Radio value={2}>女</Radio>
+            </RadioGroup>
+            {/* <Input
               value={
                 this.state.joinConferenceGroup.joinConferencePeopleList[2].sex
               }
@@ -98,18 +124,18 @@ class MeetingRegister extends React.Component {
                 )
                 this.setState({ joinConferenceGroup: newGroup })
               }}
-              placeholder="请输入性别"
-            />
+              placeholder="请输入性别" */}
+
             <Input
               value={
-                this.state.joinConferenceGroup.joinConferencePeopleList[1]
+                this.state.joinConferenceGroup.joinConferencePeopleList[0]
                   .realID
               }
               onChange={e => {
                 const newGroup = produce(
                   this.state.joinConferenceGroup,
                   obj => {
-                    obj.joinConferencePeopleList[1].realID = e.target.value
+                    obj.joinConferencePeopleList[0].realID = e.target.value
                   }
                 )
                 this.setState({ joinConferenceGroup: newGroup })
@@ -121,10 +147,10 @@ class MeetingRegister extends React.Component {
                 const newGroup = produce(
                   this.state.joinConferenceGroup,
                   obj => {
-                    if (e.target.value === '预定住宿') {
-                      obj.joinConferencePeopleList[3].ordered = true
+                    if (e.target.value === 1) {
+                      obj.joinConferencePeopleList[0].ordered = true
                     } else {
-                      obj.joinConferencePeopleList[3].ordered = false
+                      obj.joinConferencePeopleList[0].ordered = false
                     }
                   }
                 )
@@ -150,7 +176,7 @@ class MeetingRegister extends React.Component {
             </Upload>
           </FormItem>
           <FormItem>
-            <Checkbox
+            {/* <Checkbox
               onChange={e => {
                 const newGroup = produce(
                   this.state.joinConferenceGroup,
@@ -166,7 +192,7 @@ class MeetingRegister extends React.Component {
               }}
             >
               聆听参会
-            </Checkbox>
+            </Checkbox> */}
             <div>
               <StyledButton onClick={() => this.props.handleSubmit(false)}>
                 取消
@@ -176,8 +202,7 @@ class MeetingRegister extends React.Component {
                 style={{ marginLeft: 40 }}
                 onClick={() =>
                   this.props.handleSubmit({
-                    ...form,
-                    feeImages: this.feeImages
+                    ...form
                   })
                 }
               >
