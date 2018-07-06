@@ -8,3 +8,7 @@ export function getReleasedMeetings({ page = 1, orgId }) {
     }
   })
 }
+
+export function getMeetingInfo(id) {
+  return request(`/api/user/conference/${id}`)
+}

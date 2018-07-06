@@ -37,7 +37,7 @@ class Layout extends React.Component {
   }
   static getDerivedStateFromProps(nextProp, prevState) {
     const inNavBar = path =>
-      ['/', '/home', '/collection', '/released'].includes(path)
+      ['/', '/home', '/collection', '/released', '/admin'].includes(path)
     const { pathname } = nextProp.location
     if (inNavBar(pathname)) {
       return {
@@ -76,7 +76,9 @@ class Layout extends React.Component {
           selectedKeys={[this.state.current]}
         >
           <Menu.Item key="/">Lein Meeting</Menu.Item>
-          {role !== 'organizer' && <Menu.Item key="/home">主页</Menu.Item>}
+          {role === 'admin' && <Menu.Item key="/admin">管理</Menu.Item>}
+          {role !== 'organizer' &&
+            role !== 'admin' && <Menu.Item key="/home">主页</Menu.Item>}
           {role === 'user' && (
             <Menu.Item key="/contribution">我的投稿</Menu.Item>
           )}
