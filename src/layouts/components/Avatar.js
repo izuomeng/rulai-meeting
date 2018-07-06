@@ -25,7 +25,7 @@ const Avatar = ({ userInfo, dispatch }) => {
             <Menu>
               {role === 'user' && (
                 <Menu.Item key="0">
-                  <Link to="/">个人信息</Link>
+                  <Link to="/info">个人信息</Link>
                 </Menu.Item>
               )}
               {role === 'user' && (
