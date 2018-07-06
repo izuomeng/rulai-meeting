@@ -10,22 +10,19 @@ class Admin extends Component {
     list: [],
     loading: true
   }
-  async componentDidMount() {
-    const {
-      data: { data }
-    } = await this.fetch()
-    this.setState({ list: data.items, loading: false })
+  componentDidMount() {
+    this.fetch()
   }
   handleCheck = async (conf, pass) => {
     await updateConf({ confId: conf.id, organizationStatus: pass })
     message.success('评审成功')
+    this.fetch()
+  }
+  async fetch() {
     const {
       data: { data }
-    } = await this.fetch()
-    this.setState({ list: data.items })
-  }
-  fetch() {
-    return getRegisterList()
+    } = await getRegisterList()
+    this.setState({ list: data.items, loading: false })
   }
   render() {
     const { loading, list } = this.state

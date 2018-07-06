@@ -45,17 +45,17 @@ const SubTitle = styled.div`
   font-size: 0.8em;
   margin-top: 4px;
 `
-const TitleCard = ({ children, title, subtitle, hasAdd = true }) => {
+const TitleCard = ({
+  children,
+  title,
+  subtitle,
+  hasAdd = true,
+  handleAdd = () => router.push('/publish')
+}) => {
   return (
     <Card>
       <Title>
-        {hasAdd && (
-          <AddButton
-            onClick={() => router.push('/publish')}
-            shape="circle"
-            icon="plus"
-          />
-        )}
+        {hasAdd && <AddButton onClick={handleAdd} shape="circle" icon="plus" />}
         {title}
         <SubTitle>{subtitle}</SubTitle>
       </Title>

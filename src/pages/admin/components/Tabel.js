@@ -6,6 +6,7 @@ import { InjectClass } from '@/utils/HOC'
 const columns = ({ handleCheck }) => [
   { title: '机构ID', dataIndex: 'organizationID', key: 'organizationID' },
   { title: '机构名称', dataIndex: 'organizationName', key: 'organizationName' },
+  { title: '邮箱', dataIndex: 'mail', key: 'mail' },
   { title: '法人信息', dataIndex: 'legalInfo', key: 'legalInfo' },
   { title: '企业信用代码', dataIndex: 'creditCode', key: 'realid' },
   { title: '证明附件', dataIndex: 'attachment', key: 'attachment' },

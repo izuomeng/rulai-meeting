@@ -36,7 +36,7 @@ class Search extends Component {
     this.setState({ searchInput: e.target.value })
     this.betterSearch(e.target.value)
   }
-  betterSearch = debounce(this.handleSearch)
+  betterSearch = debounce(this.handleSearch, 200)
   async handleSearch(value) {
     const {
       data: { data }
