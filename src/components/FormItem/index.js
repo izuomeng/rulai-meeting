@@ -23,10 +23,12 @@ const MyItem = ({
   rules = [],
   isDatePicker = false,
   isRangePicker = false,
+  initialValue,
   ...rest
 }) => {
   const config = {
-    rules: [{ required, message }, ...rules]
+    rules: [{ required, message }, ...rules],
+    initialValue
   }
   return (
     <FormItem {...formItemLayout} label={label}>

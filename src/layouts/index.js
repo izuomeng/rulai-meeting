@@ -37,7 +37,15 @@ class Layout extends React.Component {
   }
   static getDerivedStateFromProps(nextProp, prevState) {
     const inNavBar = path =>
-      ['/', '/home', '/collection', '/released', '/admin'].includes(path)
+      [
+        '/',
+        '/home',
+        '/collection',
+        '/released',
+        '/admin',
+        '/contribution',
+        '/account'
+      ].includes(path)
     const { pathname } = nextProp.location
     if (inNavBar(pathname)) {
       return {
@@ -62,7 +70,7 @@ class Layout extends React.Component {
     const {
       location: { pathname },
       children,
-      userInfo: { role, id }
+      userInfo: { role, id, root }
     } = this.props
     if (this.withoutHeader(pathname)) {
       return <React.Fragment>{children}</React.Fragment>
@@ -86,7 +94,8 @@ class Layout extends React.Component {
           {role === 'organizer' && (
             <Menu.Item key="/released">我的发布</Menu.Item>
           )}
-
+          {role === 'organizer' &&
+            root && <Menu.Item key="/account">账号管理</Menu.Item>}
           <RightContainer>
             <Search />
             <Avatar />

@@ -67,7 +67,6 @@ class MyTabel extends React.Component {
   render() {
     const { loading, data } = this.props
     const { visible } = this.state
-    console.info(data)
     return (
       <React.Fragment>
         {!loading && (
