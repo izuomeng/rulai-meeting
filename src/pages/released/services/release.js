@@ -19,3 +19,9 @@ export function updateMeeting(id, body) {
     body
   })
 }
+
+export function removeMeeting(id) {
+  return request(`/api/organization/conference?conference_id=${id}`, {
+    method: 'delete'
+  })
+}

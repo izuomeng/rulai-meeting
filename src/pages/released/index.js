@@ -4,7 +4,11 @@ import Loading from 'CP/Loading'
 import TitleCard from 'CP/TitleCard'
 import { connect } from 'dva'
 import { transTime } from '@/utils'
-import { getReleasedMeetings, updateMeeting } from './services/release'
+import {
+  getReleasedMeetings,
+  updateMeeting,
+  removeMeeting
+} from './services/release'
 import Tabel from './components/Tabel'
 import MeetingInfo from './components/MeetingInfo'
 
@@ -56,6 +60,11 @@ class Released extends React.Component {
       this.fetch()
     })
   }
+  handleDelete = async meeting => {
+    await removeMeeting(meeting.id)
+    message.success('删除成功')
+    this.fetch()
+  }
   render() {
     const { loading, data, current } = this.state
     return (
@@ -67,7 +76,11 @@ class Released extends React.Component {
             title="已发布会议"
             subtitle="查看和编辑已发布会议，新建会议"
           >
-            <Tabel list={data.items} handleEdit={this.handleEdit} />
+            <Tabel
+              list={data.items}
+              handleEdit={this.handleEdit}
+              handleDelete={this.handleDelete}
+            />
             <div style={{ textAlign: 'center' }}>
               <Pagination
                 current={current}

@@ -18,6 +18,11 @@ export default {
     '/api': {
       target: 'http://140.143.208.38:8080/demo-0.0.1-SNAPSHOT',
       changeOrigin: true
+    },
+    '/dapi': {
+      target: 'http://140.143.208.38:8080/demo-0.0.1-SNAPSHOT',
+      changeOrigin: true,
+      pathRewrite: { '^/dapi': '' }
     }
   }
 }

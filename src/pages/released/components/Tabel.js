@@ -1,10 +1,26 @@
-import { Table, Divider } from 'antd'
+import { Table, Divider, Popover } from 'antd'
 import React from 'react'
 import styled from 'styled-components'
 import { InjectClass } from '@/utils/HOC'
 import Link from 'umi/link'
 
-const columns = ({ handleEdit }) => [
+const D = styled.span`
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  max-width: 80px;
+  display: inline-block;
+`
+const FullD = styled.div`
+  max-width: 500px;
+`
+const Desc = ({ record }) => (
+  <Popover content={<FullD>{record.introduction}</FullD>}>
+    <D>{record.introduction}</D>
+  </Popover>
+)
+
+const columns = ({ handleEdit, handleDelete }) => [
   {
     title: 'ID',
     dataIndex: 'id',
@@ -16,14 +32,9 @@ const columns = ({ handleEdit }) => [
     key: 'title'
   },
   {
-    title: '开始时间',
-    dataIndex: 'confBeginDate',
-    key: 'confBeginDate'
-  },
-  {
-    title: '截稿时间',
-    dataIndex: 'ddlDate',
-    key: 'ddlDate'
+    title: '会议介绍',
+    key: 'introduction',
+    render: (text, record) => <Desc record={record} />
   },
   {
     title: '操作',
@@ -32,13 +43,19 @@ const columns = ({ handleEdit }) => [
       <span>
         <Link to={`/papers/${record.id}?title=${record.title}`}>投稿情况</Link>
         <Divider type="vertical" />
+        <a href={`/dapi/download/excel/conference?conference_id=${record.id}`}>
+          导出投稿
+        </a>
+        <Divider type="vertical" />
         <Link to={`/meeting-register/${record.id}?title=${record.title}`}>
           注册情况
         </Link>
         <Divider type="vertical" />
         <a onClick={() => handleEdit(record)}>编辑</a>
-        {/* <Divider type="vertical" />
-        <a style={{ color: 'red' }}>删除</a> */}
+        <Divider type="vertical" />
+        <a onClick={() => handleDelete(record)} style={{ color: 'red' }}>
+          删除
+        </a>
       </span>
     )
   }
@@ -75,7 +92,10 @@ const MyTabel = props => {
   return (
     <T
       pagination={false}
-      columns={columns({ handleEdit: props.handleEdit })}
+      columns={columns({
+        handleEdit: props.handleEdit,
+        handleDelete: props.handleDelete
+      })}
       dataSource={props.list}
       rowKey="id"
       {...props}

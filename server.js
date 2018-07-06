@@ -12,10 +12,16 @@ const proxyConfig2 = {
   changeOrigin: true,
   pathRewrite: { '^/tapi': '' }
 }
+const proxyConfig3 = {
+  target: 'http://140.143.208.38:8080/demo-0.0.1-SNAPSHOT',
+  changeOrigin: true,
+  pathRewrite: { '^/dapi': '' }
+}
 
 app.use(express.static(path.resolve(__dirname, 'dist')))
 app.use('/api', proxyMid(proxyConfig1))
 app.use('/tapi', proxyMid(proxyConfig2))
+app.use('/dapi', proxyMid(proxyConfig3))
 
 app.use(function(err, req, res, next) {
   res.status(err.status || 500)
