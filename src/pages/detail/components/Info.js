@@ -10,7 +10,7 @@ const MyContainer = styled.div`
 const Theme = styled(
   InjectClass(props => (
     <MyContainer>
-      <Icon type="smile-o" spin="true" style={{ fontSize: 25 }} />
+      <Icon type="line-chart" style={{ fontSize: 25 }} />
       <span className={props.className}>
         {props.label}：{props.value}
       </span>
@@ -25,15 +25,20 @@ const Theme = styled(
 const Tip = styled(
   InjectClass(props => (
     <div className={props.className}>
+      <Icon type={props.iconType} style={{ marginRight: 6, fontSize: 16 }} />
       {props.label}: {props.value}
     </div>
   ))
-)``
+)`
+  margin-top: 10px;
+`
 
-const Container = styled.div`
+const ContainerPar = styled.div`
+  display: flex;
+`
+const ContainerKid = styled.div`
   padding-left: 30px;
-  width: 30%;
-  display: inline-block;
+  flex: 1;
 `
 
 const Info = ({ meeting }) => {
@@ -41,18 +46,51 @@ const Info = ({ meeting }) => {
   return (
     <Card style={{ padding: '30px' }}>
       <Theme label="会议名称" value={meeting.title} />
-      <Container>
-        <Tip label="发布机构" value={meeting.organization.name} />
-        <Tip label="创建日期" value={meeting.registerDate} />
-        <Tip label="截稿日期" value={meeting.ddlDate} />
-        <Tip label="联系方式" value={meeting.contact} />
-      </Container>
-      <Container>
-        <Tip label="录用通知日期" value={meeting.informDate} />
-        <Tip label="会议注册日期" value={meeting.registerDate} />
-        <Tip label="会议开始日期" value={meeting.confBeginDate} />
-        <Tip label="注册费用" value={meeting.cost} />
-      </Container>
+      <ContainerPar>
+        <ContainerKid>
+          <Tip
+            label="发布机构名称"
+            value={meeting.organization.name}
+            iconType="home"
+          />
+          <Tip label="邮箱地址" value={meeting.contact} iconType="mail" />
+          <Tip label="注册费用" value={meeting.cost} iconType="pay-circle-o" />
+        </ContainerKid>
+        <ContainerKid>
+          <Tip
+            label="会议创建日期"
+            value={meeting.setDate}
+            iconType="clock-circle-o"
+          />
+          <Tip
+            label="论文截稿日期"
+            value={meeting.ddlDate}
+            iconType="clock-circle-o"
+          />
+          <Tip
+            label="录用通知日期"
+            value={meeting.informDate}
+            iconType="clock-circle-o"
+          />
+        </ContainerKid>
+        <ContainerKid>
+          <Tip
+            label="注册截止日期"
+            value={meeting.registerDate}
+            iconType="clock-circle-o"
+          />
+          <Tip
+            label="会议开始日期"
+            value={meeting.confBeginDate}
+            iconType="clock-circle-o"
+          />
+          <Tip
+            label="会议结束日期"
+            value={meeting.confBeginDate}
+            iconType="clock-circle-o"
+          />
+        </ContainerKid>
+      </ContainerPar>
     </Card>
   )
 }

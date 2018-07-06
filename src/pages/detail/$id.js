@@ -2,111 +2,131 @@ import React from 'react'
 import withRouter from 'umi/withRouter'
 import Info from './components/Info'
 import Item from './components/Item'
-import { Button, Modal } from 'antd'
+import { Button, Modal, message } from 'antd'
 import { getMeetingsByID } from './services/meeting'
 import Procedure from './components/Procedure'
 import SubmitForm from './components/SubmitForm'
 import { RestClient } from '@/utils/HOC'
+import Loading from '@/components/Loading'
+import styled from 'styled-components'
+import { connect } from 'dva'
 
-// const fakeData = {
-//   id: 1,
-//   title: '讨论崔明亮有多傻大会',
-//   introduction:
-//     '这是一个非常严肃的会议，讨论崔明亮有多傻大会。这是一个非常严肃的会议，讨论崔明亮有多傻大会。这是一个非常严肃的会议，讨论崔明亮有多傻大会。这是一个非常严肃的会议，讨论崔明亮有多傻大会。这是一个非常严肃的会议，讨论崔明亮有多傻大会。这是一个非常严肃的会议，讨论崔明亮有多傻大会。这是一个非常严肃的会议，讨论崔明亮有多傻大会。这是一个非常严肃的会议，讨论崔明亮有多傻大会。这是一个非常严肃的会议，讨论崔明亮有多傻大会。这是一个非常严肃的会议，讨论崔明亮有多傻大会。这是一个非常严肃的会议，讨论崔明亮有多傻大会。这是一个非常严肃的会议，讨论崔明亮有多傻大会。这是一个非常严肃的会议，讨论崔明亮有多傻大会。这是一个非常严肃的会议，讨论崔明亮有多傻大会。这是一个非常严肃的会议，讨论崔明亮有多傻大会。这是一个非常严肃的会议，讨论崔明亮有多傻大会。这是一个非常严肃的会议，讨论崔明亮有多傻大会。这是一个非常严肃的会议，讨论崔明亮有多傻大会。这是一个非常严肃的会议，讨论崔明亮有多傻大会。这是一个非常严肃的会议，讨论崔明亮有多傻大会。这是一个非常严肃的会议，讨论崔明亮有多傻大会。这是一个非常严肃的会议，讨论崔明亮有多傻大会。这是一个非常严肃的会议，讨论崔明亮有多傻大会。这是一个非常严肃的会议，讨论崔明亮有多傻大会。这是一个非常严肃的会议，讨论崔明亮有多傻大会。这是一个非常严肃的会议，讨论崔明亮有多傻大会。这是一个非常严肃的会议，讨论崔明亮有多傻大会。这是一个非常严肃的会议，讨论崔明亮有多傻大会。这是一个非常严肃的会议，讨论崔明亮有多傻大会。这是一个非常严肃的会议，讨论崔明亮有多傻大会。这是一个非常严肃的会议，讨论崔明亮有多傻大会。',
-//   requirement:
-//     '凡是说崔明亮傻的材料都可以入围。凡是说崔明亮傻的材料都可以入围。凡是说崔明亮傻的材料都可以入围。凡是说崔明亮傻的材料都可以入围。凡是说崔明亮傻的材料都可以入围。凡是说崔明亮傻的材料都可以入围。凡是说崔明亮傻的材料都可以入围。凡是说崔明亮傻的材料都可以入围。凡是说崔明亮傻的材料都可以入围。凡是说崔明亮傻的材料都可以入围。凡是说崔明亮傻的材料都可以入围。凡是说崔明亮傻的材料都可以入围。凡是说崔明亮傻的材料都可以入围。凡是说崔明亮傻的材料都可以入围。凡是说崔明亮傻的材料都可以入围。凡是说崔明亮傻的材料都可以入围。凡是说崔明亮傻的材料都可以入围。凡是说崔明亮傻的材料都可以入围。凡是说崔明亮傻的材料都可以入围。凡是说崔明亮傻的材料都可以入围。凡是说崔明亮傻的材料都可以入围。凡是说崔明亮傻的材料都可以入围。凡是说崔明亮傻的材料都可以入围。凡是说崔明亮傻的材料都可以入围。凡是说崔明亮傻的材料都可以入围。凡是说崔明亮傻的材料都可以入围。凡是说崔明亮傻的材料都可以入围。凡是说崔明亮傻的材料都可以入围。凡是说崔明亮傻的材料都可以入围。凡是说崔明亮傻的材料都可以入围。凡是说崔明亮傻的材料都可以入围。凡是说崔明亮傻的材料都可以入围。凡是说崔明亮傻的材料都可以入围。凡是说崔明亮傻的材料都可以入围。凡是说崔明亮傻的材料都可以入围。凡是说崔明亮傻的材料都可以入围。凡是说崔明亮傻的材料都可以入围。凡是说崔明亮傻的材料都可以入围。',
-//   ddlDate: '2018.5.22',
-//   informDate: '2018.5.22',
-//   registerDate: '2018.6.22',
-//   confBeginDate: '2018.7.22',
-//   organization: {
-//     id: 1,
-//     name: '北航'
-//   },
-//   storagePath: ['d:/', 'e:/', 'c:/'],
-//   cost: '130',
-//   accommodationInfo:
-//     '批判的最狠的住总统包房，批判的一般的住普通酒店，表扬的住厕所',
-//   contact: '110',
-//   confEndDate: '2018.8.22',
-//   schedule: '日程安排'
-// }
+const Container = styled.div`
+  background-color: white;
+  margin: 0px auto;
+  width: 75%;
+  min-width: 800px;
+  padding-bottom: 1px;
+`
 
 class Meeting extends React.Component {
   state = {
     visible: false
   }
 
-  showModal = () => {
-    this.setState({
-      visible: true
-    })
+  showModal = data => {
+    if (data.name && data.institution) {
+      this.setState({
+        visible: true
+      })
+    } else {
+      message.error('请先补全个人信息')
+    }
   }
 
-  handleClick = type => {
-    if (type === 'ok') {
-      // this.setState({ loading: true })
-      // setTimeout(() => {
-      //   this.setState({ loading: false, visible: false })
-      // }, 3000)
-      this.setState({ visible: false })
-    } else if (type === 'cancel') {
-      this.setState({ visible: false })
-    }
+  handleClick = () => {
+    this.setState({ visible: false })
   }
 
   render() {
-    const { data, loading } = this.props
-    console.log(data)
+    const {
+      data: { data },
+      loading
+    } = this.props
+    // console.log('test', loading)
+    if (loading) return <Loading />
     const { visible } = this.state
-    if (loading || !data.introduction) {
-      return null
+
+    const nowTime = new Date().getTime()
+    const ddlDate = new Date(data.ddlDate).getTime()
+    const informDate = new Date(data.informDate).getTime()
+    const registerDate = new Date(data.registerDate).getTime()
+    const confBeginDate = new Date(data.confBeginDate).getTime()
+    const confEndDate = new Date(data.confEndDate).getTime()
+    let checkPoint = 0
+    switch (true) {
+      case ddlDate - nowTime >= 0:
+        checkPoint = 0
+        break
+      case ddlDate - nowTime < 0 && informDate - nowTime >= 0:
+        checkPoint = 1
+        break
+      case informDate - nowTime < 0 && registerDate - nowTime >= 0:
+        checkPoint = 2
+        break
+      case ddlDate - nowTime < 0 && confBeginDate - nowTime >= 0:
+        checkPoint = 3
+        break
+      case ddlDate - nowTime < 0 && confEndDate - nowTime >= 0:
+        checkPoint = 4
+        break
+      case confEndDate - nowTime < 0:
+        checkPoint = 5
+        break
+      default:
+        checkPoint = 0
     }
+
+    const { userInfo } = this.props
     return (
-      <div
-        style={{
-          backgroundColor: 'white',
-          margin: '0px auto',
-          width: '70%',
-          minWidth: 800
-        }}
-      >
-        <Info meeting={data} />
-        <Procedure label="会议流程" />
-        <Item label="会议简介" value={data.introduction} />
-        <Item label="正文信息" value={data.requirement} />
-        <Item label="住宿交通" value={data.accommodationInfo} />
+      <React.Fragment>
+        {loading ? (
+          <Loading />
+        ) : (
+          <Container>
+            <Info meeting={data} />
+            <Procedure label="会议流程" checkPoint={checkPoint} data={data} />
+            <Item label="会议简介" value={data.introduction} />
+            <Item label="征文信息" value={data.requirement} />
+            <Item label="日程安排" value={data.schedule} />
+            <Item label="住宿交通" value={data.accommodationInfo} />
 
-        <Button
-          type="primary"
-          icon="download"
-          size={'large'}
-          style={{ margin: '40px 0px 60px 200px' }}
-          href="/user/test/xxxx.txt"
-          download="论文模板.txt"
-        >
-          下载论文模板
-        </Button>
-        <Button
-          type="primary"
-          size={'large'}
-          style={{ marginLeft: 200, width: 150 }}
-          onClick={this.showModal}
-        >
-          在线会议投稿
-        </Button>
-
-        <Modal
-          style={{ top: 20 }}
-          visible={visible}
-          title="论文投稿"
-          footer={null}
-          onCancel={() => this.handleClick('cancel')}
-          onOk={() => this.handleClick('ok')}
-        >
-          <SubmitForm handleClick={this.handleClick} />
-        </Modal>
-      </div>
+            <div style={{ textAlign: 'center', margin: '40px 0' }}>
+              <Button
+                type="primary"
+                icon="download"
+                size={'large'}
+                href="/user/test/xxxx.txt"
+                download="论文模板.txt"
+              >
+                下载论文模板
+              </Button>
+              <Button
+                type="primary"
+                size={'large'}
+                style={{ marginLeft: 200, width: 150 }}
+                onClick={() => this.showModal(userInfo)}
+              >
+                在线会议投稿
+              </Button>
+            </div>
+            <Modal
+              // style={{ top: 20 }}
+              visible={visible}
+              title="论文投稿"
+              footer={null}
+              destroyOnClose={true}
+              onCancel={this.handleClick}
+              onOk={this.handleClick}
+            >
+              <SubmitForm
+                handleClick={this.handleClick}
+                id={this.props.match.params.id}
+              />
+            </Modal>
+          </Container>
+        )}
+      </React.Fragment>
     )
   }
 }
@@ -118,4 +138,8 @@ const Detail = props => {
   return <MyComponent {...props} />
 }
 
-export default withRouter(Detail)
+const mapState = state => ({
+  userInfo: state.user
+})
+
+export default withRouter(connect(mapState)(Detail))
