@@ -1,7 +1,7 @@
 import request from '@/utils/request'
 
-export function getAllCollections(id = 1) {
-  return request(`/tapi/user/collection_list/${id}`, {
+export function getAllCollections() {
+  return request(`/api/user/collection_list/1`, {
     method: 'get'
   })
 }

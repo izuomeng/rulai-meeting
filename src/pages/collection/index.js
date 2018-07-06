@@ -6,7 +6,6 @@ import Loading from '@/components/Loading'
 import { Icon, Button } from 'antd'
 import { getAllCollections } from './services/collection'
 import { deleteCollection } from './services/deleteCollection'
-import { clearAllCollection } from './services/clearAll'
 
 const Container = styled.div`
   display: block;
@@ -14,28 +13,33 @@ const Container = styled.div`
 
 const Extra = props => (
   <React.Fragment>
-    <Button type="danger" onClick={clearAllCollection()}>
-      <Icon type="exclamation-circle" style={{ marginRight: '8px' }} />清空收藏列表
-    </Button>
-    <Button type="danger" onClick={deleteCollection()}>
-      <Icon type="close-circle-o" style={{ marginRight: '8px' }} />取消收藏
+    <Button type="danger" onClick={props.handleDelete}>
+      <Icon type="close-circle-o" style={{ marginRight: '8px' }} />删除
     </Button>
   </React.Fragment>
 )
 
 class Collection extends React.Component {
+  handleDelete = () => {
+    deleteCollection()
+  }
   render() {
-    const { data, loading } = this.props
-    console.log(data)
+    const {
+      data: { items },
+      loading
+    } = this.props
     return (
       <Container>
         {loading ? (
           <Loading />
         ) : (
-          <MeetingList extra={<Extra />} items={data.items} />
+          <MeetingList
+            extra={<Extra handleDelete={this.handleDelete} />}
+            items={items}
+          />
         )}
       </Container>
     )
   }
 }
-export default RestClient(getAllCollections, 1)(Collection)
+export default RestClient(getAllCollections)(Collection)
