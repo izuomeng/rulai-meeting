@@ -1,9 +1,10 @@
 import React from 'react'
-import { Pagination, Modal } from 'antd'
+import { Pagination, Modal, message } from 'antd'
 import Loading from 'CP/Loading'
 import TitleCard from 'CP/TitleCard'
 import { connect } from 'dva'
-import { getReleasedMeetings } from './services/release'
+import { transTime } from '@/utils'
+import { getReleasedMeetings, updateMeeting } from './services/release'
 import Tabel from './components/Tabel'
 import MeetingInfo from './components/MeetingInfo'
 
@@ -15,7 +16,10 @@ class Released extends React.Component {
     editDialog: false
   }
   currentMeeting = {}
-  async componentDidMount() {
+  componentDidMount() {
+    this.fetch()
+  }
+  async fetch() {
     const orgId = this.props.userInfo.organization.id
     const {
       data: { data }
@@ -24,7 +28,6 @@ class Released extends React.Component {
     })
     this.setState({ data, loading: false })
   }
-
   onPageChange = async page => {
     const {
       data: { data }
@@ -39,10 +42,18 @@ class Released extends React.Component {
     this.setState({ editDialog: true })
   }
   handleEditDone = form => {
-    this.setState({ editDialog: false }, () => {
+    this.setState({ editDialog: false }, async () => {
       if (!form) {
         return
       }
+      await updateMeeting(this.currentMeeting.id, {
+        ...this.currentMeeting,
+        ...form,
+        confBeginDate: transTime(this.currentMeeting.confBeginDate),
+        ddlDate: transTime(form.ddlDate || this.currentMeeting.ddlDate)
+      })
+      message.success('更新成功')
+      this.fetch()
     })
   }
   render() {
@@ -68,12 +79,16 @@ class Released extends React.Component {
           </TitleCard>
         )}
         <Modal
+          destroyOnClose
           visible={this.state.editDialog}
           title="编辑会议信息"
           footer={null}
           onCancel={() => this.setState({ editDialog: false })}
         >
-          <MeetingInfo confId={this.currentMeeting.id} />
+          <MeetingInfo
+            handleSubmit={this.handleEditDone}
+            confId={this.currentMeeting.id}
+          />
         </Modal>
       </React.Fragment>
     )

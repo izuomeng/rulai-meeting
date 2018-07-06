@@ -31,7 +31,7 @@ const Children = styled.div`
   overflow: auto;
   position: relative;
 `
-class Layout extends React.Component {
+class Layout extends React.PureComponent {
   state = {
     current: this.props.location.pathname
   }
