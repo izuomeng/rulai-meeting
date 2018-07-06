@@ -5,7 +5,7 @@ import router from 'umi/router'
 import { modifyUserInfo } from '../services/userInfo'
 
 const FormItem = Form.Item
-// const { TextArea } = Input
+
 //控制格式
 const formItemLayout = {
   labelCol: {
