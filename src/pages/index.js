@@ -26,7 +26,9 @@ function IndexPage() {
   return (
     <div className={styles.normal}>
       <div>
-        <div className={styles.title}>Welcome to Lein Meeting!</div>
+        <div className={styles.title}>
+          Welcome to Lein Meeting!
+        </div>
       </div>
       <div className={styles.list}>
         <StyledButton onClick={() => router.push('/home')}>

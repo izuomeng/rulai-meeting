@@ -2,7 +2,9 @@
   font-family: Georgia, sans-serif;
   text-align: center;
   background: url(../assets/meeting.jpg) no-repeat center 0;
-  background-size: cover;
+  background-size: 2000px 1800px;
+  /* background-position: 200px 0; */
+  background-repeat: no-repeat;
   position: fixed;
   top: 0;
   left: 0;
@@ -16,7 +18,7 @@
   color: #ffffff;
   letter-spacing: -1px;
   margin-bottom: 200px;
-  margin-top: 200px;
+  margin-top: 350px;
 }
 
 .welcome {
@@ -27,7 +29,7 @@
 
 .list {
   font-size: 1.2em;
-  margin-top: 1.8em;
+  margin-top: 20px;
   list-style: none;
   line-height: 1.5em;
   text-align: center;
