@@ -22,7 +22,10 @@ export function RestClient(request, options) {
         loading: true,
         result: {}
       }
-      async componentDidMount() {
+      componentDidMount() {
+        this.fetch()
+      }
+      async fetch() {
         try {
           let reqArgs = options
           if (typeof options === 'function') {
@@ -42,7 +45,14 @@ export function RestClient(request, options) {
         if (!loading && !result) {
           return null
         }
-        return <MyComponent loading={loading} data={result} {...this.props} />
+        return (
+          <MyComponent
+            fetch={this.fetch}
+            loading={loading}
+            data={result}
+            {...this.props}
+          />
+        )
       }
     }
   }
