@@ -1,7 +1,8 @@
 import React from 'react'
-import { Form, Icon, Input, Button, Upload } from 'antd'
+import { Form, Icon, Input, Button, Upload, message } from 'antd'
 import changeContribution from '../services/changeMessage'
 import { getBase64 } from '@/utils'
+import { transTime } from '@/utils'
 
 const FormItem = Form.Item
 const { TextArea } = Input
@@ -86,19 +87,24 @@ class SubForm extends React.Component {
   }
   handleSubmit = e => {
     e.preventDefault()
-    this.props.form.validateFields((err, values) => {
+    this.props.form.validateFields(async (err, values) => {
       console.info(values)
-      values.files = this.feeImages
+      values.files = [this.feeImages]
       const repostDate = getNowDate()
       const newValues = {
         ...values,
-        repostDate: repostDate,
+        repostDate: transTime(repostDate),
         paperId: this.props.paperId
       }
-
+      this.props.onCancel()
       if (!err) {
         console.log('Received values of form: ', newValues)
-        changeContribution(newValues, this.props.paperId)
+        const { data } = await changeContribution(newValues, this.props.paperId)
+        console.info(data)
+
+        if (data.errorCode === 0) {
+          message.success('提交修改稿成功')
+        }
         return
       }
     })

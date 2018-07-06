@@ -1,4 +1,4 @@
-import { Table, Divider, Modal } from 'antd'
+import { Table, Modal } from 'antd'
 import React from 'react'
 import styled from 'styled-components'
 import { InjectClass } from '@/utils/HOC'
@@ -6,28 +6,30 @@ import getContribution from '../services/contributionMessage'
 import { RestClient } from '@/utils/HOC'
 import Message from './message'
 
+const filterState = state => ['未通过', '待审核', '已通过', '修改后通过'][state]
 const columns = ({ handleResult }) => [
   { title: '论文名称', dataIndex: 'title', key: 'name' },
 
   {
     title: '状态',
     dataIndex: 'judgeStatus',
-    key: 'state'
+    key: 'state',
+    render: (text, record) => <span>{filterState(record.judgeStatusInt)}</span>
   },
   {
     title: '操作',
     key: 'action',
     render: (text, record) => (
       <React.Fragment>
-        {record.judgeStatus === 'Pending' && (
+        {record.judgeStatusInt === 3 && (
           <React.Fragment>
             <a onClick={() => handleResult(record)}>修改</a>
-            <Divider type="vertical" />
+            {/* <Divider type="vertical" /> */}
           </React.Fragment>
         )}
-        <a download="file.jpg" href="data:image/jpeg;base64,/9j/4AAQSk">
+        {/* <a download="file.jpg" href="data:image/jpeg;base64,/9j/4AAQSk">
           下载
-        </a>
+        </a> */}
       </React.Fragment>
     )
   }
@@ -84,7 +86,10 @@ class MyTabel extends React.Component {
               onCancel={this.handleCancel}
               footer={null}
             >
-              <Message paperId={0} onCancel={this.handleCancel} />
+              <Message
+                paperId={this.state.current.id}
+                onCancel={this.handleCancel}
+              />
             </Modal>
           </React.Fragment>
         )}
