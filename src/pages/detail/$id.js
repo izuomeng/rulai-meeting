@@ -25,16 +25,16 @@ class Meeting extends React.Component {
   }
 
   showModal = data => {
-    // if (data.name && data.institution) {
-    //   this.setState({
-    //     visible: true
-    //   })
-    // } else {
-    //   message.error('请先补全个人信息')
-    // }
-    this.setState({
-      visible: true
-    })
+    if (data.name && data.institution) {
+      this.setState({
+        visible: true
+      })
+    } else {
+      message.error('请先补全个人信息')
+    }
+    // this.setState({
+    //   visible: true
+    // })
   }
 
   handleClick = type => {
@@ -50,7 +50,12 @@ class Meeting extends React.Component {
   }
 
   render() {
-    const { data, loading } = this.props
+    const {
+      data: { data },
+      loading
+    } = this.props
+    // console.log('test', loading)
+    if (loading) return <Loading />
     const { visible } = this.state
 
     const nowTime = new Date().getTime()
