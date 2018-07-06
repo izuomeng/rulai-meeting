@@ -43,7 +43,6 @@ class Meeting extends React.Component {
       data: { data },
       loading
     } = this.props
-    // console.log('test', loading)
     if (loading) return <Loading />
     const { visible } = this.state
 
