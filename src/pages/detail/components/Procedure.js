@@ -7,7 +7,7 @@ import { Steps, Popover } from 'antd'
 const Step = Steps.Step
 
 const StyledSteps = styled(InjectClass(Steps))`
-  margin: 40px 30px 20px 30px !important;
+  margin: 40px 50px 20px 50px !important;
   width: auto !important;
   & .ant-steps-item-description {
     text-align: center !important;

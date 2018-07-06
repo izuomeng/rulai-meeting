@@ -32,21 +32,10 @@ class Meeting extends React.Component {
     } else {
       message.error('请先补全个人信息')
     }
-    // this.setState({
-    //   visible: true
-    // })
   }
 
-  handleClick = type => {
-    if (type === 'ok') {
-      // this.setState({ loading: true })
-      // setTimeout(() => {
-      //   this.setState({ loading: false, visible: false })
-      // }, 3000)
-      this.setState({ visible: false })
-    } else if (type === 'cancel') {
-      this.setState({ visible: false })
-    }
+  handleClick = () => {
+    this.setState({ visible: false })
   }
 
   render() {
@@ -127,8 +116,8 @@ class Meeting extends React.Component {
               title="论文投稿"
               footer={null}
               destroyOnClose={true}
-              onCancel={() => this.handleClick('cancel')}
-              onOk={() => this.handleClick('ok')}
+              onCancel={this.handleClick}
+              onOk={this.handleClick}
             >
               <SubmitForm
                 handleClick={this.handleClick}

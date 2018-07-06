@@ -51,12 +51,14 @@ const BtnContainer = styled.div`
 class SubForm extends React.Component {
   state = {
     current: 0,
+    loading: false,
     params: {}
   }
   file = ''
 
   handleSubmit = e => {
     e.preventDefault()
+    this.setState({ loading: true })
     this.props.form.validateFields(async (err, values) => {
       if (err) {
         return
@@ -68,7 +70,8 @@ class SubForm extends React.Component {
         return
       }
       const { data } = await submitOnline(params, this.props.id, this.file)
-      this.props.handleClick('ok')
+      this.props.handleClick()
+      this.setState({ loading: false })
       if (data.errorCode === 0) {
         message.success('投稿成功')
         return
@@ -128,7 +131,7 @@ class SubForm extends React.Component {
 
   render() {
     const { getFieldDecorator } = this.props.form
-    const { current } = this.state
+    const { current, loading } = this.state
     const { userInfo } = this.props
     return (
       <React.Fragment>
@@ -172,7 +175,7 @@ class SubForm extends React.Component {
               <FormItem>{'邮箱：' + userInfo.email}</FormItem> */}
               <BtnContainer>
                 <Button
-                  onClick={() => this.props.handleClick('cancel')}
+                  onClick={this.props.handleClick}
                   // style={{ marginLeft: 320 }}
                 >
                   取消
@@ -246,7 +249,12 @@ class SubForm extends React.Component {
                 <Button key="back" onClick={this.formerStep}>
                   上一步
                 </Button>
-                <Button key="submit" type="primary" onClick={this.handleSubmit}>
+                <Button
+                  key="submit"
+                  type="primary"
+                  loading={loading}
+                  onClick={this.handleSubmit}
+                >
                   提交
                 </Button>
               </BtnContainer>
