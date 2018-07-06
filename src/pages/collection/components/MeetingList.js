@@ -2,7 +2,7 @@ import React from 'react'
 import router from 'umi/router'
 import Item from 'CP/MeetingList/Item'
 
-const MeetingList = ({ items, extra }) => {
+const MeetingList = ({ items = [], extra }) => {
   return (
     <React.Fragment>
       {items.map(item => (

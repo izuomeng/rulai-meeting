@@ -37,11 +37,12 @@ class Home extends React.Component {
   }
   handleSubmit = async form => {
     this.setState({ visible: false })
-    if (!form) {
+    const newForm = { conferenceID: this.state.currentMeeting.id, ...form }
+    if (!newForm) {
       return
     } else {
       try {
-        await registerMeetings(form)
+        await registerMeetings(newForm)
         message.success('注册成功')
       } catch (error) {
         return

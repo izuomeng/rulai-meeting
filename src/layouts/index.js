@@ -31,13 +31,21 @@ const Children = styled.div`
   overflow: auto;
   position: relative;
 `
-class Layout extends React.Component {
+class Layout extends React.PureComponent {
   state = {
     current: this.props.location.pathname
   }
   static getDerivedStateFromProps(nextProp, prevState) {
     const inNavBar = path =>
-      ['/', '/home', '/collection', '/released'].includes(path)
+      [
+        '/',
+        '/home',
+        '/collection',
+        '/released',
+        '/admin',
+        '/contribution',
+        '/account'
+      ].includes(path)
     const { pathname } = nextProp.location
     if (inNavBar(pathname)) {
       return {
@@ -62,7 +70,7 @@ class Layout extends React.Component {
     const {
       location: { pathname },
       children,
-      userInfo: { role, id }
+      userInfo: { role, id, root }
     } = this.props
     if (this.withoutHeader(pathname)) {
       return <React.Fragment>{children}</React.Fragment>
@@ -76,7 +84,9 @@ class Layout extends React.Component {
           selectedKeys={[this.state.current]}
         >
           <Menu.Item key="/">Lein Meeting</Menu.Item>
-          {role !== 'organizer' && <Menu.Item key="/home">主页</Menu.Item>}
+          {role === 'admin' && <Menu.Item key="/admin">管理</Menu.Item>}
+          {role !== 'organizer' &&
+            role !== 'admin' && <Menu.Item key="/home">主页</Menu.Item>}
           {role === 'user' && (
             <Menu.Item key="/contribution">我的投稿</Menu.Item>
           )}
@@ -84,7 +94,8 @@ class Layout extends React.Component {
           {role === 'organizer' && (
             <Menu.Item key="/released">我的发布</Menu.Item>
           )}
-
+          {role === 'organizer' &&
+            root && <Menu.Item key="/account">账号管理</Menu.Item>}
           <RightContainer>
             <Search />
             <Avatar />

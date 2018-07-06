@@ -1,6 +1,5 @@
 import React from 'react'
 import styled from 'styled-components'
-import { RestClient } from '@/utils/HOC'
 import MeetingList from './components/MeetingList'
 import Loading from 'CP/Loading'
 import { Icon, message } from 'antd'
@@ -22,15 +21,26 @@ const Extra = props => (
 )
 
 class Collection extends React.Component {
+  state = {
+    data: {},
+    laoding: true
+  }
+  componentDidMount() {
+    this.fetch()
+  }
+  async fetch() {
+    const {
+      data: { data }
+    } = await getAllCollections()
+    this.setState({ data, loading: false })
+  }
   handleDelete = async meeting => {
     await unstar(meeting.id)
     message.success('取消成功')
+    this.fetch()
   }
   render() {
-    const {
-      data: { data = {} },
-      loading
-    } = this.props
+    const { data, loading } = this.state
     return (
       <Container>
         {loading ? (
@@ -48,4 +58,4 @@ class Collection extends React.Component {
   }
 }
 
-export default RestClient(getAllCollections, 1)(Collection)
+export default Collection

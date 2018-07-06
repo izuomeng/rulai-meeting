@@ -1,18 +1,25 @@
 import React from 'react'
-import { Pagination } from 'antd'
+import { Pagination, Modal, message } from 'antd'
 import Loading from 'CP/Loading'
 import TitleCard from 'CP/TitleCard'
 import { connect } from 'dva'
-import { getReleasedMeetings } from './services/release'
+import { transTime } from '@/utils'
+import { getReleasedMeetings, updateMeeting } from './services/release'
 import Tabel from './components/Tabel'
+import MeetingInfo from './components/MeetingInfo'
 
 class Released extends React.Component {
   state = {
     data: {},
     loading: true,
-    current: 1
+    current: 1,
+    editDialog: false
   }
-  async componentDidMount() {
+  currentMeeting = {}
+  componentDidMount() {
+    this.fetch()
+  }
+  async fetch() {
     const orgId = this.props.userInfo.organization.id
     const {
       data: { data }
@@ -21,7 +28,6 @@ class Released extends React.Component {
     })
     this.setState({ data, loading: false })
   }
-
   onPageChange = async page => {
     const {
       data: { data }
@@ -30,6 +36,25 @@ class Released extends React.Component {
       orgId: this.props.userInfo.organization.id
     })
     this.setState({ current: page, data }, () => window.scrollTo(0, 0))
+  }
+  handleEdit = meeting => {
+    this.currentMeeting = meeting
+    this.setState({ editDialog: true })
+  }
+  handleEditDone = form => {
+    this.setState({ editDialog: false }, async () => {
+      if (!form) {
+        return
+      }
+      await updateMeeting(this.currentMeeting.id, {
+        ...this.currentMeeting,
+        ...form,
+        confBeginDate: transTime(this.currentMeeting.confBeginDate),
+        ddlDate: transTime(form.ddlDate || this.currentMeeting.ddlDate)
+      })
+      message.success('更新成功')
+      this.fetch()
+    })
   }
   render() {
     const { loading, data, current } = this.state
@@ -42,7 +67,7 @@ class Released extends React.Component {
             title="已发布会议"
             subtitle="查看和编辑已发布会议，新建会议"
           >
-            <Tabel list={data.items} />
+            <Tabel list={data.items} handleEdit={this.handleEdit} />
             <div style={{ textAlign: 'center' }}>
               <Pagination
                 current={current}
@@ -53,6 +78,18 @@ class Released extends React.Component {
             </div>
           </TitleCard>
         )}
+        <Modal
+          destroyOnClose
+          visible={this.state.editDialog}
+          title="编辑会议信息"
+          footer={null}
+          onCancel={() => this.setState({ editDialog: false })}
+        >
+          <MeetingInfo
+            handleSubmit={this.handleEditDone}
+            confId={this.currentMeeting.id}
+          />
+        </Modal>
       </React.Fragment>
     )
   }

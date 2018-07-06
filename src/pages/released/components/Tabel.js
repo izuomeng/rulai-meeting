@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import { InjectClass } from '@/utils/HOC'
 import Link from 'umi/link'
 
-const columns = [
+const columns = ({ handleEdit }) => [
   {
     title: 'ID',
     dataIndex: 'id',
@@ -32,7 +32,11 @@ const columns = [
       <span>
         <Link to={`/papers/${record.id}?title=${record.title}`}>投稿情况</Link>
         <Divider type="vertical" />
-        <a>编辑</a>
+        <Link to={`/meeting-register/${record.id}?title=${record.title}`}>
+          注册情况
+        </Link>
+        <Divider type="vertical" />
+        <a onClick={() => handleEdit(record)}>编辑</a>
         {/* <Divider type="vertical" />
         <a style={{ color: 'red' }}>删除</a> */}
       </span>
@@ -71,7 +75,7 @@ const MyTabel = props => {
   return (
     <T
       pagination={false}
-      columns={columns}
+      columns={columns({ handleEdit: props.handleEdit })}
       dataSource={props.list}
       rowKey="id"
       {...props}
