@@ -12,8 +12,19 @@ const Loading = L.extend`
 
 const filterState = state => ['未通过', '待审核', '已通过', '修改后通过'][state]
 const columns = ({ handleResult }) => [
-  { title: '论文名称', dataIndex: 'title', key: 'name' },
-
+  {
+    title: '论文名称',
+    dataIndex: 'title',
+    key: 'name',
+    render: (text, record) => (
+      <div style={{ maxWidth: 200 }}>{record.title}</div>
+    )
+  },
+  {
+    title: '投稿机构',
+    dataIndex: 'conferenceTitle',
+    key: 'organization'
+  },
   {
     title: '状态',
     dataIndex: 'judgeStatus',

@@ -1,7 +1,7 @@
 import React from 'react'
-import event from '@/utils/events'
 import { Form, Input, Button, message } from 'antd'
 import { addAccount } from '../services/AccountList'
+import event from '@/utils/events'
 
 const FormItem = Form.Item
 const formItemLayout = {
@@ -44,7 +44,7 @@ class SubForm extends React.Component {
           <FormItem {...formItemLayout} label="密码">
             {getFieldDecorator('pwd', {
               rules: [{ required: true, message: '请填写密码' }]
-            })(<Input placeholder="请在此处填写密码" />)}
+            })(<Input placeholder="请在此处填写密码" type="password" />)}
           </FormItem>
           <Button
             key="back"
