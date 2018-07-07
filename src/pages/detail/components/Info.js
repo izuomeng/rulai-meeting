@@ -43,9 +43,7 @@ const ContainerKid = styled.div`
 
 const Info = ({ meeting }) => {
   return (
-    <Card
-      style={{ padding: '30px', backgroundColor: 'rgba(255, 255, 255, 0.1)' }}
-    >
+    <Card style={{ padding: '30px' }}>
       <Theme label="会议名称" value={meeting.title} />
       <ContainerPar>
         <ContainerKid>

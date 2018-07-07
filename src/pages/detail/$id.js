@@ -12,8 +12,8 @@ import styled from 'styled-components'
 import { connect } from 'dva'
 
 const Container = styled.div`
-  /* background-color: white; */
-  background-color: rgba(255, 245, 238, 0.8);
+  background-color: white;
+  /* background-color: rgba(255, 245, 238, 0.8); */
   margin: 0px auto;
   width: 75%;
   min-width: 800px;
@@ -109,7 +109,7 @@ class Meeting extends React.Component {
                 icon="download"
                 size={'large'}
                 href={`download/file/${data.storagePath[0]}`}
-                download={`${data.title}论文模板.txt`}
+                download={data.title}
               >
                 下载论文模板
               </Button>
