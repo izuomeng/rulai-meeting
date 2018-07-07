@@ -10,10 +10,13 @@ import { getBase64 } from '@/utils'
 const FormItem = Form.Item
 
 const Container = styled.div`
-  width: 350px;
+  background-color: #fff;
+  padding: 26px 38px 22px;
+  margin: 64px auto;
+  border: 1px solid #e9e9e9;
+  border-radius: 4px;
+  width: 430px;
   text-align: center;
-  margin: 0 auto;
-  margin-top: 20px;
 `
 
 class RegisterInfo extends React.Component {

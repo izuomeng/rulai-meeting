@@ -40,6 +40,9 @@ const Children = styled.div`
   overflow: auto;
   position: relative;
 `
+const WithoutHeader = styled.div`
+  overflow: auto;
+`
 class Layout extends React.PureComponent {
   state = {
     current: this.props.location.pathname
@@ -86,7 +89,7 @@ class Layout extends React.PureComponent {
     } = this.props
     const role = userInfo && userInfo.role
     if (this.withoutHeader(pathname)) {
-      return <React.Fragment>{children}</React.Fragment>
+      return <WithoutHeader>{children}</WithoutHeader>
     }
     return (
       <React.Fragment>
@@ -109,7 +112,7 @@ class Layout extends React.PureComponent {
             <Menu.Item key="/released">我的发布</Menu.Item>
           )}
           {role === 'organizer' &&
-            root && <Menu.Item key="/account">账号管理</Menu.Item>}
+            userInfo.root && <Menu.Item key="/account">账号管理</Menu.Item>}
           <RightContainer>
             <Search />
             <Avatar />

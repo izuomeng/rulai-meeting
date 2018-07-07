@@ -15,7 +15,6 @@ const Container = styled.div`
   width: 350px;
   text-align: center;
   margin: 0 auto;
-  margin-top: 20px;
 `
 class LoginInfo extends React.Component {
   constructor(props) {
@@ -54,7 +53,14 @@ class LoginInfo extends React.Component {
       <React.Fragment>
         <Container>
           <img src={p} alt="图片加载中" width="180px" />
-
+          <p
+            style={{
+              fontSize: 30,
+              fontWeight: 'bold'
+            }}
+          >
+            欢迎回到Lein
+          </p>
           <Form className="login-form">
             <FormItem>
               <Input

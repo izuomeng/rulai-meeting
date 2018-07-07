@@ -44,14 +44,14 @@ const Item = ({ meeting, handleClick = () => {}, extra }) => {
       <div>
         <Tip icon="solution" label="机构" value={meeting.organization.name} />
         <Tip
+          icon="clock-circle"
+          label="截稿时间"
+          value={transTime(meeting.ddlDate, false)}
+        />
+        <Tip
           icon="clock-circle-o"
           label="开始日期"
           value={transTime(meeting.confBeginDate, false)}
-        />
-        <Tip
-          icon="clock-circle"
-          label="结束日期"
-          value={transTime(meeting.ddlDate, false)}
         />
       </div>
     </StyledCard>
