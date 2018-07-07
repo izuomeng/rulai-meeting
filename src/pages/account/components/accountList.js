@@ -1,8 +1,8 @@
 import { Table } from 'antd'
 import React from 'react'
 import styled from 'styled-components'
-import { InjectClass } from '@/utils/HOC'
-import { RestClient } from '@/utils/HOC'
+import event from '@/utils/events'
+import { InjectClass, RestClient } from '@/utils/HOC'
 import { getAccountList, removeAccount } from '../services/AccountList'
 import { connect } from 'dva'
 
@@ -55,6 +55,10 @@ class AccountList extends React.Component {
     visible: false,
     current: {}
   }
+  componentDidMount() {
+    event.subscribe('refresh', this.props.fetch)
+  }
+
   handleResult = result => {
     this.setState({ visible: true, current: result })
   }
@@ -63,11 +67,7 @@ class AccountList extends React.Component {
     this.setState({ visible: false })
   }
   render() {
-    const { userInfo } = this.props
-    console.info(userInfo)
     const { loading, data } = this.props
-    //const { visible } = this.state
-    console.info(data)
     return (
       <React.Fragment>
         {!loading && (

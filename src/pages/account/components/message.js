@@ -1,4 +1,5 @@
 import React from 'react'
+import event from '@/utils/events'
 import { Form, Input, Button, message } from 'antd'
 import { addAccount } from '../services/AccountList'
 
@@ -23,7 +24,7 @@ class SubForm extends React.Component {
         const { data } = await addAccount(values)
         if (data.errorCode === 0) {
           message.success('已成功添加子账户')
-          window.location.reload()
+          event.emit('refresh')
         }
         return
       }
