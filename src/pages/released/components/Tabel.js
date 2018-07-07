@@ -8,7 +8,7 @@ const D = styled.span`
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
-  max-width: 80px;
+  max-width: ${props => (props.maxLen ? props.maxLen : 80)}px;
   display: inline-block;
 `
 const FullD = styled.div`
@@ -28,8 +28,15 @@ const columns = ({ handleEdit, handleDelete }) => [
   },
   {
     title: '会议名称',
-    dataIndex: 'title',
-    key: 'title'
+    key: 'title',
+    render: (text, record) => (
+      <Link
+        style={{ color: 'rgba(0, 0, 0, 0.65)' }}
+        to={`/detail/${record.id}`}
+      >
+        <D maxLen={300}>{record.title}</D>
+      </Link>
+    )
   },
   {
     title: '会议介绍',
