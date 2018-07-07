@@ -5,8 +5,10 @@ export function getPaticipants({ confId, page = 1 }) {
 }
 
 export function updateStatus({ entryId, handleStatus }) {
-  return request(`/api/organization/parthandle/${entryId}`, {
-    method: 'post',
-    body: { handleStatus }
-  })
+  return request(
+    `/api/organization/parthandle/${entryId}?handleStatusStr=${handleStatus}`,
+    {
+      method: 'post'
+    }
+  )
 }
