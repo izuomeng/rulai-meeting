@@ -16,7 +16,6 @@ const Container = styled.div`
   border: 1px solid #e9e9e9;
   border-radius: 4px;
   width: 430px;
-  text-align: center;
 `
 
 class RegisterInfo extends React.Component {
@@ -104,33 +103,34 @@ class RegisterInfo extends React.Component {
     return (
       <React.Fragment>
         <Container>
-          <img src={p} alt="图片加载中" width="180px" />
-          <p
-            style={{
-              fontSize: 30,
-              fontWeight: 'bold'
-            }}
-          >
-            欢迎加入Lein
-          </p>
-          {this.state.user === 'people' ? (
+          <div style={{ textAlign: 'center' }}>
+            <img src={p} alt="图片加载中" width="180px" />
             <p
               style={{
-                fontSize: 18
+                fontSize: 30,
+                fontWeight: 'bold'
               }}
             >
-              个人信息注册
+              欢迎加入Lein
             </p>
-          ) : (
-            <p
-              style={{
-                fontSize: 18
-              }}
-            >
-              组织单位注册
-            </p>
-          )}
-
+            {this.state.user === 'people' ? (
+              <p
+                style={{
+                  fontSize: 18
+                }}
+              >
+                个人信息注册
+              </p>
+            ) : (
+              <p
+                style={{
+                  fontSize: 18
+                }}
+              >
+                组织单位注册
+              </p>
+            )}
+          </div>
           <Form onSubmit={this.handleSubmit} className="login-form">
             <FormItem>
               {getFieldDecorator('mail', {
