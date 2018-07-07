@@ -3,8 +3,9 @@ import styled from 'styled-components'
 import Theme from './Theme'
 
 const Container = styled.div`
-  margin: 0px 160px 0px 50px;
+  margin: 0px 50px 0px 50px;
   padding-left: 20px;
+  padding-right: 20px;
   padding-top: 12px;
 `
 
