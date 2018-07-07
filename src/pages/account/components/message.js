@@ -1,6 +1,7 @@
 import React from 'react'
 import { Form, Input, Button, message } from 'antd'
 import { addAccount } from '../services/AccountList'
+import event from '@/utils/events'
 
 const FormItem = Form.Item
 const formItemLayout = {
@@ -14,7 +15,6 @@ const formItemLayout = {
   }
 }
 class SubForm extends React.Component {
-  componentDidMount() {}
   handleSubmit = e => {
     e.preventDefault()
     this.props.form.validateFields(async (err, values) => {
@@ -24,7 +24,7 @@ class SubForm extends React.Component {
         const { data } = await addAccount(values)
         if (data.errorCode === 0) {
           message.success('已成功添加子账户')
-          window.location.reload()
+          event.emit('refresh')
         }
         return
       }
