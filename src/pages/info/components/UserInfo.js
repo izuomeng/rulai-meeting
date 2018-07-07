@@ -2,6 +2,7 @@ import React from 'react'
 import { Form, Icon, Input, Button, message } from 'antd'
 import styled from 'styled-components'
 import router from 'umi/router'
+import { connect } from 'dva'
 import { modifyUserInfo } from '../services/userInfo'
 
 const FormItem = Form.Item
@@ -41,6 +42,7 @@ class SubForm extends React.Component {
       this.setState({ loading: false })
       if (data.errorCode === 0) {
         message.success('个人信息修改成功')
+        this.props.dispatch({ type: 'user/save', payload: values })
         router.push('/')
         return
       }
@@ -118,4 +120,4 @@ class SubForm extends React.Component {
 
 const UserInfo = Form.create()(SubForm)
 
-export default UserInfo
+export default connect()(UserInfo)
