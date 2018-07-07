@@ -32,7 +32,8 @@ class MeetingRegister extends React.Component {
         ],
         evidence: []
       },
-      fileList: []
+      fileList: [],
+      loading: false
     }
     this.evidence = ''
   }
@@ -55,8 +56,11 @@ class MeetingRegister extends React.Component {
     })
     return false
   }
+  changeLoad = () => {
+    this.loading = true
+  }
   render() {
-    const { fileList, ...form } = this.state
+    const { fileList, loading, ...form } = this.state
     return (
       <React.Fragment>
         <Form className="login-form">
@@ -200,11 +204,11 @@ class MeetingRegister extends React.Component {
               <StyledButton
                 type="primary"
                 style={{ marginLeft: 40 }}
-                onClick={() =>
-                  this.props.handleSubmit({
-                    ...form
-                  })
-                }
+                loading={loading}
+                onClick={() => {
+                  this.setState({ loading: true })
+                  this.props.handleSubmit({ ...form })
+                }}
               >
                 确认
               </StyledButton>
