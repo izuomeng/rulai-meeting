@@ -4,8 +4,9 @@ import styled from 'styled-components'
 import { InjectClass } from '@/utils/HOC'
 import { RestClient } from '@/utils/HOC'
 import { getAccountList, removeAccount } from '../services/AccountList'
+import { connect } from 'dva'
 
-const columns = ({ handleResult }) => [
+const columns = data => [
   { title: '用户ID', dataIndex: 'id', key: 'id' },
   { title: '用户名', dataIndex: 'userName', key: 'name' },
   {
@@ -27,9 +28,9 @@ const columns = ({ handleResult }) => [
           <React.Fragment>
             <a
               style={{ color: 'red' }}
-              onClick={() => {
-                removeAccount(record.id)
-                window.location.reload()
+              onClick={async () => {
+                await removeAccount(record.id)
+                data.fetch()
               }}
             >
               删除
@@ -62,6 +63,8 @@ class AccountList extends React.Component {
     this.setState({ visible: false })
   }
   render() {
+    const { userInfo } = this.props
+    console.info(userInfo)
     const { loading, data } = this.props
     //const { visible } = this.state
     console.info(data)
@@ -70,7 +73,7 @@ class AccountList extends React.Component {
         {!loading && (
           <T
             pagination={false}
-            columns={columns({ handleResult: this.handleResult })}
+            columns={columns({ fetch: this.props.fetch })}
             dataSource={data.adminList.items}
             rowKey="id"
             {...this.props}
@@ -81,4 +84,12 @@ class AccountList extends React.Component {
   }
 }
 
-export default RestClient(getAccountList)(AccountList)
+const mapState = state => ({
+  userInfo: state.user
+})
+
+export default connect(mapState)(
+  RestClient(getAccountList, props => ({
+    id: props.userInfo.organization.id
+  }))(AccountList)
+)

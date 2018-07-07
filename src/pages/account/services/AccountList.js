@@ -1,6 +1,6 @@
 import request from '@/utils/request'
 
-export function getAccountList(organizationID = 21, page = 1) {
+export function getAccountList({ id: organizationID, page = 1 }) {
   return request(`/api/organization/accountList/${organizationID}/${page}`, {
     method: 'get'
   })
