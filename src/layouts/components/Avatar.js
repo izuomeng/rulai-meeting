@@ -16,10 +16,10 @@ const logout = dispatch => {
 }
 
 const Avatar = ({ userInfo, dispatch }) => {
-  const { role } = userInfo
+  const role = userInfo && userInfo.role
   return (
     <AvatarContainer>
-      {userInfo.userName ? (
+      {userInfo && userInfo.id ? (
         <Dropdown
           overlay={
             <Menu>

@@ -3,7 +3,7 @@ import * as userService from '../services/user'
 export default {
   namespace: 'user',
 
-  state: {},
+  state: null,
 
   subscriptions: {
     setup({ dispatch, history }) {
