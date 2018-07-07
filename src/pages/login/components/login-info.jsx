@@ -21,29 +21,36 @@ class LoginInfo extends React.Component {
     super(props)
     this.state = {
       email: '',
-      pwd: ''
+      pwd: '',
+      loading: false
     }
     this.isUser = true
   }
 
-  loginClick = async () => {
-    const { data } = await getLogin(
-      {
-        email: this.state.email,
-        pwd: this.state.pwd
-      },
-      this.isUser
-    )
-    if (data.errorCode === 0) {
-      // const sessionId = data[SESSION_KEY]
-      // Cookies.set(SESSION_KEY, sessionId)
-      await this.props.dispatch({ type: 'user/fetch', payload: {} })
-      message.success('登陆成功')
-      router.push('/')
-    } else {
-      // Cookies.remove(SESSION_KEY)
-      message.error(data.errorInfo || '登陆失败')
-    }
+  loginClick = () => {
+    this.setState({ loading: true }, async () => {
+      try {
+        const { data } = await getLogin(
+          {
+            email: this.state.email,
+            pwd: this.state.pwd
+          },
+          this.isUser
+        )
+        if (data.errorCode === 0) {
+          // const sessionId = data[SESSION_KEY]
+          // Cookies.set(SESSION_KEY, sessionId)
+          await this.props.dispatch({ type: 'user/fetch', payload: {} })
+          message.success('登陆成功')
+          router.push('/')
+        } else {
+          // Cookies.remove(SESSION_KEY)
+          message.error(data.errorInfo || '登陆失败')
+        }
+      } finally {
+        this.setState({ loading: false })
+      }
+    })
   }
   onChange = e => {
     this.isUser = !e.target.checked
@@ -93,6 +100,7 @@ class LoginInfo extends React.Component {
 
             <FormItem>
               <Button
+                loading={this.state.loading}
                 type="primary"
                 htmlType="submit"
                 className="login-form-button"

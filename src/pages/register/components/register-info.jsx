@@ -23,7 +23,8 @@ class RegisterInfo extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      user: 'people'
+      user: 'people',
+      loading: false
     }
     this.feeImages = ''
   }
@@ -53,15 +54,21 @@ class RegisterInfo extends React.Component {
     return false
   }
 
-  registerClick = async values => {
-    const data = await RegisterUser({
-      email: values.mail,
-      password: values.password
+  registerClick = values => {
+    this.setState({ loading: true }, async () => {
+      try {
+        const data = await RegisterUser({
+          email: values.mail,
+          password: values.password
+        })
+        if (data.data.errorCode === 0) {
+          message.success('注册成功, 请登录')
+          router.push('/login')
+        }
+      } finally {
+        this.setState({ loading: false })
+      }
     })
-    if (data.data.errorCode === 0) {
-      message.success('注册成功')
-      router.push('/login')
-    }
   }
 
   organizationClick = async values => {
@@ -128,42 +135,21 @@ class RegisterInfo extends React.Component {
             <FormItem>
               {getFieldDecorator('mail', {
                 rules: [{ required: true, message: '请输入邮箱' }]
-              })(
-                <Input
-                  // value={this.state.mail}
-                  // onChange={e => this.setState({ mail: e.target.value })}
-
-                  placeholder="请输入邮箱"
-                />
-              )}
+              })(<Input type="email" placeholder="请输入邮箱" />)}
             </FormItem>
             {this.state.user === 'company' ? (
               <React.Fragment>
                 <FormItem>
                   {getFieldDecorator('name', {
                     rules: [{ required: true, message: '请输入组织名称' }]
-                  })(
-                    <Input
-                      // value={this.state.pwd}
-                      // onChange={e => this.setState({ pwd: e.target.value })}
-
-                      placeholder="请输入组织名称"
-                    />
-                  )}
+                  })(<Input placeholder="请输入组织名称" />)}
                 </FormItem>
                 <FormItem>
                   {getFieldDecorator('code', {
                     rules: [
                       { required: true, message: '请输入统一社会信用代码' }
                     ]
-                  })(
-                    <Input
-                      // value={this.state.pwd}
-                      // onChange={e => this.setState({ pwd: e.target.value })}
-
-                      placeholder="请输入统一社会信用代码"
-                    />
-                  )}
+                  })(<Input placeholder="请输入统一社会信用代码" />)}
                 </FormItem>
                 <FormItem>
                   {getFieldDecorator('file', {
@@ -200,6 +186,7 @@ class RegisterInfo extends React.Component {
               {this.state.user === 'people' ? (
                 <Button
                   type="primary"
+                  loading={this.state.loading}
                   htmlType="submit"
                   className="login-form-button"
                   style={{ display: 'block', width: 350 }}
@@ -209,6 +196,7 @@ class RegisterInfo extends React.Component {
               ) : (
                 <Button
                   type="primary"
+                  loading={this.state.loading}
                   htmlType="submit"
                   className="login-form-button"
                   style={{ display: 'block', width: 350 }}
