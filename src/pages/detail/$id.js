@@ -12,7 +12,8 @@ import styled from 'styled-components'
 import { connect } from 'dva'
 
 const Container = styled.div`
-  background-color: white;
+  /* background-color: white; */
+  background-color: rgba(255, 245, 238, 0.8);
   margin: 0px auto;
   width: 75%;
   min-width: 800px;
@@ -24,13 +25,23 @@ class Meeting extends React.Component {
     visible: false
   }
 
-  showModal = data => {
-    if (data.name && data.institution) {
-      this.setState({
-        visible: true
-      })
+  showModal = (data, checkPoint) => {
+    if (data.role === 'user') {
+      if (checkPoint === 0) {
+        if (data.name && data.institution && data.realId) {
+          this.setState({
+            visible: true
+          })
+        } else {
+          message.error('请先补全个人信息')
+        }
+      } else {
+        message.error('已超过该会议投稿截止日期')
+      }
+    } else if (data.role === 'organizer') {
+      message.error('机构用户不可以投稿')
     } else {
-      message.error('请先补全个人信息')
+      message.error('您不能投稿')
     }
   }
 
@@ -43,7 +54,9 @@ class Meeting extends React.Component {
       data: { data },
       loading
     } = this.props
-    if (loading) return <Loading />
+    if (loading) {
+      return <Loading />
+    }
     const { visible } = this.state
 
     const nowTime = new Date().getTime()
@@ -95,8 +108,8 @@ class Meeting extends React.Component {
                 type="primary"
                 icon="download"
                 size={'large'}
-                href="/user/test/xxxx.txt"
-                download="论文模板.txt"
+                href={`download/file/${data.storagePath[0]}`}
+                download={`${data.title}论文模板.txt`}
               >
                 下载论文模板
               </Button>
@@ -104,7 +117,7 @@ class Meeting extends React.Component {
                 type="primary"
                 size={'large'}
                 style={{ marginLeft: 200, width: 150 }}
-                onClick={() => this.showModal(userInfo)}
+                onClick={() => this.showModal(userInfo, checkPoint)}
               >
                 在线会议投稿
               </Button>
