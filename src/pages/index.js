@@ -3,31 +3,29 @@ import { connect } from 'dva'
 import styled from 'styled-components'
 import styles from './index.css'
 import router from 'umi/router'
+import { Button } from 'antd'
 
-const Button = styled.div`
-  font-size: 1.5em;
-  outline: none;
-  padding: 10px 20px;
-  border-radius: 4px;
-  margin-left: 40px;
-  margin-right: 60px;
-  background: transparent;
-  border: 2px solid #ffffff;
-  color: #ffffff;
-  transition: 0.3s;
-  :hover {
-    background: transparent;
-    border: 2px solid #47c479;
-    color: #47c479;
-  }
+const ButtonContainer = styled.div`
+  font-size: 14px;
+  text-align: center;
+  color: #fff;
+  margin-top: 60px;
 `
 
 function IndexPage() {
   return (
     <div className={styles.normal}>
-      <div className={styles.title}>Welcome to Lein Meeting!</div>
-      <div className={styles.list}>
-        <Button onClick={() => router.push('/home')}>现在开始</Button>
+      <div className={styles.wrapper}>
+        <h1 className={styles.title}>Welcome to Lein Meeting</h1>
+        <span className={styles.subtitle}>
+          A perfect meeting management system in which you could find whatever
+          you want
+        </span>
+        <ButtonContainer onClick={() => router.push('/home')}>
+          <Button type="primary" className={styles.button}>
+            现在开始
+          </Button>
+        </ButtonContainer>
       </div>
     </div>
   )

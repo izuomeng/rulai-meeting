@@ -8,21 +8,32 @@
   left: 0;
   right: 0;
   bottom: 0;
+  color: #fff;
+  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
 }
-
+.wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+}
 .title {
-  font-size: 5rem;
-  font-weight: 10em;
-  color: #ffffff;
-  letter-spacing: -1px;
-  margin-bottom: 200px;
-  margin-top: 200px;
+  font-size: 67px;
+  font-weight: 700;
+  line-height: 74px;
+  color: #fff;
+  margin-top: 40vh;
+  margin-bottom: 20px;
 }
-
-.list {
-  font-size: 1.2em;
-  margin-top: 1.8em;
-  list-style: none;
-  line-height: 1.5em;
-  text-align: center;
+.subtitle {
+  font-size: 18px;
+  font-weight: 300;
+  -webkit-text-size-adjust: 100%;
+}
+.button {
+  display: inline-block;
+  height: 50px;
+  width: 126px;
 }
