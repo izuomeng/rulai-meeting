@@ -4,15 +4,6 @@ import Loading from '@/components/Loading'
 import { getUserInfo } from './services/userInfo'
 import TitleCard from 'CP/TitleCard'
 
-// const Container = styled.div`
-//   background-color: white;
-//   margin: 0px auto;
-//   width: 75%;
-//   min-width: 800px;
-//   padding-bottom: 1px;
-//   min-height: 500px;
-// `
-
 class Info extends React.Component {
   state = {
     data: {}

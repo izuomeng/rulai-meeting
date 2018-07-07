@@ -9,7 +9,7 @@ const Step = Steps.Step
 const StyledSteps = styled(InjectClass(Steps))`
   margin: 40px 50px 20px 50px !important;
   width: auto !important;
-  display: inline-block;
+  display: inline-block !important;
   text-align: left;
 `
 

@@ -2,6 +2,11 @@ import React from 'react'
 import { Card, Icon } from 'antd'
 import { InjectClass } from '@/utils/HOC'
 import styled from 'styled-components'
+import miment from 'miment'
+
+function trans(time) {
+  return miment(time).format('YYYY-MM-DD')
+}
 
 const MyContainer = styled.div`
   margin-bottom: 15px;
@@ -48,7 +53,7 @@ const Info = ({ meeting }) => {
       <ContainerPar>
         <ContainerKid>
           <Tip
-            label="发布机构名称"
+            label="机构名称"
             value={meeting.organization.name}
             iconType="home"
           />
@@ -58,34 +63,34 @@ const Info = ({ meeting }) => {
         <ContainerKid>
           <Tip
             label="会议创建日期"
-            value={meeting.setDate}
+            value={trans(meeting.setDate)}
             iconType="clock-circle-o"
           />
           <Tip
             label="论文截稿日期"
-            value={meeting.ddlDate}
+            value={trans(meeting.ddlDate)}
             iconType="clock-circle-o"
           />
           <Tip
             label="录用通知日期"
-            value={meeting.informDate}
+            value={trans(meeting.informDate)}
             iconType="clock-circle-o"
           />
         </ContainerKid>
         <ContainerKid>
           <Tip
             label="注册截止日期"
-            value={meeting.registerDate}
+            value={trans(meeting.registerDate)}
             iconType="clock-circle-o"
           />
           <Tip
             label="会议开始日期"
-            value={meeting.confBeginDate}
+            value={trans(meeting.confBeginDate)}
             iconType="clock-circle-o"
           />
           <Tip
             label="会议结束日期"
-            value={meeting.confBeginDate}
+            value={trans(meeting.confBeginDate)}
             iconType="clock-circle-o"
           />
         </ContainerKid>

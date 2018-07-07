@@ -60,24 +60,25 @@ class SubForm extends React.Component {
     e.preventDefault()
     this.setState({ loading: true })
     this.props.form.validateFields(async (err, values) => {
-      if (err) {
+      try {
+        if (err) {
+          return
+        }
+        const { params } = this.state
+        if (this.state.current !== 2) {
+          message.error('投稿失败，未知错误')
+          return
+        }
+        const { data } = await submitOnline(params, this.props.id, this.file)
+        this.props.handleClick()
+        if (data.errorCode === 0) {
+          message.success('投稿成功')
+          return
+        }
+        message.error(data.errorInfo || '投稿失败')
+      } finally {
         this.setState({ loading: false })
-        return
       }
-      console.log('Received values of form: ', values)
-      const { params } = this.state
-      if (this.state.current !== 2) {
-        message.error('投稿失败，未知错误')
-        return
-      }
-      const { data } = await submitOnline(params, this.props.id, this.file)
-      this.props.handleClick()
-      this.setState({ loading: false })
-      if (data.errorCode === 0) {
-        message.success('投稿成功')
-        return
-      }
-      message.error(data.errorInfo || '投稿失败')
     })
   }
 

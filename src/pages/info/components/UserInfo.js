@@ -20,9 +20,6 @@ const formItemLayout = {
 }
 const BtnContainer = styled.div`
   text-align: center;
-  /* & button {
-    margin-left: 10px;
-  } */
 `
 
 class SubForm extends React.Component {
@@ -37,13 +34,12 @@ class SubForm extends React.Component {
       if (err) {
         return
       }
-      console.log('Received values of form: ', values)
       const { data } = await modifyUserInfo(values)
       this.setState({ loading: false })
       if (data.errorCode === 0) {
         message.success('个人信息修改成功')
         this.props.dispatch({ type: 'user/save', payload: values })
-        router.push('/')
+        router.go(-1)
         return
       }
       message.error(data.errorInfo || '个人信息修改失败')
@@ -57,7 +53,7 @@ class SubForm extends React.Component {
     return (
       <Form
         onSubmit={this.handleSubmit}
-        style={{ width: '50%', margin: '35px auto', textAlign: 'center' }}
+        style={{ width: '50%', margin: '35px auto' }}
       >
         <FormItem {...formItemLayout} label="昵称">
           {getFieldDecorator('nickname', {
@@ -93,9 +89,11 @@ class SubForm extends React.Component {
         </FormItem>
         <FormItem {...formItemLayout} label="身份证号">
           {getFieldDecorator('realId', {
-            initialValue: data.realId
+            initialValue: data.realId,
+            rules: [{ len: 18, message: '请输入合法的身份证号' }]
           })(
             <Input
+              type="number"
               prefix={
                 <Icon type="idcard" style={{ color: 'rgba(0,0,0,.25)' }} />
               }

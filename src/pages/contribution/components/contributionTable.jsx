@@ -13,6 +13,11 @@ const Loading = L.extend`
 const filterState = state => ['未通过', '待审核', '已通过', '修改后通过'][state]
 const columns = ({ handleResult }) => [
   {
+    title: '论文编号',
+    dataIndex: 'id',
+    key: 'id'
+  },
+  {
     title: '论文名称',
     dataIndex: 'title',
     key: 'name',
