@@ -11,6 +11,21 @@ const columns = ({ handlePass, handleReject }) => [
   { title: '论文ID', dataIndex: 'paperid', key: 'paperid' },
   { title: '状态', dataIndex: 'handleStatus', key: 'handleStatus' },
   {
+    title: '缴费凭证',
+    key: 'proof',
+    render: (_, record) =>
+      record.proof[0] &&
+      record.proof[0].storagePath && (
+        <a
+          href={`/dapi/download/file?url=${encodeURIComponent(
+            record.proof[0].storagePath
+          )}`}
+        >
+          下载
+        </a>
+      )
+  },
+  {
     title: '操作',
     key: 'action',
     render: (text, record) => (
