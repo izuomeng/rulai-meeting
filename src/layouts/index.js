@@ -9,6 +9,15 @@ import Search from 'CP/Search'
 import { connect } from 'dva'
 import Loading from 'CP/Loading'
 
+const Filter = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.2);
+`
+
 const StyledMenu = styled(InjectClass(Menu))`
   border-bottom: 0;
   position: fixed;
@@ -81,6 +90,7 @@ class Layout extends React.PureComponent {
     }
     return (
       <React.Fragment>
+        <Filter />
         <StyledMenu
           mode="horizontal"
           theme="dark"

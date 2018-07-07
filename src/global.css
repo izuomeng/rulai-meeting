@@ -8,6 +8,7 @@ body,
 body {
   background-image: url(./assets/body-back.jpg);
   background-attachment: fixed;
-  background-size: 100%;
+  background-size: cover;
   background-repeat: no-repeat;
+  /* background-color: #e5e5e5; */
 }

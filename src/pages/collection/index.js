@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import MeetingList from './components/MeetingList'
 import Loading from 'CP/Loading'
-import { Icon, message } from 'antd'
+import { Icon, message, Spin } from 'antd'
 import { getAllCollections, unstar } from './services/collection'
 
 const Container = styled.div`
@@ -23,35 +23,42 @@ const Extra = props => (
 class Collection extends React.Component {
   state = {
     data: {},
-    laoding: true
+    loading: true,
+    spinning: false
   }
   componentDidMount() {
     this.fetch()
   }
-  async fetch() {
+  async fetch(callback) {
     const {
       data: { data }
     } = await getAllCollections()
-    this.setState({ data, loading: false })
+    this.setState({ data, loading: false }, callback)
   }
-  handleDelete = async meeting => {
-    await unstar(meeting.id)
-    message.success('取消成功')
-    this.fetch()
+  handleDelete = meeting => {
+    this.setState({ spinning: true }, async () => {
+      await unstar(meeting.id)
+      this.fetch(() => {
+        this.setState({ spinning: false })
+        message.success('取消成功')
+      })
+    })
   }
   render() {
-    const { data, loading } = this.state
+    const { data, loading, spinning } = this.state
     return (
       <Container>
         {loading ? (
           <Loading />
         ) : (
-          <MeetingList
-            extra={props => (
-              <Extra {...props} handleDelete={this.handleDelete} />
-            )}
-            items={data.items}
-          />
+          <Spin spinning={spinning} size="large">
+            <MeetingList
+              extra={props => (
+                <Extra {...props} handleDelete={this.handleDelete} />
+              )}
+              items={data.items}
+            />
+          </Spin>
         )}
       </Container>
     )

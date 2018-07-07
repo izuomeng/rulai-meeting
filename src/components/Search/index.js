@@ -33,7 +33,7 @@ class Search extends Component {
     if (!e.target.value) {
       return this.setState({ results: [], searchInput: '' })
     }
-    this.setState({ searchInput: e.target.value })
+    this.setState({ searchInput: e.target.value, results: [] })
     this.betterSearch(e.target.value)
   }
   betterSearch = debounce(this.handleSearch, 200)
