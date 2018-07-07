@@ -7,3 +7,10 @@ export function getUserInfo() {
 export function search(name) {
   return request(`/api/user/search/1?name=${name}`)
 }
+
+export function resetPwd(body) {
+  return request('/api/user/password/reset', {
+    method: 'post',
+    body
+  })
+}

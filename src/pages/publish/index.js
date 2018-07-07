@@ -152,7 +152,7 @@ class Publish extends Component {
             required={false}
           />
           <AntdFormItem {...formItemLayout} label="论文模版">
-            {getFieldDecorator('file', {})(
+            {getFieldDecorator('files', {})(
               <Upload
                 beforeUpload={this.beforeUpload}
                 onChange={this.handleChange}

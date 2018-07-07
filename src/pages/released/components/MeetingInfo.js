@@ -77,7 +77,7 @@ class MeetingInfo extends Component {
           required={false}
           initialValue={defaultInfo.requirement}
         />
-        <div>
+        <div style={{ textAlign: 'right' }}>
           <Button
             onClick={this.handleSubmit}
             type="primary"

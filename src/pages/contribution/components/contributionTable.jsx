@@ -21,7 +21,7 @@ const columns = ({ handleResult }) => [
     )
   },
   {
-    title: '投稿机构',
+    title: '投稿会议',
     dataIndex: 'conferenceTitle',
     key: 'organization'
   },

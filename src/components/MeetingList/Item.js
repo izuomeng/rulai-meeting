@@ -25,6 +25,7 @@ const StyledCard = styled(InjectClass(Card))`
 const Introduce = styled.div`
   cursor: pointer;
   margin-bottom: 20px;
+  min-height: 20px;
 `
 
 const Item = ({ meeting, handleClick = () => {}, extra }) => {

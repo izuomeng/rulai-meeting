@@ -173,7 +173,7 @@ class SubForm extends React.Component {
               >
                 {fileList.length === 0 && (
                   <Button>
-                    <Icon type="upload" /> 提交修改后的PDF文件或照片
+                    <Icon type="upload" /> 提交修改后的文件
                   </Button>
                 )}
               </Upload>
