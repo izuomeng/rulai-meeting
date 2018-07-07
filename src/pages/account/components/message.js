@@ -1,5 +1,4 @@
 import React from 'react'
-import event from '@/utils/events'
 import { Form, Input, Button, message } from 'antd'
 import { addAccount } from '../services/AccountList'
 
@@ -15,6 +14,7 @@ const formItemLayout = {
   }
 }
 class SubForm extends React.Component {
+  componentDidMount() {}
   handleSubmit = e => {
     e.preventDefault()
     this.props.form.validateFields(async (err, values) => {
@@ -24,7 +24,7 @@ class SubForm extends React.Component {
         const { data } = await addAccount(values)
         if (data.errorCode === 0) {
           message.success('已成功添加子账户')
-          event.emit('refresh')
+          window.location.reload()
         }
         return
       }
@@ -44,7 +44,7 @@ class SubForm extends React.Component {
           <FormItem {...formItemLayout} label="密码">
             {getFieldDecorator('pwd', {
               rules: [{ required: true, message: '请填写密码' }]
-            })(<Input placeholder="请在此处填写密码" />)}
+            })(<Input placeholder="请在此处填写密码" type="password" />)}
           </FormItem>
           <Button
             key="back"
