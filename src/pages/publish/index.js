@@ -49,7 +49,7 @@ class Publish extends Component {
   async publishMeeting(form) {
     try {
       const { userInfo } = this.props
-      await publish(userInfo.organization.id, { ...form, file: [this.file] })
+      await publish(userInfo.organization.id, { ...form, files: [this.file] })
       message.success('发布成功')
       router.push('/released')
     } catch (error) {

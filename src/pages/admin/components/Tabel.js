@@ -27,7 +27,7 @@ const columns = ({ handleCheck }) => [
     title: '操作',
     key: 'action',
     render: (text, record) => (
-      <span>
+      <span style={{ display: 'inline-block', width: 100 }}>
         <a onClick={() => handleCheck(record, true)}>通过</a>
         <Divider type="vertical" />
         <a onClick={() => handleCheck(record, false)} style={{ color: 'red' }}>
