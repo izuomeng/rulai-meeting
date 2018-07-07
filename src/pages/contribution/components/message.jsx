@@ -128,51 +128,74 @@ class SubForm extends React.Component {
     const { getFieldDecorator } = this.props.form
     const { fileList } = this.state
     return (
-      <Form onSubmit={this.handleSubmit}>
-        <FormItem {...formItemLayout} label="修改信息">
-          {getFieldDecorator('modInfo', {
-            rules: [{ required: true, message: '请填写修改信息' }]
-          })(
-            <TextArea
-              placeholder="修改信息"
-              autosize={{ minRows: 5, maxRows: 5 }}
-              style={{ marginTop: 6 }}
-            />
-          )}
-        </FormItem>
-        <FormItem>
-          {getFieldDecorator('files', {
-            rules: [{ required: true, message: '请上传修改后的论文' }]
-          })(
-            <Upload
-              beforeUpload={this.beforeUpload}
-              onChange={this.handleChange}
-              onRemove={this.handleRemove}
-            >
-              {fileList.length === 0 && (
-                <Button>
-                  <Icon type="upload" /> 提交修改后的PDF文件或照片
-                </Button>
-              )}
-            </Upload>
-          )}
-        </FormItem>
-        <Button
-          key="back"
-          onClick={this.props.onCancel}
-          style={{ marginLeft: 320 }}
-        >
-          取消
-        </Button>
-        <Button
-          key="submit"
-          type="primary"
-          onClick={this.handleSubmit}
-          style={{ marginLeft: 10 }}
-        >
-          提交
-        </Button>
-      </Form>
+      <React.Fragment>
+        <div style={{ marginBottom: 20 }}>
+          <div
+            style={{
+              display: 'inline-block',
+              color: 'rgba(0, 0, 0, 0.85)',
+              fontSize: 14
+            }}
+          >
+            修改意见:
+          </div>
+          <div
+            style={{
+              display: 'inline-block',
+              color: 'rgba(0, 0, 0, 0.85)',
+              fontSize: 14
+            }}
+          >
+            {this.props.opinion}
+          </div>
+        </div>
+
+        <Form onSubmit={this.handleSubmit}>
+          <FormItem {...formItemLayout} label="修改信息">
+            {getFieldDecorator('modInfo', {
+              rules: [{ required: true, message: '请填写修改信息' }]
+            })(
+              <TextArea
+                placeholder="请在此处填写修改说明"
+                autosize={{ minRows: 5, maxRows: 5 }}
+                style={{ marginTop: 6 }}
+              />
+            )}
+          </FormItem>
+          <FormItem>
+            {getFieldDecorator('files', {
+              rules: [{ required: true, message: '请上传修改后的论文' }]
+            })(
+              <Upload
+                beforeUpload={this.beforeUpload}
+                onChange={this.handleChange}
+                onRemove={this.handleRemove}
+              >
+                {fileList.length === 0 && (
+                  <Button>
+                    <Icon type="upload" /> 提交修改后的PDF文件或照片
+                  </Button>
+                )}
+              </Upload>
+            )}
+          </FormItem>
+          <Button
+            key="back"
+            onClick={this.props.onCancel}
+            style={{ marginLeft: 320 }}
+          >
+            取消
+          </Button>
+          <Button
+            key="submit"
+            type="primary"
+            onClick={this.handleSubmit}
+            style={{ marginLeft: 10 }}
+          >
+            提交
+          </Button>
+        </Form>
+      </React.Fragment>
     )
   }
 }

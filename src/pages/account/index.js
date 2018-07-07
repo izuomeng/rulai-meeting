@@ -1,8 +1,13 @@
 import React, { Component } from 'react'
+import AccountTable from './components/accountTable'
 
 class Account extends Component {
   render() {
-    return <div>账号管理</div>
+    return (
+      <React.Fragment>
+        <AccountTable />
+      </React.Fragment>
+    )
   }
 }
 
