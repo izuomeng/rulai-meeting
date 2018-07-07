@@ -90,6 +90,7 @@ class Meeting extends React.Component {
     }
 
     const { userInfo } = this.props
+    // console.log(data.storagePath.length)
     return (
       <React.Fragment>
         {loading ? (
@@ -104,18 +105,25 @@ class Meeting extends React.Component {
             <Item label="住宿交通" value={data.accommodationInfo} />
 
             <div style={{ textAlign: 'center', margin: '40px 0' }}>
+              {data.storagePath.length ? (
+                <Button
+                  type="primary"
+                  icon="download"
+                  size={'large'}
+                  style={{ marginRight: 200 }}
+                  href={`/dapi/download/file?url=${encodeURIComponent(
+                    data.storagePath[0]
+                  )}`}
+                >
+                  下载论文模板
+                </Button>
+              ) : (
+                <React.Fragment />
+              )}
               <Button
                 type="primary"
-                icon="download"
                 size={'large'}
-                href={`/download/file/${data.storagePath[0]}`}
-              >
-                下载论文模板
-              </Button>
-              <Button
-                type="primary"
-                size={'large'}
-                style={{ marginLeft: 200, width: 150 }}
+                style={{ width: 150 }}
                 onClick={() => this.showModal(userInfo, checkPoint)}
               >
                 在线会议投稿
