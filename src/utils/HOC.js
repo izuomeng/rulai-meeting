@@ -25,7 +25,7 @@ export function RestClient(request, options) {
       componentDidMount() {
         this.fetch()
       }
-      async fetch() {
+      fetch = async () => {
         try {
           let reqArgs = options
           if (typeof options === 'function') {
