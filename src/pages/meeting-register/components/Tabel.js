@@ -3,13 +3,23 @@ import React from 'react'
 import styled from 'styled-components'
 import { InjectClass } from '@/utils/HOC'
 
+const map = {
+  Pending: '待处理',
+  Accepted: '已接受',
+  Rejected: '已拒绝'
+}
+
 const columns = ({ handlePass, handleReject }) => [
   { title: 'ID', dataIndex: 'id', key: 'id' },
   { title: '姓名', dataIndex: 'name', key: 'name' },
   { title: '性别', dataIndex: 'sex', key: 'sex' },
   { title: '身份证号', dataIndex: 'realid', key: 'realid' },
   { title: '论文ID', dataIndex: 'paperid', key: 'paperid' },
-  { title: '状态', dataIndex: 'handleStatus', key: 'handleStatus' },
+  {
+    title: '状态',
+    key: 'handleStatus',
+    render: (_, record) => map[record.handleStatus] || record.handleStatus
+  },
   {
     title: '缴费凭证',
     key: 'proof',
