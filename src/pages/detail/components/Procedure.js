@@ -9,9 +9,8 @@ const Step = Steps.Step
 const StyledSteps = styled(InjectClass(Steps))`
   margin: 40px 50px 20px 50px !important;
   width: auto !important;
-  & .ant-steps-item-description {
-    text-align: center !important;
-  }
+  display: inline-block;
+  text-align: left;
 `
 
 const customDot = (dot, { status, index }) => (
@@ -39,14 +38,20 @@ const Procedure = props => {
   return (
     <React.Fragment>
       <Theme content={props.label} />
-      <StyledSteps current={props.checkPoint} progressDot={customDot}>
-        <Step title="投稿中" description={props.data.setDate} />
-        <Step title="已截止" description={props.data.ddlDate} />
-        <Step title="注册中" description={props.data.informDate} />
-        <Step title="截止注册" description={props.data.registerDate} />
-        <Step title="会议中" description={props.data.confBeginDate} />
-        <Step title="会议结束" description={props.data.confEndDate} />
-      </StyledSteps>
+      <div style={{ textAlign: 'center' }}>
+        <StyledSteps
+          direction="vertical"
+          current={props.checkPoint}
+          progressDot={customDot}
+        >
+          <Step title="投稿中" description={props.data.setDate} />
+          <Step title="已截止" description={props.data.ddlDate} />
+          <Step title="注册中" description={props.data.informDate} />
+          <Step title="截止注册" description={props.data.registerDate} />
+          <Step title="会议中" description={props.data.confBeginDate} />
+          <Step title="会议结束" description={props.data.confEndDate} />
+        </StyledSteps>
+      </div>
     </React.Fragment>
   )
 }

@@ -143,33 +143,6 @@ class SubForm extends React.Component {
               <MyFormItem content={'身份证号 ：' + userInfo.realId} />
               <MyFormItem content={'单位机构 ：' + userInfo.institution} />
               <MyFormItem content={'联系邮箱 ：' + userInfo.email} />
-              {/* <FormItem>
-                {getFieldDecorator('userName', {
-                  rules: [{ required: true, message: '会议作者不能为空！' }],
-                  initialValue: userInfo.name
-                })(
-                  <Input
-                    prefix={
-                      <Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />
-                    }
-                    placeholder="第一作者姓名"
-                  />
-                )}
-              </FormItem>
-              <FormItem>
-                {getFieldDecorator('company', {
-                  rules: [{ required: true, message: '单位不能为空！' }],
-                  initialValue: userInfo.institution
-                })(
-                  <Input
-                    prefix={
-                      <Icon type="home" style={{ color: 'rgba(0,0,0,.25)' }} />
-                    }
-                    placeholder="所属机构/学校/单位"
-                  />
-                )}
-              </FormItem>
-              <FormItem>{'邮箱：' + userInfo.email}</FormItem> */}
               <BtnContainer>
                 <Button
                   onClick={this.props.handleClick}
