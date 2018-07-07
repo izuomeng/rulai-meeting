@@ -42,7 +42,6 @@ const ContainerKid = styled.div`
 `
 
 const Info = ({ meeting }) => {
-  console.log('meeting', meeting)
   return (
     <Card style={{ padding: '30px' }}>
       <Theme label="会议名称" value={meeting.title} />

@@ -41,7 +41,11 @@ class Search extends Component {
     const {
       data: { data }
     } = await search(value)
-    this.setState({ results: data.items })
+    let results = data.items
+    if (data.items && data.items.length === 0) {
+      results = [{ id: -1, title: '无结果' }]
+    }
+    this.setState({ results })
   }
   handleClick = id => {
     this.setState({ results: [], searchInput: '' }, () =>
