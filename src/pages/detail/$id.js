@@ -108,8 +108,7 @@ class Meeting extends React.Component {
                 type="primary"
                 icon="download"
                 size={'large'}
-                href={`download/file/${data.storagePath[0]}`}
-                download={data.title}
+                href={`/download/file/${data.storagePath[0]}`}
               >
                 下载论文模板
               </Button>
