@@ -100,23 +100,16 @@ class Publish extends Component {
           />
           <FormItem
             decorator={getFieldDecorator}
-            label="会议日期范围"
-            prop="confDate"
-            isRangePicker
-            message="会议日期范围不能为空"
-          />
-          <FormItem
-            decorator={getFieldDecorator}
-            label="注册费用"
-            prop="cost"
-            type="number"
-            message="注册费用不能为空"
-          />
-          <FormItem
-            decorator={getFieldDecorator}
             label="截稿日期"
             prop="ddlDate"
             message="截稿日期不能为空"
+            isDatePicker
+          />
+          <FormItem
+            decorator={getFieldDecorator}
+            label="录用通知日期"
+            prop="informDate"
+            message="录用通知日期不能为空"
             isDatePicker
           />
           <FormItem
@@ -128,10 +121,17 @@ class Publish extends Component {
           />
           <FormItem
             decorator={getFieldDecorator}
-            label="录用通知日期"
-            prop="informDate"
-            message="录用通知日期不能为空"
-            isDatePicker
+            label="会议日期范围"
+            prop="confDate"
+            isRangePicker
+            message="会议日期范围不能为空"
+          />
+          <FormItem
+            decorator={getFieldDecorator}
+            label="注册费用"
+            prop="cost"
+            type="number"
+            message="注册费用不能为空"
           />
           <FormItem
             decorator={getFieldDecorator}

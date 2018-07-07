@@ -31,6 +31,7 @@ class AccountTable extends Component {
             visible={this.state.visible}
             onCancel={this.handleCancel}
             footer={null}
+            destroyOnClose
           >
             <AccountMessage onCancel={this.handleCancel} />
           </Modal>

@@ -9,7 +9,20 @@ const columns = ({ handleCheck }) => [
   { title: '邮箱', dataIndex: 'mail', key: 'mail' },
   { title: '法人信息', dataIndex: 'legalInfo', key: 'legalInfo' },
   { title: '企业信用代码', dataIndex: 'creditCode', key: 'realid' },
-  { title: '证明附件', dataIndex: 'attachment', key: 'attachment' },
+  {
+    title: '证明附件',
+    key: 'attachment',
+    render: (text, record) =>
+      record.attachmentURLs[0] ? (
+        <a
+          href={`/dapi/download/file?url=${encodeURIComponent(
+            record.attachmentURLs[0]
+          )}`}
+        >
+          下载
+        </a>
+      ) : null
+  },
   {
     title: '操作',
     key: 'action',
@@ -34,11 +47,12 @@ const T = styled(InjectClass(Table))`
 
 class MyTabel extends React.Component {
   render() {
+    const { handleCheck, handleDownload } = this.props
     return (
       <React.Fragment>
         <T
           pagination={false}
-          columns={columns({ handleCheck: this.props.handleCheck })}
+          columns={columns({ handleCheck, handleDownload })}
           dataSource={this.props.list}
           rowKey="id"
           {...this.props}
