@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import styles from './index.css'
 import router from 'umi/router'
 
-const StyledButton = styled.button`
+const Button = styled.div`
   font-size: 1.5em;
   outline: none;
   padding: 10px 20px;
@@ -25,16 +25,9 @@ const StyledButton = styled.button`
 function IndexPage() {
   return (
     <div className={styles.normal}>
-      <div>
-        <div className={styles.title}>Welcome to Lein Meeting!</div>
-      </div>
+      <div className={styles.title}>Welcome to Lein Meeting!</div>
       <div className={styles.list}>
-        <StyledButton onClick={() => router.push('/home')}>
-          查看会议
-        </StyledButton>
-        <StyledButton onClick={() => router.push('/publish')}>
-          发布会议
-        </StyledButton>
+        <Button onClick={() => router.push('/home')}>现在开始</Button>
       </div>
     </div>
   )

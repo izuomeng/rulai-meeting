@@ -11,10 +11,13 @@ const Container = styled.div`
 `
 
 const Item = ({ title = '', id, handleClick, keyword }) => {
-  const html = title.replace(
-    keyword,
-    `<span style="color: #6dd192">${keyword}</span>`
-  )
+  let html = title
+  if (id !== -1) {
+    html = title.replace(
+      keyword,
+      `<span style="color: #6dd192">${keyword}</span>`
+    )
+  }
   return (
     <Container
       onClick={() => handleClick(id)}

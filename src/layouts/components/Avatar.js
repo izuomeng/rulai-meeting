@@ -48,7 +48,7 @@ const Avatar = ({ userInfo, dispatch }) => {
           style={{ verticalAlign: 2 }}
           type="primary"
         >
-          登陆
+          登录
         </Button>
       )}
     </AvatarContainer>

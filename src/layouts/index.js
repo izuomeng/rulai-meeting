@@ -57,6 +57,9 @@ class Layout extends React.PureComponent {
     }
   }
   handleClick = e => {
+    if (!e.key) {
+      return
+    }
     this.setState({
       current: e.key
     })
