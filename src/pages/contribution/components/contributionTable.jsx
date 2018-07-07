@@ -88,6 +88,7 @@ class MyTabel extends React.Component {
               <Message
                 paperId={this.state.current.id}
                 onCancel={this.handleCancel}
+                opinion={this.state.current.opinion}
               />
             </Modal>
           </React.Fragment>

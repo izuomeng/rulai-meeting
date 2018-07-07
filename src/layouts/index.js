@@ -70,8 +70,9 @@ class Layout extends React.PureComponent {
     const {
       location: { pathname },
       children,
-      userInfo: { role, id, root }
+      userInfo
     } = this.props
+    const role = userInfo && userInfo.role
     if (this.withoutHeader(pathname)) {
       return <React.Fragment>{children}</React.Fragment>
     }
@@ -101,7 +102,7 @@ class Layout extends React.PureComponent {
             <Avatar />
           </RightContainer>
         </StyledMenu>
-        <Children>{id ? children : <Loading />}</Children>
+        <Children>{userInfo ? children : <Loading />}</Children>
       </React.Fragment>
     )
   }

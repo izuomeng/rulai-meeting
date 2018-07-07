@@ -1,13 +1,14 @@
 import React, { Component } from 'react'
-import { Card, Form, Button, message } from 'antd'
+import { Card, Form, Button, message, Upload, Icon } from 'antd'
 import styled from 'styled-components'
 import { InjectClass } from '@/utils/HOC'
-import { transTime } from '@/utils'
+import { transTime, getBase64 } from '@/utils'
 import { connect } from 'dva'
 import router from 'umi/router'
 import { publish } from './services/publish'
 import FormItem from './components/FormItem'
 
+const AntdFormItem = Form.Item
 const Container = styled(InjectClass(Card))`
   width: 75%;
   margin: 0 auto !important;
@@ -25,6 +26,10 @@ const Footer = styled.div`
 `
 
 class Publish extends Component {
+  state = {
+    fileList: []
+  }
+  file = ''
   handleSubmit = e => {
     this.props.form.validateFields((err, fieldsValue) => {
       if (err) {
@@ -44,15 +49,40 @@ class Publish extends Component {
   async publishMeeting(form) {
     try {
       const { userInfo } = this.props
-      await publish(userInfo.organization.id, form)
+      await publish(userInfo.organization.id, { ...form, file: [this.file] })
       message.success('发布成功')
       router.push('/released')
     } catch (error) {
       console.log(error)
     }
   }
+  handleChange = async ({ file }) => {
+    const base64 = await getBase64(file)
+    this.file = base64
+  }
+  handleRemove = () => {
+    this.file = ''
+    this.setState({ fileList: [] })
+  }
+  beforeUpload = file => {
+    this.setState({
+      fileList: [file]
+    })
+    return false
+  }
   render() {
     const { getFieldDecorator } = this.props.form
+    const { fileList } = this.state
+    const formItemLayout = {
+      labelCol: {
+        xs: { span: 5 },
+        sm: { span: 5 }
+      },
+      wrapperCol: {
+        xs: { span: 19 },
+        sm: { span: 19 }
+      }
+    }
     return (
       <Container>
         <Form onSubmit={this.handleSubmit}>
@@ -121,6 +151,21 @@ class Publish extends Component {
             prop="accommodationInfo"
             required={false}
           />
+          <AntdFormItem {...formItemLayout} label="论文模版">
+            {getFieldDecorator('file', {})(
+              <Upload
+                beforeUpload={this.beforeUpload}
+                onChange={this.handleChange}
+                onRemove={this.handleRemove}
+              >
+                {fileList.length === 0 && (
+                  <Button>
+                    <Icon type="upload" /> 请上传PDF文件或照片
+                  </Button>
+                )}
+              </Upload>
+            )}
+          </AntdFormItem>
         </Form>
         <Footer>
           <Button
