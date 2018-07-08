@@ -33,7 +33,10 @@ const list = [
   '/login',
   '/publish',
   '/register',
-  '/released'
+  '/released',
+  '/meeting-register/:id',
+  '/detail/:id',
+  '/papers/:id'
 ]
 list.forEach(element => {
   app.get(element, (req, res) => {
