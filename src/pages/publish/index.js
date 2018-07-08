@@ -111,7 +111,7 @@ class Publish extends Component {
             prop="informDate"
             message="录用通知日期不能为空"
             isDatePicker
-            placeholder="应在截稿日期之后"
+            placeholder="在截稿日期之后"
           />
           <FormItem
             decorator={getFieldDecorator}
@@ -119,7 +119,7 @@ class Publish extends Component {
             prop="registerDate"
             message="注册截止日期不能为空"
             isDatePicker
-            placeholder="应在录用通知日期之后"
+            placeholder="在录用通知日期之后"
           />
           <FormItem
             decorator={getFieldDecorator}
@@ -127,7 +127,7 @@ class Publish extends Component {
             prop="confDate"
             isRangePicker
             message="会议日期范围不能为空"
-            placeholder="应在注册截止日期之后"
+            placeholder={['在注册截止之后', '结束时间']}
           />
           <FormItem
             decorator={getFieldDecorator}

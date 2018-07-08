@@ -35,13 +35,13 @@ const MyItem = ({
           <DatePicker
             showTime
             format="YYYY-MM-DD HH:mm"
-            placeholder="选择时间"
+            placeholder={rest.placeholder || '选择时间'}
           />
         ) : isRangePicker ? (
           <RangePicker
             showTime={{ format: 'HH:mm' }}
             format="YYYY-MM-DD HH:mm"
-            placeholder={['开始时间', '结束时间']}
+            placeholder={rest.placeholder || ['开始时间', '结束时间']}
           />
         ) : (
           <Input {...rest} />
