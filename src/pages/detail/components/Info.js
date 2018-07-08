@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import miment from 'miment'
 
 function trans(time) {
-  return miment(time).format('YYYY-MM-DD')
+  return miment(time).format('YYYY-MM-DD hh:mm')
 }
 
 const MyContainer = styled.div`
