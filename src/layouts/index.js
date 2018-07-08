@@ -56,7 +56,8 @@ class Layout extends React.PureComponent {
         '/released',
         '/admin',
         '/contribution',
-        '/account'
+        '/account',
+        '/my-register'
       ].includes(path)
     const { pathname } = nextProp.location
     if (inNavBar(pathname)) {
@@ -106,6 +107,9 @@ class Layout extends React.PureComponent {
             role !== 'admin' && <Menu.Item key="/home">主页</Menu.Item>}
           {role === 'user' && (
             <Menu.Item key="/contribution">我的投稿</Menu.Item>
+          )}
+          {role === 'user' && (
+            <Menu.Item key="/my-register">我的注册</Menu.Item>
           )}
           {role === 'user' && <Menu.Item key="/collection">收藏夹</Menu.Item>}
           {role === 'organizer' && (
