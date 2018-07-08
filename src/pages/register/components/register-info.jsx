@@ -55,6 +55,10 @@ class RegisterInfo extends React.Component {
 
   registerClick = values => {
     this.setState({ loading: true }, async () => {
+      if (values.passwordConfirm !== values.password) {
+        this.setState({ loading: false })
+        return message.error('两次输入密码不一致')
+      }
       try {
         const data = await RegisterUser({
           email: values.mail,
