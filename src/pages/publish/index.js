@@ -27,7 +27,8 @@ const Footer = styled.div`
 
 class Publish extends Component {
   state = {
-    fileList: []
+    fileList: [],
+    loading: false
   }
   file = ''
   handleSubmit = e => {
@@ -46,15 +47,19 @@ class Publish extends Component {
       this.publishMeeting(form)
     })
   }
-  async publishMeeting(form) {
-    try {
-      const { userInfo } = this.props
-      await publish(userInfo.organization.id, { ...form, files: [this.file] })
-      message.success('发布成功')
-      router.push('/released')
-    } catch (error) {
-      console.log(error)
-    }
+  publishMeeting(form) {
+    this.setState({ loading: true }, async () => {
+      try {
+        const { userInfo } = this.props
+        await publish(userInfo.organization.id, { ...form, files: [this.file] })
+        message.success('发布成功')
+        router.push('/released')
+      } catch (error) {
+        console.log(error)
+      } finally {
+        this.setState({ loading: false })
+      }
+    })
   }
   handleChange = async ({ file }) => {
     const base64 = await getBase64(file)
@@ -175,6 +180,7 @@ class Publish extends Component {
             onClick={this.handleSubmit}
             type="primary"
             style={{ width: '20%' }}
+            loading={this.state.loading}
           >
             提交
           </Button>
