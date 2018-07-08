@@ -36,7 +36,9 @@ const list = [
   '/released',
   '/meeting-register/:id',
   '/detail/:id',
-  '/papers/:id'
+  '/papers/:id',
+  '/my-register',
+  '*'
 ]
 list.forEach(element => {
   app.get(element, (req, res) => {
